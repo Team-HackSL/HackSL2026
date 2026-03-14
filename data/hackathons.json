@@ -1,0 +1,32 @@
+[
+  {
+    "id": "1",
+    "name": "NIBMCodeX 2.0",
+    "description": "Coding challenge and innovation competition for tech enthusiasts across Sri Lanka.",
+    "date": "2025-04-15",
+    "location": "NIBM, Colombo",
+    "registrationUrl": "https://nibmcodex.nibmieee.org",
+    "organizer": "NIBM IEEE",
+    "tags": ["Coding", "IEEE", "Innovation"]
+  },
+  {
+    "id": "2",
+    "name": "HackElite 3.0",
+    "description": "Where creativity meets impact. Build the future of technology with us.",
+    "date": "2025-05-20",
+    "location": "University of Moratuwa",
+    "registrationUrl": "#",
+    "organizer": "IEEE WIE UOM",
+    "tags": ["Hackathon", "Innovation", "UOM"]
+  },
+  {
+    "id": "3",
+    "name": "Bashaway 2025",
+    "description": "Annual tech event by SLIIT FOSS Community - workshops, talks, and hackathon.",
+    "date": "2025-06-10",
+    "location": "SLIIT, Malabe",
+    "registrationUrl": "#",
+    "organizer": "SLIIT FOSS",
+    "tags": ["Open Source", "FOSS", "SLIIT"]
+  }
+]
