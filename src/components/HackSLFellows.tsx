@@ -17,7 +17,7 @@ export function HackSLFellows() {
             href="https://whatsapp.com/channel/0029VafzTTaLY6d3MqQpTX1d"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-xl bg-[var(--accent)] px-8 py-4 font-medium text-white shadow-lg transition-all hover:scale-[1.02] hover:bg-[var(--accent-hover)] hover:shadow-xl"
+            className="inline-flex items-center gap-2 rounded-xl bg-[#25D366] px-8 py-4 font-medium text-white shadow-lg transition-colors hover:bg-[#128C7E]"
           >
             Apply via WhatsApp
           </a>

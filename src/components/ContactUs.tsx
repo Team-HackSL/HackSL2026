@@ -34,7 +34,7 @@ export function ContactUs() {
               href="https://whatsapp.com/channel/0029VafzTTaLY6d3MqQpTX1d"
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-4 inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-emerald-700"
+              className="mt-4 inline-flex items-center gap-2 rounded-xl bg-[#25D366] px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-[#128C7E]"
             >
               WhatsApp Community
             </a>
