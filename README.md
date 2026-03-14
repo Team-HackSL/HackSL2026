@@ -1,4 +1,4 @@
-# HackSL Website
+# HackSL Community
 
 **Hack Sri Lanka** – Connecting Sri Lanka's Tech Innovators, one hackathon at a time.
 
