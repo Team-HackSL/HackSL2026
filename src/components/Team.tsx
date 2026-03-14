@@ -5,26 +5,19 @@ import { useState } from "react";
 
 const TEAM = [
   {
-    name: "Santhusha Janana Mudannayaka",
+    name: "Santhusha J. Mudannayaka",
     role: "Team",
     placeholder: "SJ",
-    image: "/team/santhusha.jpg",
-    linkedIn: "https://www.linkedin.com/in/santhusha-janana-mudannayaka/",
+    image: "/team/santhusha.png",
+    linkedIn: "https://www.linkedin.com/in/santhusha-mudannayaka/",
   },
   {
-    name: "Kushitha Lakshitha",
+    name: "Kavindu Ranasinghe",
     role: "Team",
-    placeholder: "KL",
-    image: "/team/kushitha.jpg",
-    linkedIn: "https://www.linkedin.com/in/kushitha-lakshitha/",
-  },
-  {
-    name: "Dulein Cooray",
-    role: "Team",
-    placeholder: "DC",
-    image: "/team/dulein.jpg",
-    linkedIn: "https://www.linkedin.com/in/dulein-cooray/",
-  },
+    placeholder: "KR",
+    image: "/team/kavindu.jpg",
+    linkedIn: "https://www.linkedin.com/in/kavindu-ranasinghe/",
+  }
 ];
 
 function TeamMember({
@@ -48,7 +41,7 @@ function TeamMember({
             src={member.image}
             alt={member.name}
             fill
-            className="object-cover"
+            className="object-cover object-top"
             sizes="112px"
             onError={() => setImgError(true)}
           />
