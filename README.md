@@ -4,21 +4,6 @@
 
 Built with Next.js, Tailwind CSS.
 
-## Run locally
-
-```bash
-npm install
-npm run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000).
-
-## Admin
-
-- Go to `/admin` and sign in with username and password.
-- Default (dev): `admin` / `hacksl-admin-2025`
-- Production: set `HACKSL_ADMIN_USERNAME` and `HACKSL_ADMIN_PASSWORD` in your environment.
-
 ## Deploy on Vercel
 
 1. Push your repo to GitHub
