@@ -15,7 +15,11 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "HackSL – Connecting Sri Lanka's Tech Innovators",
-  icons: { icon: "/hacksl-logo.png" },
+  icons: {
+    icon: "/hacksl-logo.png",
+    shortcut: "/hacksl-logo.png",
+    apple: "/hacksl-logo.png",
+  },
   description:
     "HackSL is the comprehensive guide for hackathons and tech events in Sri Lanka. One hackathon at a time.",
   openGraph: {

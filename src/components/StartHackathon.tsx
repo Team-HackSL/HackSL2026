@@ -17,7 +17,7 @@ export function StartHackathon() {
             href="https://whatsapp.com/channel/0029VafzTTaLY6d3MqQpTX1d"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-xl bg-[var(--accent)] px-8 py-4 font-semibold text-white shadow-md transition-all hover:bg-[var(--accent-hover)] hover:shadow-lg"
+            className="inline-flex items-center gap-2 rounded-xl bg-[#25D366] px-8 py-4 font-semibold text-white shadow-md transition-colors hover:bg-[#128C7E]"
           >
             Submit via WhatsApp
           </a>
