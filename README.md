@@ -2,7 +2,7 @@
 
 **Hack Sri Lanka** – Connecting Sri Lanka's Tech Innovators, one hackathon at a time.
 
-Built with Next.js, Tailwind CSS. YC-style startup aesthetic.
+Built with Next.js, Tailwind CSS.
 
 ## Run locally
 
