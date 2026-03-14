@@ -100,6 +100,7 @@ export async function DELETE(request: NextRequest) {
     await writeFile(DATA_PATH, JSON.stringify(filtered, null, 2), "utf-8");
     return NextResponse.json({ success: true });
   } catch (err) {
+    console.error(err);
     return NextResponse.json(
       { error: "Failed to delete hackathon" },
       { status: 500 }

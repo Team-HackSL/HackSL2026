@@ -7,7 +7,12 @@
     "location": "NIBM, Colombo",
     "registrationUrl": "https://nibmcodex.nibmieee.org",
     "organizer": "NIBM IEEE",
-    "tags": ["Coding", "IEEE", "Innovation", "Beginner Friendly"],
+    "tags": [
+      "Coding",
+      "IEEE",
+      "Innovation",
+      "Beginner Friendly"
+    ],
     "mode": "in-person",
     "length": "1-6 days"
   },
@@ -20,7 +25,12 @@
     "location": "University of Moratuwa",
     "registrationUrl": "#",
     "organizer": "IEEE WIE UOM",
-    "tags": ["Hackathon", "Innovation", "UOM", "Machine Learning/AI"],
+    "tags": [
+      "Hackathon",
+      "Innovation",
+      "UOM",
+      "Machine Learning/AI"
+    ],
     "length": "1-4 weeks"
   },
   {
@@ -32,7 +42,12 @@
     "location": "SLIIT, Malabe",
     "registrationUrl": "#",
     "organizer": "SLIIT FOSS",
-    "tags": ["Open Source", "FOSS", "SLIIT", "Education"],
+    "tags": [
+      "Open Source",
+      "FOSS",
+      "SLIIT",
+      "Education"
+    ],
     "length": "1-4 weeks"
   },
   {
@@ -43,7 +58,11 @@
     "location": "Colombo",
     "registrationUrl": "#",
     "organizer": "Tech Lanka",
-    "tags": ["Fintech", "Innovation", "Beginner Friendly"],
+    "tags": [
+      "Fintech",
+      "Innovation",
+      "Beginner Friendly"
+    ],
     "mode": "in-person",
     "length": "1-6 days"
   },
@@ -55,7 +74,11 @@
     "location": "Online",
     "registrationUrl": "#",
     "organizer": "AI Community SL",
-    "tags": ["Machine Learning/AI", "Web", "Innovation"],
+    "tags": [
+      "Machine Learning/AI",
+      "Web",
+      "Innovation"
+    ],
     "mode": "online",
     "length": "1-4 weeks"
   },
@@ -67,7 +90,11 @@
     "location": "Kandy",
     "registrationUrl": "#",
     "organizer": "EcoTech SL",
-    "tags": ["Social Good", "IoT", "Innovation"],
+    "tags": [
+      "Social Good",
+      "IoT",
+      "Innovation"
+    ],
     "mode": "in-person",
     "length": "1-6 days"
   },
@@ -79,7 +106,11 @@
     "location": "University of Sri Jayewardenepura",
     "registrationUrl": "#",
     "organizer": "Blockchain Society USJ",
-    "tags": ["Blockchain", "Web", "Innovation"],
+    "tags": [
+      "Blockchain",
+      "Web",
+      "Innovation"
+    ],
     "mode": "in-person",
     "length": "1-4 weeks"
   },
@@ -91,7 +122,11 @@
     "location": "Online",
     "registrationUrl": "#",
     "organizer": "Mobile Dev Community",
-    "tags": ["Mobile", "Web", "Beginner Friendly"],
+    "tags": [
+      "Mobile",
+      "Web",
+      "Beginner Friendly"
+    ],
     "mode": "online",
     "length": "1-6 days"
   },
@@ -103,7 +138,11 @@
     "location": "KDU, Colombo",
     "registrationUrl": "#",
     "organizer": "KDU IEEE",
-    "tags": ["Cybersecurity", "Coding", "Education"],
+    "tags": [
+      "Cybersecurity",
+      "Coding",
+      "Education"
+    ],
     "mode": "in-person",
     "length": "1-4 weeks"
   },
@@ -115,7 +154,11 @@
     "location": "Colombo",
     "registrationUrl": "#",
     "organizer": "Techstars",
-    "tags": ["Innovation", "Beginner Friendly", "Social Good"],
+    "tags": [
+      "Innovation",
+      "Beginner Friendly",
+      "Social Good"
+    ],
     "mode": "in-person",
     "length": "1-6 days"
   },
@@ -127,7 +170,11 @@
     "location": "Online",
     "registrationUrl": "#",
     "organizer": "Women Who Code Sri Lanka",
-    "tags": ["Social Good", "Innovation", "Beginner Friendly"],
+    "tags": [
+      "Social Good",
+      "Innovation",
+      "Beginner Friendly"
+    ],
     "mode": "online",
     "length": "1-4 weeks"
   },
@@ -139,7 +186,11 @@
     "location": "University of Colombo",
     "registrationUrl": "#",
     "organizer": "UoC Tech Club",
-    "tags": ["Social Good", "Machine Learning/AI", "Web"],
+    "tags": [
+      "Social Good",
+      "Machine Learning/AI",
+      "Web"
+    ],
     "mode": "in-person",
     "length": "1-6 days"
   },
@@ -151,7 +202,11 @@
     "location": "Online",
     "registrationUrl": "#",
     "organizer": "EdTech Lanka",
-    "tags": ["Social Good", "Education", "Open Source"],
+    "tags": [
+      "Social Good",
+      "Education",
+      "Open Source"
+    ],
     "mode": "online",
     "length": "1-4 weeks"
   },
@@ -163,7 +218,11 @@
     "location": "SLIIT, Malabe",
     "registrationUrl": "#",
     "organizer": "Game Dev Community SL",
-    "tags": ["Innovation", "Beginner Friendly", "Open Ended"],
+    "tags": [
+      "Innovation",
+      "Beginner Friendly",
+      "Open Ended"
+    ],
     "mode": "in-person",
     "length": "1-6 days"
   }

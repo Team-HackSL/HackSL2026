@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState, useEffect } from "react";
 import type { Hackathon } from "@/lib/hackathon-types";
 
@@ -82,7 +83,9 @@ function LoginForm({
         </button>
       </form>
       <p className="mt-6 text-center text-sm text-[var(--muted)]">
-        <a href="/" className="hover:underline">← Back to Home</a>
+        <Link href="/" className="hover:underline">
+          ← Back to Home
+        </Link>
       </p>
     </div>
   );
@@ -476,9 +479,9 @@ export default function AdminPage() {
         </div>
 
         <p className="mt-8 text-sm text-[var(--muted)]">
-          <a href="/" className="text-[var(--foreground)] hover:underline">
+          <Link href="/" className="text-[var(--foreground)] hover:underline">
             ← Back to Home
-          </a>
+          </Link>
         </p>
       </div>
     </div>

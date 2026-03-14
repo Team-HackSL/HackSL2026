@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { Hackathon } from "@/lib/hackathon-types";
 import { getHackathonStatus } from "@/lib/hackathon-types";
 import { HackathonCard } from "./HackathonCard";
@@ -8,7 +8,6 @@ import {
   HackathonFilters,
   type FilterState,
   type LocationFilter,
-  type StatusFilter,
   type LengthFilter,
 } from "./HackathonFilters";
 
@@ -54,7 +53,36 @@ function matchesFilters(h: Hackathon, filters: FilterState): boolean {
 
 export function HackathonsSection({ hackathons }: HackathonsSectionProps) {
   const [filters, setFilters] = useState<FilterState>(defaultFilters);
+  const initialRestore = useRef(false);
+
+  // Restore persisted filter state after hydration (only once).
+  useEffect(() => {
+    if (initialRestore.current) return;
+
+    try {
+      const stored = localStorage.getItem("hacksl.filters");
+      if (!stored) return;
+
+      const saved: FilterState = JSON.parse(stored);
+      window.requestAnimationFrame(() => {
+        setFilters({ ...defaultFilters, ...saved });
+      });
+      initialRestore.current = true;
+    } catch {
+      // Ignore parsing issues.
+    }
+  }, []);
+
   const [showFilters, setShowFilters] = useState(false);
+
+  // Persist filter state so users don't lose context when navigating/refreshing.
+  useEffect(() => {
+    try {
+      localStorage.setItem("hacksl.filters", JSON.stringify(filters));
+    } catch {
+      // Ignore write errors (e.g. private mode).
+    }
+  }, [filters]);
 
   const allTags = useMemo(() => {
     const set = new Set<string>();

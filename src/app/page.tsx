@@ -13,6 +13,7 @@ import { HackSLFellows } from "@/components/HackSLFellows";
 import { Community } from "@/components/Community";
 import { ContactUs } from "@/components/ContactUs";
 import { Footer } from "@/components/Footer";
+import { BackToTop } from "@/components/BackToTop";
 
 export default async function Home() {
   const hackathons = await getHackathons();
@@ -20,7 +21,7 @@ export default async function Home() {
   return (
     <div className="min-h-screen bg-white text-[var(--foreground)]">
       <Header />
-      <main>
+      <main id="main">
         <Hero />
         <PhotoCarousel />
         <AboutUs />
@@ -34,6 +35,7 @@ export default async function Home() {
         <Community />
         <ContactUs />
       </main>
+      <BackToTop />
       <Footer />
     </div>
   );
