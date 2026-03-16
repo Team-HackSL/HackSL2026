@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import type { BlogPost } from "@/lib/blog-types";
 import type { Hackathon } from "@/lib/hackathon-types";
 
 function LoginForm({
@@ -102,6 +103,15 @@ export default function AdminPage() {
     tags: [],
   });
   const [tagInput, setTagInput] = useState("");
+  const [blogs, setBlogs] = useState<BlogPost[]>([]);
+  const [blogForm, setBlogForm] = useState<Partial<BlogPost>>({
+    title: "",
+    excerpt: "",
+    date: "",
+    slug: "",
+    image: "",
+    content: "",
+  });
 
   useEffect(() => {
     fetch("/api/auth/session", { credentials: "include" })
@@ -116,6 +126,11 @@ export default function AdminPage() {
       .then((r) => r.json())
       .then(setHackathons)
       .catch(() => setHackathons([]));
+
+    fetch("/api/blogs")
+      .then((r) => r.json())
+      .then(setBlogs)
+      .catch(() => setBlogs([]));
   }, [authStatus]);
 
   const addTag = () => {
@@ -204,6 +219,60 @@ export default function AdminPage() {
     setAuthStatus("unauthenticated");
   };
 
+  const submitBlog = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setMessage(null);
+    const res = await fetch("/api/admin/blogs", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify(blogForm),
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      setMessage({ type: "err", text: data.error || "Failed to save blog post." });
+      return;
+    }
+    setMessage({ type: "ok", text: "Blog post saved." });
+    setBlogForm({
+      title: "",
+      excerpt: "",
+      date: "",
+      slug: "",
+      image: "",
+      content: "",
+    });
+    const list = await fetch("/api/blogs").then((r) => r.json());
+    setBlogs(list);
+  };
+
+  const editBlog = (post: BlogPost) => {
+    setBlogForm({
+      id: post.id,
+      title: post.title,
+      excerpt: post.excerpt,
+      date: post.date,
+      slug: post.slug,
+      image: post.image,
+      content: post.content,
+    });
+    setMessage(null);
+  };
+
+  const deleteBlog = async (id: string) => {
+    if (!confirm("Delete this blog post?")) return;
+    const res = await fetch(`/api/admin/blogs?id=${id}`, {
+      method: "DELETE",
+      credentials: "include",
+    });
+    if (res.ok) {
+      setBlogs((items) => items.filter((b) => b.id !== id));
+      setMessage({ type: "ok", text: "Blog post deleted." });
+    } else {
+      setMessage({ type: "err", text: "Failed to delete blog post." });
+    }
+  };
+
   if (authStatus === "checking") {
     return (
       <div className="flex min-h-screen items-center justify-center bg-[var(--accent-light)]">
@@ -225,9 +294,9 @@ export default function AdminPage() {
       <div className="mx-auto max-w-3xl px-6">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-bold text-[var(--foreground)]">Admin – Hackathons</h1>
+            <h1 className="text-2xl font-bold text-[var(--foreground)]">Admin – HackSL</h1>
             <p className="mt-1 text-sm text-[var(--muted)]">
-              Add or update hackathons.
+              Manage hackathons and blog posts.
             </p>
           </div>
           <button
@@ -465,6 +534,121 @@ export default function AdminPage() {
                   </button>
                   <button
                     onClick={() => deleteHackathon(h.id)}
+                    className="text-sm text-red-600 hover:text-red-700"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="mt-14 border-t border-[var(--border)] pt-10">
+          <h2 className="text-lg font-semibold text-[var(--foreground)]">Blog posts</h2>
+          <form onSubmit={submitBlog} className="mt-4 space-y-4 rounded-xl border border-[var(--border)] bg-white p-6">
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div>
+                <label className="block text-sm font-medium text-[var(--foreground)]">Title</label>
+                <input
+                  required
+                  value={blogForm.title ?? ""}
+                  onChange={(e) => setBlogForm((f) => ({ ...f, title: e.target.value }))}
+                  className="mt-1 w-full rounded-lg border border-[var(--border)] px-3 py-2"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-[var(--foreground)]">Date</label>
+                <input
+                  type="date"
+                  required
+                  value={blogForm.date ?? ""}
+                  onChange={(e) => setBlogForm((f) => ({ ...f, date: e.target.value }))}
+                  className="mt-1 w-full rounded-lg border border-[var(--border)] px-3 py-2"
+                />
+              </div>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-[var(--foreground)]">Slug (optional)</label>
+              <input
+                value={blogForm.slug ?? ""}
+                onChange={(e) => setBlogForm((f) => ({ ...f, slug: e.target.value }))}
+                placeholder="my-blog-post"
+                className="mt-1 w-full rounded-lg border border-[var(--border)] px-3 py-2"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-[var(--foreground)]">Excerpt</label>
+              <textarea
+                value={blogForm.excerpt ?? ""}
+                onChange={(e) => setBlogForm((f) => ({ ...f, excerpt: e.target.value }))}
+                rows={3}
+                className="mt-1 w-full rounded-lg border border-[var(--border)] px-3 py-2"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-[var(--foreground)]">Image URL (optional)</label>
+              <input
+                value={blogForm.image ?? ""}
+                onChange={(e) => setBlogForm((f) => ({ ...f, image: e.target.value || undefined }))}
+                placeholder="/blog/image.jpg or https://..."
+                className="mt-1 w-full rounded-lg border border-[var(--border)] px-3 py-2"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-[var(--foreground)]">Content (optional)</label>
+              <textarea
+                value={blogForm.content ?? ""}
+                onChange={(e) => setBlogForm((f) => ({ ...f, content: e.target.value }))}
+                rows={4}
+                className="mt-1 w-full rounded-lg border border-[var(--border)] px-3 py-2"
+              />
+            </div>
+            <button
+              type="submit"
+              className="rounded-lg bg-[var(--accent)] px-4 py-2 text-sm font-medium text-white hover:bg-[var(--accent-hover)]"
+            >
+              {blogForm.id ? "Update" : "Add"} Blog post
+            </button>
+            {blogForm.id && (
+              <button
+                type="button"
+                onClick={() =>
+                  setBlogForm({
+                    title: "",
+                    excerpt: "",
+                    date: "",
+                    slug: "",
+                    image: "",
+                    content: "",
+                  })
+                }
+                className="ml-2 text-sm text-[var(--muted)] hover:underline"
+              >
+                Cancel edit
+              </button>
+            )}
+          </form>
+
+          <ul className="mt-6 space-y-3">
+            {blogs.map((post) => (
+              <li
+                key={post.id}
+                className="flex items-center justify-between rounded-lg border border-[var(--border)] bg-white p-4"
+              >
+                <div>
+                  <p className="font-medium text-[var(--foreground)]">{post.title}</p>
+                  <p className="text-sm text-[var(--muted)]">{post.date}</p>
+                </div>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => editBlog(post)}
+                    className="text-sm text-[var(--muted)] hover:text-[var(--foreground)]"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => deleteBlog(post.id)}
                     className="text-sm text-red-600 hover:text-red-700"
                   >
                     Delete

@@ -19,3 +19,18 @@ export async function ensureHackathonsTable() {
   `;
 }
 
+export async function ensureBlogsTable() {
+  await sql`
+    CREATE TABLE IF NOT EXISTS blogs (
+      id TEXT PRIMARY KEY,
+      title TEXT NOT NULL,
+      excerpt TEXT NOT NULL,
+      date DATE NOT NULL,
+      slug TEXT NOT NULL,
+      image TEXT,
+      content TEXT
+    )
+  `;
+}
+
+
