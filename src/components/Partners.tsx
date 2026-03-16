@@ -6,31 +6,31 @@ import { useState } from "react";
 const PARTNERS = [
   {
     name: "NIBM",
-    logo: "https://logo.clearbit.com/nibm.lk",
+    logo: "https://d1lmq142maiv1z.cloudfront.net/Untitled_1_01_682429d2a3.svg",
     alt: "NIBM - National Institute of Business Management",
-    fallback: "/partners/nibm.png",
+    fallback: "/partners/nibm.svg",
   },
   {
     name: "SLIIT",
-    logo: "https://logo.clearbit.com/sliit.lk",
+    logo: "https://static.sliit.lk/wp-content/uploads/2023/06/06022054/SLIIT-UNI-LOGO.png",
     alt: "SLIIT - Sri Lanka Institute of Information Technology",
     fallback: "/partners/sliit.png",
   },
   {
     name: "University of Moratuwa",
-    logo: "https://logo.clearbit.com/uom.lk",
+    logo: "https://uom.lk/assets/images/logo_0.png",
     alt: "University of Moratuwa",
     fallback: "/partners/uom.png",
   },
   {
     name: "University of Sri Jayewardenepura",
-    logo: "https://logo.clearbit.com/sjp.ac.lk",
+    logo: "https://www.sjp.ac.lk/wp-content/uploads/2019/01/sjp-logo-large-trilingual.png",
     alt: "University of Sri Jayewardenepura",
     fallback: "/partners/usj.png",
   },
   {
     name: "KDU",
-    logo: "https://logo.clearbit.com/kdu.ac.lk",
+    logo: "https://kdu.ac.lk/wp-content/uploads/2023/06/kdu-logo2.png",
     alt: "General Sir John Kotelawala Defence University",
     fallback: "/partners/kdu.png",
   },
@@ -38,7 +38,7 @@ const PARTNERS = [
     name: "IEEE Sri Lanka",
     logo: "https://cdn.simpleicons.org/ieee/0088CC",
     alt: "IEEE Sri Lanka Section",
-    fallback: "/partners/ieee.png",
+    fallback: "/partners/ieee.svg",
   },
 ];
 
@@ -71,7 +71,7 @@ function PartnerLogo({
   if (hasError) {
     return (
       <div
-        className="flex h-10 items-center justify-center"
+        className="flex h-10 w-32 items-center justify-center"
         title={partner.alt}
       >
         <span className="text-sm font-medium tracking-wide text-white/70">
@@ -83,7 +83,7 @@ function PartnerLogo({
 
   return (
     <div
-      className="flex h-10 items-center justify-center"
+      className="flex h-10 w-32 items-center justify-center"
       title={partner.alt}
     >
       <Image
