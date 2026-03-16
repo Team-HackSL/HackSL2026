@@ -1,13 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
-import { readFile, writeFile } from "fs/promises";
-import path from "path";
-import { Hackathon } from "@/lib/hackathons";
+import { sql } from "@vercel/postgres";
+import type { Hackathon } from "@/lib/hackathon-types";
+import { ensureHackathonsTable } from "@/lib/db";
 import {
   verifySessionToken,
   getSessionCookieName,
 } from "@/lib/auth";
-
-const DATA_PATH = path.join(process.cwd(), "data", "hackathons.json");
 
 function authFailed(): NextResponse {
   return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -35,12 +33,11 @@ export async function POST(request: NextRequest) {
 
   try {
     const body = await request.json();
-    const hackathons: Hackathon[] = JSON.parse(
-      await readFile(DATA_PATH, "utf-8")
-    );
+    await ensureHackathonsTable();
 
-    const newHackathon: Hackathon = {
-      id: body.id || `hack-${Date.now()}`,
+    const id = body.id || `hack-${Date.now()}`;
+    const validated: Hackathon = {
+      id,
       name: body.name || "Untitled Hackathon",
       description: body.description || "",
       date: body.date || new Date().toISOString().split("T")[0],
@@ -60,15 +57,40 @@ export async function POST(request: NextRequest) {
           : undefined,
     };
 
-    const existingIndex = hackathons.findIndex((h) => h.id === newHackathon.id);
-    if (existingIndex >= 0) {
-      hackathons[existingIndex] = newHackathon;
-    } else {
-      hackathons.push(newHackathon);
-    }
+    await sql`
+      INSERT INTO hackathons (
+        id, name, description, date, location,
+        registration_url, organizer, tags, image, mode, status, length
+      )
+      VALUES (
+        ${validated.id},
+        ${validated.name},
+        ${validated.description},
+        ${validated.date},
+        ${validated.location},
+        ${validated.registrationUrl},
+        ${validated.organizer},
+        ${validated.tags},
+        ${validated.image ?? null},
+        ${validated.mode ?? null},
+        ${validated.status ?? null},
+        ${validated.length ?? null}
+      )
+      ON CONFLICT (id) DO UPDATE SET
+        name = EXCLUDED.name,
+        description = EXCLUDED.description,
+        date = EXCLUDED.date,
+        location = EXCLUDED.location,
+        registration_url = EXCLUDED.registration_url,
+        organizer = EXCLUDED.organizer,
+        tags = EXCLUDED.tags,
+        image = EXCLUDED.image,
+        mode = EXCLUDED.mode,
+        status = EXCLUDED.status,
+        length = EXCLUDED.length
+    `;
 
-    await writeFile(DATA_PATH, JSON.stringify(hackathons, null, 2), "utf-8");
-    return NextResponse.json({ success: true, hackathon: newHackathon });
+    return NextResponse.json({ success: true, hackathon: validated });
   } catch (err) {
     console.error(err);
     return NextResponse.json(
@@ -93,11 +115,8 @@ export async function DELETE(request: NextRequest) {
   }
 
   try {
-    const hackathons: Hackathon[] = JSON.parse(
-      await readFile(DATA_PATH, "utf-8")
-    );
-    const filtered = hackathons.filter((h) => h.id !== id);
-    await writeFile(DATA_PATH, JSON.stringify(filtered, null, 2), "utf-8");
+    await ensureHackathonsTable();
+    await sql`DELETE FROM hackathons WHERE id = ${id}`;
     return NextResponse.json({ success: true });
   } catch (err) {
     return NextResponse.json(
