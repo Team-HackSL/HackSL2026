@@ -68,7 +68,7 @@ export function HackathonsSection({ hackathons }: HackathonsSectionProps) {
   );
 
   return (
-    <section id="hackathons" className="border-t border-[var(--border)] bg-[var(--surface)] py-20">
+    <section id="hackathons" className="border-t border-[var(--border)] bg-white py-20">
       <div className="mx-auto max-w-7xl px-6">
         <div className="text-center">
           <h2 className="text-3xl font-bold tracking-tight text-[var(--foreground)] sm:text-4xl">

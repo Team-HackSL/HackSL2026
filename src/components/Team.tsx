@@ -79,7 +79,7 @@ function TeamMember({
 
 export function Team() {
   return (
-    <section id="team" className="border-t border-[var(--border)] bg-[var(--surface)] py-24">
+    <section id="team" className="border-t border-[var(--border)] bg-[var(--accent-light)] py-24">
       <div className="mx-auto max-w-5xl px-6">
         <h2 className="text-center text-3xl font-bold tracking-tight text-[var(--foreground)]">
           Our Team

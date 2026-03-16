@@ -37,7 +37,7 @@ export function ContactUs() {
   };
 
   return (
-    <section id="contact" className="border-t border-[var(--border)] bg-[var(--surface)] py-24">
+    <section id="contact" className="border-t border-[var(--border)] bg-white py-24">
       <div className="mx-auto max-w-4xl px-6">
         <h2 className="text-center text-3xl font-bold tracking-tight text-[var(--foreground)]">
           Contact Us

@@ -137,7 +137,7 @@ function PartnerLogo({
   if (hasError) {
     return (
       <div
-        className="flex h-20 w-52 items-center justify-center"
+        className="flex h-24 w-64 items-center justify-center"
         title={partner.alt}
       >
         <span className="text-sm font-medium tracking-wide text-white/70">
@@ -149,15 +149,15 @@ function PartnerLogo({
 
   return (
     <div
-      className="group flex h-20 w-52 items-center justify-center"
+      className="group flex h-24 w-64 items-center justify-center"
       title={partner.alt}
     >
       <Image
         src={src}
         alt={partner.alt}
-        width={220}
-        height={88}
-        className="h-14 w-40 object-contain transition-all duration-200 filter grayscale-[40%] opacity-80 group-hover:filter-none group-hover:opacity-100"
+        width={260}
+        height={104}
+        className="h-16 w-48 object-contain transition-all duration-200 opacity-100 group-hover:scale-[1.03]"
         onError={handleError}
         unoptimized={src.startsWith("http")}
       />
@@ -171,7 +171,7 @@ export function Partners() {
   return (
     <section
       id="partners"
-      className="border-t border-white/10 bg-[var(--dark)] py-20"
+      className="border-t border-white/10 bg-[#181818] py-20"
     >
       <div className="mx-auto max-w-6xl px-6">
         <h2 className="text-center text-2xl font-bold tracking-tight text-white">
