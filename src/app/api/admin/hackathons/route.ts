@@ -70,7 +70,7 @@ export async function POST(request: NextRequest) {
         ${validated.location},
         ${validated.registrationUrl},
         ${validated.organizer},
-        ${validated.tags},
+        ${validated.tags as any},
         ${validated.image ?? null},
         ${validated.mode ?? null},
         ${validated.status ?? null},
