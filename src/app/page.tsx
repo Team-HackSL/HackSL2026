@@ -14,6 +14,8 @@ import { Community } from "@/components/Community";
 import { ContactUs } from "@/components/ContactUs";
 import { Footer } from "@/components/Footer";
 
+export const dynamic = "force-dynamic";
+
 export default async function Home() {
   const hackathons = await getHackathons();
 
