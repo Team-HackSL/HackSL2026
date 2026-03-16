@@ -7,10 +7,33 @@ export function ContactUs() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (status === "sending") return;
     setStatus("sending");
-    // Placeholder: in production, wire to an API or email service
-    await new Promise((r) => setTimeout(r, 800));
-    setStatus("sent");
+
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.get("name"),
+          email: formData.get("email"),
+          message: formData.get("message"),
+        }),
+      });
+
+      if (!res.ok) {
+        throw new Error("Request failed");
+      }
+
+      setStatus("sent");
+      form.reset();
+    } catch (err) {
+      console.error("Contact form error", err);
+      setStatus("error");
+    }
   };
 
   return (
