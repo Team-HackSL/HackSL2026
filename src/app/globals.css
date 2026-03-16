@@ -6,10 +6,10 @@
   --foreground: #222222;
   --surface: #F7F7F7;
   --surface-hover: #EBEBEB;
-  /* Purple - matches HackSL logo #5B21B6 */
-  --accent: #5B21B6;
-  --accent-hover: #4C1D95;
-  --accent-light: #f5f3ff;
+  /* Purple - matches HackSL logo #5500e3 */
+  --accent: #5500e3;
+  --accent-hover: #3f00a8;
+  --accent-light: #c6bbfc;
   /* Dark sections (footer, partners) */
   --dark: #222222;
   --dark-surface: #222222;

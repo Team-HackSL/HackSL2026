@@ -1,6 +1,6 @@
 export function AboutUs() {
   return (
-    <section id="about" className="border-t border-[var(--border)] bg-white py-24">
+    <section id="about" className="border-t border-[var(--border)] bg-[var(--accent-light)] py-24">
       <div className="mx-auto max-w-4xl px-6">
         <h2 className="text-center text-3xl font-bold tracking-tight text-[var(--foreground)]">
           About Us

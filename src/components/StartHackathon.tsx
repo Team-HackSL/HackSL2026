@@ -2,7 +2,7 @@ export function StartHackathon() {
   return (
     <section
       id="start-hackathon"
-      className="border-t border-[var(--border)] bg-[var(--surface)] py-20"
+      className="border-t border-[var(--border)] bg-[var(--accent-light)] py-20"
     >
       <div className="mx-auto max-w-3xl px-6 text-center">
         <h2 className="text-3xl font-bold tracking-tight text-[var(--foreground)]">
