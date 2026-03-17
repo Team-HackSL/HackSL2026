@@ -137,7 +137,7 @@ function PartnerLogo({
   if (hasError) {
     return (
       <div
-        className="flex h-24 w-64 items-center justify-center"
+        className="flex h-20 w-40 items-center justify-center rounded-lg bg-white/5 sm:h-24 sm:w-56 lg:w-64"
         title={partner.alt}
       >
         <span className="text-sm font-medium tracking-wide text-white/70">
@@ -149,7 +149,7 @@ function PartnerLogo({
 
   return (
     <div
-      className="group flex h-24 w-64 items-center justify-center"
+      className="group flex h-20 w-40 items-center justify-center sm:h-24 sm:w-56 lg:w-64"
       title={partner.alt}
     >
       <Image
@@ -171,7 +171,7 @@ export function Partners() {
   return (
     <section
       id="partners"
-      className="border-t border-white/10 bg-[#181818] py-20"
+      className="border-t border-white/10 bg-[#181818] py-16 sm:py-20"
     >
       <div className="mx-auto max-w-6xl px-6">
         <h2 className="text-center text-2xl font-bold tracking-tight text-white">
