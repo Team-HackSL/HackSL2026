@@ -78,7 +78,7 @@ const PARTNERS = [
   },
   {
     name: "University of Kelaniya",
-    logo: "https://lh3.googleusercontent.com/sitesv/APaQ0SSlmD59LO6o0fCXR9IpmDaAldSQezstgLYyJlGJAQP-wskw1eMLHAxYbAgBywadoBlHRiqRwiUb1XyJScH9p-kBfYCDMx6mXDRbGLKrVdjkhkH_EWc3saNI9epJSxpWxnuF4CFlSfOQZ00itaablwiKIWL8114ykP3PAeZ4f_0uHnwEZULd6gr8p_I=w16383",
+    logo: "/partners/uok.png",
     alt: "University of Kelaniya",
     fallback: undefined,
   },
@@ -90,7 +90,7 @@ const PARTNERS = [
   },
   {
     name: "University of Peradeniya",
-    logo: "https://www.pdn.ac.lk/wp-content/uploads/2022/06/University_of_Peradeniya_crest-1.png",
+    logo: "/partners/uop.png",
     alt: "University of Peradeniya",
     fallback: undefined,
   },
