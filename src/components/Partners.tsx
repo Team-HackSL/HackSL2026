@@ -113,6 +113,24 @@ const PARTNERS = [
     alt: "Sri Lanka Technology Campus Research University",
     fallback: undefined,
   },
+  {
+    name: "FounderFlow",
+    logo: "https://founderflow.world/h-logo.png",
+    alt: "FounderFlow",
+    fallback: undefined,
+  },
+  {
+    name: "Rotaract Sri Lanka",
+    logo: "https://www.rotaract3220.org/Logo.png",
+    alt: "Rotaract Sri Lanka",
+    fallback: undefined,
+  },
+  {
+    name: "AIESEC Sri Lanka",
+    logo: "https://www.aiesec.lk/_next/image?url=%2Fimages%2Fnavigation%2Faiesec-logo-blue.png&w=256&q=75&dpl=dpl_Ejp5TWV4HAZvJUM7UzVeDbBaDCt7",
+    alt: "AIESEC Sri Lanka",
+    fallback: undefined,
+  },
 ];
 
 function PartnerLogo({
