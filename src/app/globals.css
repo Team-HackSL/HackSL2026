@@ -106,3 +106,138 @@ select:focus-visible {
 .animate-marquee-right {
   animation: marquee-right 30s linear infinite;
 }
+
+/*
+  Footer logos layout
+  The footer markup uses classes like `footer-grid`, `footer-logo`, and `footer-logos`.
+  Ensure all partner/sponsor logos render in one horizontal row and stretch to full row height.
+*/
+.footer-grid {
+  align-items: stretch;
+  height: auto;
+}
+
+.footer-logo {
+  height: auto;
+  min-height: 0;
+  align-items: stretch;
+}
+
+.footer-logos {
+  display: flex !important;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  justify-content: center;
+  width: 100%;
+  height: auto;
+  min-height: 0;
+  align-self: stretch;
+  padding: 0;
+  line-height: 0; /* prevent inline-image whitespace */
+  overflow-x: auto;
+}
+
+/* Hide scrollbar while keeping horizontal scrolling available */
+.footer-logos::-webkit-scrollbar {
+  display: none;
+}
+
+.footer-logos > * {
+  flex: 0 0 auto;
+  align-self: stretch;
+  display: flex;
+  min-height: 0;
+}
+
+.footer-logos img {
+  height: 65px;
+  max-height: 65px;
+  object-fit: contain;
+  display: block; /* avoid baseline whitespace */
+}
+
+.footer-logos svg {
+  height: 100%;
+  width: auto;
+  display: block;
+}
+
+/*
+  Specific footer logo sizing tweak
+  DevTools shows the Berkeley logo rendered at the row height (65px).
+  Make it visually larger by overriding its height/max-height.
+*/
+/* Keep logos consistent in the footer (no special per-logo sizing). */
+
+/*
+  Theme toggle placement
+  Your DOM indicates: div.layout .ri-pattern > nav.navbar > div.nav-container > button.theme-toggle.
+  Ensure the toggle is pushed to the far right of the navbar (next to the red dot area).
+*/
+div.layout .ri-pattern nav.navbar .nav-container {
+  display: flex;
+  align-items: center;
+}
+
+div.layout .ri-pattern nav.navbar .nav-container > button.theme-toggle {
+  margin-left: auto;
+  order: 9999;
+}
+
+div.layout .ri-pattern nav.navbar {
+  position: relative;
+}
+
+div.layout .ri-pattern nav.navbar .nav-container {
+  width: 100%;
+}
+
+/* Push toggle to the right border of the site */
+div.layout .ri-pattern nav.navbar .nav-container > button.theme-toggle {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/*
+  Footer logos alignment
+  Match the DevTools structure:
+  footer.footer > div.footer-content > div.footer-grid > div.footer-logo > div.footer-logo-item[] > img.footer-logo-img
+*/
+footer.footer .footer-grid {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+  justify-content: center;
+  width: 100%;
+}
+
+footer.footer .footer-logo {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+  justify-content: center;
+  width: 100%;
+}
+
+footer.footer .footer-logo-item {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: auto;
+}
+
+footer.footer .footer-logo-img {
+  display: block;
+  height: 65px;
+  max-height: 65px;
+  width: auto;
+  object-fit: contain;
+}
+
+/* Keep logos consistent in the footer (no special per-logo sizing). */

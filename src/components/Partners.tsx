@@ -93,6 +93,7 @@ const PARTNERS = [
     logo: "/partners/uop.png",
     alt: "University of Peradeniya",
     fallback: undefined,
+    removeWhiteBg: true,
   },
   {
     name: "Sabaragamuwa University",
@@ -116,6 +117,7 @@ function PartnerLogo({
     logo: string;
     alt: string;
     fallback?: string;
+    removeWhiteBg?: boolean;
   };
 }) {
   const [src, setSrc] = useState(partner.logo);
@@ -157,7 +159,7 @@ function PartnerLogo({
         alt={partner.alt}
         width={260}
         height={104}
-        className="h-16 w-48 object-contain transition-all duration-200 opacity-100 group-hover:scale-[1.03]"
+        className={`h-16 w-48 object-contain transition-all duration-200 opacity-100 group-hover:scale-[1.03] ${partner.removeWhiteBg ? "mix-blend-multiply" : ""}`}
         onError={handleError}
         unoptimized={src.startsWith("http")}
       />
