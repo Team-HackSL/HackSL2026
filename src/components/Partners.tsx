@@ -106,7 +106,13 @@ const PARTNERS = [
     logo: "https://www.uwu.ac.lk/wp-content/uploads/logo_uwu.jpg",
     alt: "Uva Wellassa University",
     fallback: undefined,
-  }
+  },
+  {
+    name: "Sri Lanka Technology CampusqResearch University ",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/SLTC_Research_University_Logo.png/500px-SLTC_Research_University_Logo.png",
+    alt: "Sri Lanka Technology Campus Research University",
+    fallback: undefined,
+  },
 ];
 
 function PartnerLogo({
