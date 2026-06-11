@@ -30,7 +30,7 @@ export function Hero() {
         {/* Badge */}
         <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-sm font-medium text-white/90 backdrop-blur-sm">
           <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-green-400" />
-          Sri Lanka&apos;s Hackathon Hub
+          Sri Lanka&apos;s largest Hackathon Hub
         </div>
 
         <h1 className="text-5xl font-bold tracking-[-0.04em] text-white sm:text-6xl md:text-7xl lg:text-8xl">
