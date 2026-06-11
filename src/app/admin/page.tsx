@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import type { BlogPost } from "@/lib/blog-types";
 import type { Hackathon } from "@/lib/hackathon-types";
 
@@ -103,6 +103,8 @@ export default function AdminPage() {
     tags: [],
   });
   const [tagInput, setTagInput] = useState("");
+  const [imageUploading, setImageUploading] = useState(false);
+  const imageFileRef = useRef<HTMLInputElement>(null);
   const [blogs, setBlogs] = useState<BlogPost[]>([]);
   const [blogForm, setBlogForm] = useState<Partial<BlogPost>>({
     title: "",
@@ -148,6 +150,30 @@ export default function AdminPage() {
       ...f,
       tags: (f.tags || []).filter((_, idx) => idx !== i),
     }));
+  };
+
+  const handleImageFile = async (file: File) => {
+    setImageUploading(true);
+    setMessage(null);
+    try {
+      const fd = new FormData();
+      fd.append("file", file);
+      const res = await fetch("/api/admin/upload", {
+        method: "POST",
+        credentials: "include",
+        body: fd,
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setMessage({ type: "err", text: data.error || "Upload failed" });
+        return;
+      }
+      setForm((f) => ({ ...f, image: data.url }));
+    } catch {
+      setMessage({ type: "err", text: "Upload failed" });
+    } finally {
+      setImageUploading(false);
+    }
   };
 
   const submit = async (e: React.FormEvent) => {
@@ -386,13 +412,51 @@ export default function AdminPage() {
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium text-[var(--foreground)]">Image URL (optional)</label>
-              <input
-                value={form.image ?? ""}
-                onChange={(e) => setForm((f) => ({ ...f, image: e.target.value || undefined }))}
-                placeholder="/image.png or https://..."
-                className="mt-1 w-full rounded-lg border border-[var(--border)] px-3 py-2"
-              />
+              <label className="block text-sm font-medium text-[var(--foreground)]">Event Image (optional)</label>
+              <div className="mt-1 space-y-2">
+                <label
+                  className={`flex cursor-pointer items-center justify-center gap-2 rounded-lg border-2 border-dashed border-[var(--border)] px-3 py-3 text-sm text-[var(--muted)] transition hover:border-[var(--accent)] hover:text-[var(--accent)] ${imageUploading ? "opacity-60 pointer-events-none" : ""}`}
+                >
+                  <input
+                    ref={imageFileRef}
+                    type="file"
+                    accept="image/*"
+                    className="sr-only"
+                    onChange={(e) => {
+                      const file = e.target.files?.[0];
+                      if (file) handleImageFile(file);
+                    }}
+                  />
+                  {imageUploading ? "Uploading…" : "Upload image"}
+                </label>
+                <input
+                  value={form.image ?? ""}
+                  onChange={(e) => setForm((f) => ({ ...f, image: e.target.value || undefined }))}
+                  placeholder="or paste URL: /image.png or https://..."
+                  className="w-full rounded-lg border border-[var(--border)] px-3 py-2 text-sm"
+                />
+                {form.image && (
+                  <div className="relative">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={form.image}
+                      alt="preview"
+                      className="h-24 w-full rounded-lg object-cover"
+                      onError={(e) => (e.currentTarget.style.display = "none")}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setForm((f) => ({ ...f, image: undefined }));
+                        if (imageFileRef.current) imageFileRef.current.value = "";
+                      }}
+                      className="absolute right-1 top-1 rounded-full bg-black/50 px-1.5 py-0.5 text-xs text-white hover:bg-black/70"
+                    >
+                      ✕
+                    </button>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
           <div className="grid gap-4 sm:grid-cols-2">
