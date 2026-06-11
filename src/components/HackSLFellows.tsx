@@ -29,7 +29,7 @@ export function HackSLFellows() {
           {PERKS.map((perk) => (
             <div
               key={perk.text}
-              className="flex flex-col items-center gap-2 rounded-2xl border border-[var(--border)] bg-white p-5 text-center"
+              className="flex flex-col items-center gap-2 rounded-2xl border border-[var(--border)] bg-[var(--background)] p-5 text-center"
             >
               <span className="text-2xl">{perk.icon}</span>
               <p className="text-sm font-medium text-[var(--foreground)]">
@@ -50,7 +50,7 @@ export function HackSLFellows() {
           </a>
           <a
             href="#contact"
-            className="inline-flex items-center gap-2 rounded-xl border border-[var(--border)] bg-white px-7 py-3.5 text-sm font-semibold text-[var(--foreground)] transition-all duration-200 hover:border-[var(--accent)]/30 hover:shadow-md"
+            className="inline-flex items-center gap-2 rounded-xl border border-[var(--border)] bg-[var(--background)] px-7 py-3.5 text-sm font-semibold text-[var(--foreground)] transition-all duration-200 hover:border-[var(--accent)]/30 hover:shadow-md"
           >
             Learn more
           </a>

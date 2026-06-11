@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { ThemeToggle } from "./ThemeToggle";
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -64,6 +65,7 @@ export function Header() {
         {/* Desktop nav */}
         <div className="hidden items-center gap-8 md:flex">
           <NavLinks className="flex items-center gap-6" />
+          <ThemeToggle />
           <a
             href="#contact"
             className="rounded-lg bg-white/15 px-4 py-2 text-sm font-semibold text-white transition-all duration-200 hover:bg-white/25"
@@ -72,7 +74,9 @@ export function Header() {
           </a>
         </div>
 
-        {/* Mobile menu button */}
+        {/* Mobile: theme toggle + hamburger */}
+        <div className="flex items-center gap-1 md:hidden">
+          <ThemeToggle />
         <button
           type="button"
           className="inline-flex items-center justify-center rounded-md p-2 text-white/80 hover:bg-white/10 md:hidden"
@@ -98,6 +102,7 @@ export function Header() {
             />
           </div>
         </button>
+        </div>
       </nav>
 
       {/* Mobile nav panel */}

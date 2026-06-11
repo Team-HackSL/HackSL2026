@@ -37,7 +37,7 @@ export function PhotoCarousel() {
         <p className="mx-auto mt-2 max-w-xl text-center text-[var(--muted)]">
           Highlights from hackathons and events we&apos;ve partnered with.
         </p>
-        <div className="relative mt-10 overflow-hidden rounded-2xl border border-[var(--border)] bg-white shadow-sm">
+        <div className="relative mt-10 overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--background)] shadow-sm">
           <div className="aspect-video w-full bg-black">
             {SLIDES.map((slide, i) => (
               <div

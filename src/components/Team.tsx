@@ -34,7 +34,7 @@ function TeamMember({
   const [imgError, setImgError] = useState(false);
 
   const inner = (
-    <div className="group flex flex-col items-center rounded-2xl border border-[var(--border)] bg-white p-8 text-center shadow-sm transition-all duration-200 hover:-translate-y-1 hover:border-[var(--accent)]/20 hover:shadow-lg">
+    <div className="group flex flex-col items-center rounded-2xl border border-[var(--border)] bg-[var(--background)] p-8 text-center shadow-sm transition-all duration-200 hover:-translate-y-1 hover:border-[var(--accent)]/20 hover:shadow-lg">
       <div className="relative h-24 w-24 overflow-hidden rounded-full bg-[var(--accent)] ring-4 ring-[var(--accent)]/10">
         {!imgError ? (
           <Image

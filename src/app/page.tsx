@@ -19,7 +19,7 @@ export default async function Home() {
   const hackathons = await getHackathons();
 
   return (
-    <div className="min-h-screen bg-white text-[var(--foreground)]">
+    <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
       <Header />
       <main>
         {/* 1. Hero */}

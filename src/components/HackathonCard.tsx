@@ -18,7 +18,7 @@ export function HackathonCard({ hackathon }: HackathonCardProps) {
       href={hackathon.registrationUrl}
       target="_blank"
       rel="noopener noreferrer"
-      className="group flex flex-col overflow-hidden rounded-2xl border border-[var(--border)] bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[var(--accent)]/20 hover:shadow-xl"
+      className="group flex flex-col overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--background)] shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[var(--accent)]/20 hover:shadow-xl"
     >
       {/* Thumbnail / Banner */}
       <div

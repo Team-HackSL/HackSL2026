@@ -68,7 +68,7 @@ export function HackathonsSection({ hackathons }: HackathonsSectionProps) {
   );
 
   return (
-    <section id="hackathons" className="bg-white py-24">
+    <section id="hackathons" className="bg-[var(--background)] py-24">
       <div className="mx-auto max-w-7xl px-6">
         <div className="text-center">
           <span className="inline-block rounded-full bg-[var(--accent)]/10 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-[var(--accent)]">
@@ -88,12 +88,12 @@ export function HackathonsSection({ hackathons }: HackathonsSectionProps) {
             <button
               type="button"
               onClick={() => setShowFilters((v) => !v)}
-              className="flex items-center gap-2 rounded-xl border border-[var(--border)] bg-white px-5 py-2.5 text-sm font-medium text-[var(--accent)] shadow-sm transition-all hover:shadow"
+              className="flex items-center gap-2 rounded-xl border border-[var(--border)] bg-[var(--background)] px-5 py-2.5 text-sm font-medium text-[var(--accent)] shadow-sm transition-all hover:shadow"
             >
               Filters {showFilters ? "▲" : "▼"}
             </button>
             {showFilters && (
-              <div className="mt-4 rounded-xl border border-[var(--border)] bg-white p-4">
+              <div className="mt-4 rounded-xl border border-[var(--border)] bg-[var(--background)] p-4">
                 <HackathonFilters
                   filters={filters}
                   onChange={setFilters}
