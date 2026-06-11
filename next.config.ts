@@ -12,6 +12,11 @@ const nextConfig: NextConfig = {
         hostname: "scontent-sjc3-1.xx.fbcdn.net",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "*.public.blob.vercel-storage.com",
+        pathname: "/**",
+      },
     ],
   },
 };
