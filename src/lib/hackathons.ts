@@ -5,7 +5,7 @@ import { ensureHackathonsTable } from "./db";
 export type { Hackathon } from "./hackathon-types";
 export { getHackathonStatus, formatDate } from "./hackathon-types";
 
-export async function getHackathons(): Promise<Hackathon[]> {
+async function getHackathonsFromDb(): Promise<Hackathon[]> {
   await ensureHackathonsTable();
   const { rows } = await sql<{
     id: string;
@@ -36,5 +36,19 @@ export async function getHackathons(): Promise<Hackathon[]> {
     status: (row.status as Hackathon["status"]) ?? undefined,
     length: (row.length as Hackathon["length"]) ?? undefined,
   }));
+}
+
+/**
+ * Returns all hackathons. If the database is unavailable (for example when
+ * running locally without POSTGRES_URL configured), we return an empty list
+ * instead of crashing the whole page.
+ */
+export async function getHackathons(): Promise<Hackathon[]> {
+  try {
+    return await getHackathonsFromDb();
+  } catch (err) {
+    console.error("Failed to load hackathons from database", err);
+    return [];
+  }
 }
 

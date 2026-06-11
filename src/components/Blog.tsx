@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { getBlogs } from "@/lib/blogs";
 import { formatDate } from "@/lib/hackathon-types";
 
@@ -20,8 +21,9 @@ export async function Blog() {
 
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {posts.map((post) => (
-            <article
+            <Link
               key={post.id}
+              href={`/blog/${post.slug}`}
               className="group flex flex-col overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--background)] shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-lg"
             >
               <div className="relative h-32 w-full overflow-hidden">
@@ -62,7 +64,7 @@ export async function Blog() {
                   Read more →
                 </span>
               </div>
-            </article>
+            </Link>
           ))}
         </div>
       </div>
