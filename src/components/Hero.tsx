@@ -1,6 +1,6 @@
 const STATS = [
-  { value: "20+", label: "Hackathons" },
-  { value: "5K+", label: "Participants" },
+  { value: "50+", label: "Hackathons" },
+  { value: "50K+", label: "Participants" },
   { value: "25+", label: "Universities" },
   { value: "2023", label: "Founded" },
 ];

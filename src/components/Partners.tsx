@@ -163,10 +163,10 @@ function PartnerLogo({
   if (hasError) {
     return (
       <div
-        className="flex h-20 w-40 items-center justify-center rounded-lg bg-white/5 sm:h-24 sm:w-56 lg:w-64"
+        className="flex h-20 w-40 items-center justify-center rounded-lg bg-[var(--surface)] sm:h-24 sm:w-56 lg:w-64"
         title={partner.alt}
       >
-        <span className="text-sm font-medium tracking-wide text-white/70">
+        <span className="text-sm font-medium tracking-wide text-[var(--muted)]">
           {initials}
         </span>
       </div>
@@ -197,25 +197,25 @@ export function Partners() {
   return (
     <section
       id="partners"
-      className="bg-[#111111] py-20"
+      className="bg-[var(--partners-bg)] py-20"
     >
       <div className="mx-auto max-w-6xl px-6">
         <div className="text-center">
-          <span className="inline-block rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-white/50">
+          <span className="inline-block rounded-full bg-[var(--accent)]/10 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-[var(--accent)]">
             Partners
           </span>
-          <h2 className="mt-4 text-2xl font-bold tracking-[-0.03em] text-white">
+          <h2 className="mt-4 text-2xl font-bold tracking-[-0.03em] text-[var(--foreground)]">
             Trusted by 25+ institutions
           </h2>
-          <p className="mt-2 text-sm text-white/50">
+          <p className="mt-2 text-sm text-[var(--muted)]">
             Universities, IEEE chapters, and industry organizations across Sri Lanka
           </p>
         </div>
       </div>
       <div className="relative mt-12 overflow-hidden">
         {/* Fade edges */}
-        <div className="pointer-events-none absolute left-0 top-0 z-10 h-full w-24 bg-gradient-to-r from-[#111111]" />
-        <div className="pointer-events-none absolute right-0 top-0 z-10 h-full w-24 bg-gradient-to-l from-[#111111]" />
+        <div className="pointer-events-none absolute left-0 top-0 z-10 h-full w-24 bg-gradient-to-r from-[var(--partners-bg)]" />
+        <div className="pointer-events-none absolute right-0 top-0 z-10 h-full w-24 bg-gradient-to-l from-[var(--partners-bg)]" />
         <div
           className="flex w-max flex-nowrap gap-16 py-6 animate-marquee-left hover:[animation-play-state:paused]"
           style={{ width: "max-content" }}
