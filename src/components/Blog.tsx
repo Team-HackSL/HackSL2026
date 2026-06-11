@@ -19,7 +19,16 @@ export async function Blog() {
                 className="group cursor-pointer overflow-hidden rounded-2xl border border-[var(--border)] bg-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg"
             >
                 <div className="relative h-36 w-full overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-br from-[var(--accent)] to-fuchsia-500 opacity-80" />
+                  {post.image ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={post.image}
+                      alt={post.title}
+                      className="absolute inset-0 h-full w-full object-cover"
+                    />
+                  ) : (
+                    <div className="absolute inset-0 bg-gradient-to-br from-[var(--accent)] to-fuchsia-500 opacity-80" />
+                  )}
                   <div className="relative flex h-full items-end p-4">
                     <span className="rounded-full bg-white/90 px-3 py-1 text-xs font-medium text-[var(--foreground)]">
                       {formatDate(post.date)}

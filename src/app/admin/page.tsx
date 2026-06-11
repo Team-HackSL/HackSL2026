@@ -114,6 +114,29 @@ export default function AdminPage() {
     image: "",
     content: "",
   });
+  const [blogImageUploading, setBlogImageUploading] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const uploadBlogImage = async (file: File) => {
+    setBlogImageUploading(true);
+    try {
+      const fd = new FormData();
+      fd.append("file", file);
+      fd.append("folder", "blog");
+      const res = await fetch("/api/admin/upload", {
+        method: "POST",
+        credentials: "include",
+        body: fd,
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Upload failed");
+      setBlogForm((f) => ({ ...f, image: data.url }));
+    } catch (err) {
+      setMessage({ type: "err", text: err instanceof Error ? err.message : "Upload failed" });
+    } finally {
+      setBlogImageUploading(false);
+    }
+  };
 
   useEffect(() => {
     fetch("/api/auth/session", { credentials: "include" })
@@ -651,13 +674,53 @@ export default function AdminPage() {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-[var(--foreground)]">Image URL (optional)</label>
-              <input
-                value={blogForm.image ?? ""}
-                onChange={(e) => setBlogForm((f) => ({ ...f, image: e.target.value || undefined }))}
-                placeholder="/blog/image.jpg or https://..."
-                className="mt-1 w-full rounded-lg border border-[var(--border)] px-3 py-2"
-              />
+              <label className="block text-sm font-medium text-[var(--foreground)]">Image (optional)</label>
+              <div className="mt-1 space-y-2">
+                <div className="flex gap-2">
+                  <input
+                    value={blogForm.image ?? ""}
+                    onChange={(e) => setBlogForm((f) => ({ ...f, image: e.target.value || undefined }))}
+                    placeholder="Paste URL or upload a file →"
+                    className="flex-1 rounded-lg border border-[var(--border)] px-3 py-2 text-sm"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => fileInputRef.current?.click()}
+                    disabled={blogImageUploading}
+                    className="rounded-lg border border-[var(--border)] px-4 py-2 text-sm font-medium hover:bg-[var(--surface)] disabled:opacity-60"
+                  >
+                    {blogImageUploading ? "Uploading…" : "Upload"}
+                  </button>
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept="image/jpeg,image/png,image/webp,image/gif"
+                    className="hidden"
+                    onChange={(e) => {
+                      const file = e.target.files?.[0];
+                      if (file) uploadBlogImage(file);
+                      e.target.value = "";
+                    }}
+                  />
+                </div>
+                {blogForm.image && (
+                  <div className="relative h-32 w-full overflow-hidden rounded-lg border border-[var(--border)]">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={blogForm.image}
+                      alt="Preview"
+                      className="h-full w-full object-cover"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setBlogForm((f) => ({ ...f, image: "" }))}
+                      className="absolute right-2 top-2 rounded-full bg-white/90 px-2 py-0.5 text-xs font-medium text-red-600 hover:bg-white"
+                    >
+                      Remove
+                    </button>
+                  </div>
+                )}
+              </div>
             </div>
             <div>
               <label className="block text-sm font-medium text-[var(--foreground)]">Content (optional)</label>

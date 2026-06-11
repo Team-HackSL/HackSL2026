@@ -18,6 +18,8 @@ export async function POST(request: NextRequest) {
 
   const form = await request.formData();
   const file = form.get("file") as File | null;
+  const folder = (form.get("folder") as string | null) ?? "uploads";
+
   if (!file) {
     return NextResponse.json({ error: "No file provided" }, { status: 400 });
   }
@@ -31,7 +33,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "File too large (max 5 MB)" }, { status: 400 });
   }
 
-  const blob = await put(`hackathons/${Date.now()}-${file.name}`, file, {
+  const blob = await put(`${folder}/${Date.now()}-${file.name}`, file, {
     access: "public",
   });
 
