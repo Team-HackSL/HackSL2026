@@ -49,7 +49,7 @@ export function HackSLFellows() {
             Apply now
           </a>
           <a
-            href="#contact"
+            href="/fellows"
             className="inline-flex items-center gap-2 rounded-xl border border-[var(--border)] bg-[var(--background)] px-7 py-3.5 text-sm font-semibold text-[var(--foreground)] transition-all duration-200 hover:border-[var(--accent)]/30 hover:shadow-md"
           >
             Learn more
