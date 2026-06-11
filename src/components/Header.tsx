@@ -49,7 +49,7 @@ export function Header() {
   );
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 border-b border-white/10 bg-[var(--accent)]/95 backdrop-blur-xl">
+    <header className="fixed top-0 left-0 right-0 z-50 border-b border-[#00ff66]/20 bg-[#05080a]/90 backdrop-blur-xl">
       <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
         <Link href="/" className="flex items-center gap-2">
           <Image
@@ -68,9 +68,9 @@ export function Header() {
           <ThemeToggle />
           <a
             href="#contact"
-            className="rounded-lg bg-white/15 px-4 py-2 text-sm font-semibold text-white transition-all duration-200 hover:bg-white/25"
+            className="rounded-lg border border-[#00ff66]/40 bg-[#00ff66]/10 px-4 py-2 font-mono text-sm font-semibold text-[#00ff66] transition-all duration-200 hover:bg-[#00ff66]/20 hover:shadow-[0_0_18px_-4px_rgba(0,255,102,0.7)]"
           >
-            Get in touch
+            &gt;_ Get in touch
           </a>
         </div>
 
@@ -107,7 +107,7 @@ export function Header() {
 
       {/* Mobile nav panel */}
       {isOpen && (
-        <div className="border-t border-white/10 bg-[var(--accent)] md:hidden">
+        <div className="border-t border-[#00ff66]/15 bg-[#05080a] md:hidden">
           <div className="mx-auto flex max-w-6xl flex-col gap-1 px-4 py-4">
             <NavLinks className="flex flex-col items-start gap-3 pb-3" />
             <div className="border-t border-white/10 pt-3">
