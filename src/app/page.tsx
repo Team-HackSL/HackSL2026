@@ -1,7 +1,6 @@
 import { getHackathons } from "@/lib/hackathons";
 import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
-import { PhotoCarousel } from "@/components/PhotoCarousel";
 import { AboutUs } from "@/components/AboutUs";
 import { Mission } from "@/components/Mission";
 import { HackathonsSection } from "@/components/HackathonsSection";

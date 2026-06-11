@@ -1,22 +1,21 @@
 @import "tailwindcss";
 
 :root {
-  /* Airbnb-inspired layout + HackSL purple */
   --background: #ffffff;
-  --foreground: #222222;
-  --surface: #F7F7F7;
+  --foreground: #111111;
+  --surface: #F5F5F5;
   --surface-hover: #EBEBEB;
-  /* Purple - matches HackSL logo #5500e3 */
+  /* HackSL purple */
   --accent: #5500e3;
-  --accent-hover: #3f00a8;
-  --accent-light: #c6bbfc;
-  /* Dark sections (footer, partners) */
-  --dark: #222222;
-  --dark-surface: #222222;
-  /* Typography & borders - Airbnb system */
-  --muted: #717171;
-  --border: #EBEBEB;
-  --border-light: #F7F7F7;
+  --accent-hover: #4400b8;
+  --accent-light: #ede8ff;
+  /* Dark sections */
+  --dark: #111111;
+  --dark-surface: #1a1a1a;
+  /* Typography & borders */
+  --muted: #6b6b6b;
+  --border: #e5e5e5;
+  --border-light: #F5F5F5;
 }
 
 @theme inline {

@@ -68,15 +68,18 @@ export function HackathonsSection({ hackathons }: HackathonsSectionProps) {
   );
 
   return (
-    <section id="hackathons" className="border-t border-[var(--border)] bg-white py-20">
+    <section id="hackathons" className="bg-white py-24">
       <div className="mx-auto max-w-7xl px-6">
         <div className="text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-[var(--foreground)] sm:text-4xl">
-            Join the best hackathons in Sri Lanka
+          <span className="inline-block rounded-full bg-[var(--accent)]/10 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-[var(--accent)]">
+            Events
+          </span>
+          <h2 className="mt-4 text-3xl font-bold tracking-[-0.03em] text-[var(--foreground)] sm:text-4xl">
+            The best hackathons in Sri Lanka
           </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-lg text-[var(--muted)]">
-            Online and in-person hackathons. Discover events, build projects, and
-            connect with the tech community.
+          <p className="mx-auto mt-4 max-w-xl text-lg text-[var(--muted)]">
+            Discover online and in-person events. Build projects, win prizes,
+            and grow with the tech community.
           </p>
         </div>
 
@@ -85,7 +88,7 @@ export function HackathonsSection({ hackathons }: HackathonsSectionProps) {
             <button
               type="button"
               onClick={() => setShowFilters((v) => !v)}
-              className="flex items-center gap-2 rounded-xl border border-[var(--border)] bg-white px-5 py-2.5 text-sm font-medium text-[var(--accent)] shadow-sm transition-all hover:border-[var(--border)] hover:shadow"
+              className="flex items-center gap-2 rounded-xl border border-[var(--border)] bg-white px-5 py-2.5 text-sm font-medium text-[var(--accent)] shadow-sm transition-all hover:shadow"
             >
               Filters {showFilters ? "▲" : "▼"}
             </button>
