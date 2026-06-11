@@ -22,7 +22,7 @@ export async function Blog() {
           {posts.map((post) => (
             <article
               key={post.id}
-              className="group flex flex-col overflow-hidden rounded-2xl border border-[var(--border)] bg-white shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-lg"
+              className="group flex flex-col overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--background)] shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-lg"
             >
               <div className="relative h-32 w-full overflow-hidden">
                 {post.image ? (

@@ -39,7 +39,7 @@ function LoginForm({
   };
 
   return (
-    <div className="mx-auto max-w-sm rounded-2xl border border-[var(--border)] bg-white p-8 shadow-sm">
+    <div className="mx-auto max-w-sm rounded-2xl border border-[var(--border)] bg-[var(--background)] p-8 shadow-sm">
       <h1 className="text-2xl font-bold text-[var(--foreground)]">Admin Login</h1>
       <p className="mt-1 text-sm text-[var(--muted)]">
         Sign in to manage hackathons
@@ -351,13 +351,13 @@ export default function AdminPage() {
           <button
             type="button"
             onClick={logout}
-            className="rounded-lg border border-[var(--border)] px-4 py-2 text-sm font-medium text-[var(--foreground)] hover:bg-white"
+            className="rounded-lg border border-[var(--border)] px-4 py-2 text-sm font-medium text-[var(--foreground)] hover:bg-[var(--surface)]"
           >
             Log out
           </button>
         </div>
 
-        <form onSubmit={submit} className="mt-8 space-y-4 rounded-xl border border-[var(--border)] bg-white p-6">
+        <form onSubmit={submit} className="mt-8 space-y-4 rounded-xl border border-[var(--border)] bg-[var(--background)] p-6">
           <div>
             <label className="block text-sm font-medium text-[var(--foreground)]">Name</label>
             <input
@@ -604,7 +604,7 @@ export default function AdminPage() {
             {hackathons.map((h) => (
               <li
                 key={h.id}
-                className="flex items-center justify-between rounded-lg border border-[var(--border)] bg-white p-4"
+                className="flex items-center justify-between rounded-lg border border-[var(--border)] bg-[var(--background)] p-4"
               >
                 <div>
                   <p className="font-medium text-[var(--foreground)]">{h.name}</p>
@@ -633,7 +633,7 @@ export default function AdminPage() {
 
         <div className="mt-14 border-t border-[var(--border)] pt-10">
           <h2 className="text-lg font-semibold text-[var(--foreground)]">Blog posts</h2>
-          <form onSubmit={submitBlog} className="mt-4 space-y-4 rounded-xl border border-[var(--border)] bg-white p-6">
+          <form onSubmit={submitBlog} className="mt-4 space-y-4 rounded-xl border border-[var(--border)] bg-[var(--background)] p-6">
             <div className="grid gap-4 sm:grid-cols-2">
               <div>
                 <label className="block text-sm font-medium text-[var(--foreground)]">Title</label>
@@ -714,7 +714,7 @@ export default function AdminPage() {
                     <button
                       type="button"
                       onClick={() => setBlogForm((f) => ({ ...f, image: "" }))}
-                      className="absolute right-2 top-2 rounded-full bg-white/90 px-2 py-0.5 text-xs font-medium text-red-600 hover:bg-white"
+                      className="absolute right-2 top-2 rounded-full bg-white/90 px-2 py-0.5 text-xs font-medium text-red-600 hover:bg-[var(--surface)]"
                     >
                       Remove
                     </button>
@@ -761,7 +761,7 @@ export default function AdminPage() {
             {blogs.map((post) => (
               <li
                 key={post.id}
-                className="flex items-center justify-between rounded-lg border border-[var(--border)] bg-white p-4"
+                className="flex items-center justify-between rounded-lg border border-[var(--border)] bg-[var(--background)] p-4"
               >
                 <div>
                   <p className="font-medium text-[var(--foreground)]">{post.title}</p>

@@ -18,7 +18,7 @@ const CARDS = [
 
 export function AboutUs() {
   return (
-    <section id="about" className="bg-white py-24">
+    <section id="about" className="bg-[var(--background)] py-24">
       <div className="mx-auto max-w-5xl px-6">
         <div className="text-center">
           <span className="inline-block rounded-full bg-[var(--accent)]/10 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-[var(--accent)]">

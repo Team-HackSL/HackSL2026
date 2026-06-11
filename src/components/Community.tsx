@@ -36,7 +36,7 @@ const LINKS = [
 
 export function Community() {
   return (
-    <section id="community" className="bg-white py-24">
+    <section id="community" className="bg-[var(--background)] py-24">
       <div className="mx-auto max-w-4xl px-6">
         <div className="text-center">
           <span className="inline-block rounded-full bg-[var(--accent)]/10 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-[var(--accent)]">
@@ -57,7 +57,7 @@ export function Community() {
               href={link.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-start gap-4 rounded-2xl border border-[var(--border)] bg-white p-6 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-transparent hover:bg-[var(--brand)] hover:shadow-lg hover:[--icon-color:white] hover:text-white focus-visible:border-transparent focus-visible:bg-[var(--brand)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:[--icon-color:white] focus-visible:text-white"
+              className="group flex items-start gap-4 rounded-2xl border border-[var(--border)] bg-[var(--background)] p-6 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-transparent hover:bg-[var(--brand)] hover:shadow-lg hover:[--icon-color:white] hover:text-white focus-visible:border-transparent focus-visible:bg-[var(--brand)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:[--icon-color:white] focus-visible:text-white"
               style={
                 {
                   ["--brand" as string]: link.color,
