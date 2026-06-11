@@ -36,15 +36,20 @@ const LINKS = [
 
 export function Community() {
   return (
-    <section id="community" className="border-t border-[var(--border)] bg-white py-24">
+    <section id="community" className="bg-white py-24">
       <div className="mx-auto max-w-4xl px-6">
-        <h2 className="text-center text-3xl font-bold tracking-tight text-[var(--foreground)]">
-          Join the Community
-        </h2>
-        <p className="mt-4 text-center text-[var(--muted)]">
-          Stay connected for hackathon updates, events, and tech news from Sri
-          Lanka.
-        </p>
+        <div className="text-center">
+          <span className="inline-block rounded-full bg-[var(--accent)]/10 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-[var(--accent)]">
+            Community
+          </span>
+          <h2 className="mt-4 text-3xl font-bold tracking-[-0.03em] text-[var(--foreground)]">
+            Join the Community
+          </h2>
+          <p className="mt-4 text-[var(--muted)]">
+            Stay connected for hackathon updates, events, and tech news from Sri
+            Lanka.
+          </p>
+        </div>
         <div className="mt-12 grid gap-4 sm:grid-cols-2">
           {LINKS.map((link) => (
             <a

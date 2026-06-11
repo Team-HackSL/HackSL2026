@@ -37,57 +37,79 @@ export function ContactUs() {
   };
 
   return (
-    <section id="contact" className="border-t border-[var(--border)] bg-white py-24">
-      <div className="mx-auto max-w-4xl px-6">
-        <h2 className="text-center text-3xl font-bold tracking-tight text-[var(--foreground)]">
-          Contact Us
-        </h2>
-        <p className="mx-auto mt-4 max-w-2xl text-center text-[var(--muted)]">
-          Have questions or want to list your hackathon? Get in touch.
-        </p>
+    <section id="contact" className="bg-white py-24">
+      <div className="mx-auto max-w-5xl px-6">
+        <div className="text-center">
+          <span className="inline-block rounded-full bg-[var(--accent)]/10 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-[var(--accent)]">
+            Contact
+          </span>
+          <h2 className="mt-4 text-3xl font-bold tracking-[-0.03em] text-[var(--foreground)]">
+            Get in touch
+          </h2>
+          <p className="mx-auto mt-4 max-w-md text-[var(--muted)]">
+            Have questions or want to list your hackathon? We&apos;d love to hear from
+            you.
+          </p>
+        </div>
 
-        <div className="mt-12 grid gap-12 lg:grid-cols-2">
-          <div>
-            <h3 className="font-semibold text-[var(--foreground)]">Reach out</h3>
-            <p className="mt-2 text-[var(--muted)]">
-              Connect with us on WhatsApp for the fastest response, or use the
-              form and we&apos;ll get back to you.
-            </p>
-            <a
-              href="https://whatsapp.com/channel/0029VafzTTaLY6d3MqQpTX1d"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-4 inline-flex items-center gap-2 rounded-xl bg-[#25D366] px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-[#128C7E]"
-            >
-              WhatsApp Community
-            </a>
-            <div className="mt-6 space-y-2 text-sm text-[var(--muted)]">
-              <p>
-                <strong>Email:</strong>{" "}
-                <a
-                  href="mailto:hackslcontact@gmail.com"
-                  className="text-[var(--accent)] transition-colors hover:underline"
-                >
-                  hackslcontact@gmail.com
-                </a>
+        <div className="mt-12 grid gap-8 lg:grid-cols-2">
+          {/* Left: contact info */}
+          <div className="flex flex-col gap-4">
+            <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6">
+              <h3 className="font-semibold text-[var(--foreground)]">
+                Fastest response
+              </h3>
+              <p className="mt-2 text-sm text-[var(--muted)]">
+                Join our WhatsApp community for real-time updates and the
+                quickest reply.
               </p>
-            </div> 
+              <a
+                href="https://whatsapp.com/channel/0029VafzTTaLY6d3MqQpTX1d"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-4 inline-flex items-center gap-2 rounded-xl bg-[#25D366] px-5 py-2.5 text-sm font-semibold text-white transition-all duration-200 hover:bg-[#128C7E] hover:-translate-y-0.5 hover:shadow-md"
+              >
+                WhatsApp Community
+              </a>
+            </div>
+            <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6">
+              <h3 className="font-semibold text-[var(--foreground)]">Email</h3>
+              <p className="mt-2 text-sm text-[var(--muted)]">
+                For partnerships, press, or general enquiries:
+              </p>
+              <a
+                href="mailto:hackslcontact@gmail.com"
+                className="mt-2 block text-sm font-semibold text-[var(--accent)] transition-colors hover:underline"
+              >
+                hackslcontact@gmail.com
+              </a>
+            </div>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-4">
+          {/* Right: form */}
+          <form
+            onSubmit={handleSubmit}
+            className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 space-y-4"
+          >
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-[var(--foreground)]">
+              <label
+                htmlFor="name"
+                className="block text-sm font-medium text-[var(--foreground)]"
+              >
                 Name
               </label>
               <input
                 id="name"
                 name="name"
                 required
-                className="mt-1 w-full rounded-xl border border-[var(--border)] bg-white px-4 py-3 text-[var(--foreground)] transition-colors placeholder:text-[var(--muted)] focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent)]/20"
+                className="mt-1 w-full rounded-xl border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] transition-colors placeholder:text-[var(--muted)] focus:border-[var(--accent)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20"
               />
             </div>
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-[var(--foreground)]">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-[var(--foreground)]"
+              >
                 Email
               </label>
               <input
@@ -95,11 +117,14 @@ export function ContactUs() {
                 name="email"
                 type="email"
                 required
-                className="mt-1 w-full rounded-xl border border-[var(--border)] bg-white px-4 py-3 text-[var(--foreground)] transition-colors placeholder:text-[var(--muted)] focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent)]/20"
+                className="mt-1 w-full rounded-xl border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] transition-colors placeholder:text-[var(--muted)] focus:border-[var(--accent)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20"
               />
             </div>
             <div>
-              <label htmlFor="message" className="block text-sm font-medium text-[var(--foreground)]">
+              <label
+                htmlFor="message"
+                className="block text-sm font-medium text-[var(--foreground)]"
+              >
                 Message
               </label>
               <textarea
@@ -107,19 +132,23 @@ export function ContactUs() {
                 name="message"
                 rows={4}
                 required
-                className="mt-1 w-full rounded-xl border border-[var(--border)] bg-white px-4 py-3 text-[var(--foreground)] transition-colors placeholder:text-[var(--muted)] focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent)]/20"
+                className="mt-1 w-full rounded-xl border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] transition-colors placeholder:text-[var(--muted)] focus:border-[var(--accent)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20"
               />
             </div>
             {status === "sent" && (
-              <p className="text-sm text-green-600">Thanks! We&apos;ll be in touch.</p>
+              <p className="rounded-lg bg-green-50 px-4 py-2.5 text-sm font-medium text-green-700">
+                Thanks! We&apos;ll be in touch soon.
+              </p>
             )}
             {status === "error" && (
-              <p className="text-sm text-red-600">Something went wrong. Try WhatsApp.</p>
+              <p className="rounded-lg bg-red-50 px-4 py-2.5 text-sm font-medium text-red-600">
+                Something went wrong. Try WhatsApp instead.
+              </p>
             )}
             <button
               type="submit"
               disabled={status === "sending"}
-              className="rounded-xl bg-[var(--accent)] px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-[var(--accent-hover)] disabled:opacity-60"
+              className="w-full rounded-xl bg-[var(--accent)] px-6 py-3 text-sm font-semibold text-white transition-all duration-200 hover:bg-[var(--accent-hover)] hover:shadow-md disabled:opacity-60"
             >
               {status === "sending" ? "Sending…" : "Send message"}
             </button>

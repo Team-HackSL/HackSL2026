@@ -197,17 +197,25 @@ export function Partners() {
   return (
     <section
       id="partners"
-      className="border-t border-white/10 bg-[#181818] py-16 sm:py-20"
+      className="bg-[#111111] py-20"
     >
       <div className="mx-auto max-w-6xl px-6">
-        <h2 className="text-center text-2xl font-bold tracking-tight text-white">
-          Our Partners
-        </h2>
-        <p className="mx-auto mt-2 max-w-xl text-center text-sm text-white/70">
-          Organizations and universities we&apos;ve partnered with
-        </p>
+        <div className="text-center">
+          <span className="inline-block rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-white/50">
+            Partners
+          </span>
+          <h2 className="mt-4 text-2xl font-bold tracking-[-0.03em] text-white">
+            Trusted by 25+ institutions
+          </h2>
+          <p className="mt-2 text-sm text-white/50">
+            Universities, IEEE chapters, and industry organizations across Sri Lanka
+          </p>
+        </div>
       </div>
-      <div className="relative mt-14 overflow-hidden">
+      <div className="relative mt-12 overflow-hidden">
+        {/* Fade edges */}
+        <div className="pointer-events-none absolute left-0 top-0 z-10 h-full w-24 bg-gradient-to-r from-[#111111]" />
+        <div className="pointer-events-none absolute right-0 top-0 z-10 h-full w-24 bg-gradient-to-l from-[#111111]" />
         <div
           className="flex w-max flex-nowrap gap-16 py-6 animate-marquee-left hover:[animation-play-state:paused]"
           style={{ width: "max-content" }}
