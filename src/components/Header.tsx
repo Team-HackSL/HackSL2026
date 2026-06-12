@@ -80,7 +80,7 @@ export function Header() {
           <NavLinks className="flex items-center gap-6" />
           <div className="flex items-center gap-2">
             <HackerModeToggle />
-            <ThemeToggle />
+            {!hacker && <ThemeToggle />}
           </div>
           <a href="/#contact" className={ctaClass}>
             {hacker ? <>&gt;_ Get in touch</> : "Get in touch"}
@@ -90,7 +90,7 @@ export function Header() {
         {/* Mobile: hacker toggle + theme toggle + hamburger */}
         <div className="flex items-center gap-1 md:hidden">
           <HackerModeToggle />
-          <ThemeToggle />
+          {!hacker && <ThemeToggle />}
           <button
             type="button"
             className="inline-flex items-center justify-center rounded-md p-2 text-white/80 hover:bg-white/10 md:hidden"
