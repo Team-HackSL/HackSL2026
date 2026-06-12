@@ -324,7 +324,7 @@ export default function AdminPage() {
 
   if (authStatus === "checking") {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-[var(--accent-light)]">
+      <div className="flex min-h-screen items-center justify-center bg-[var(--surface)]">
         <p className="text-[var(--muted)]">Loading…</p>
       </div>
     );
@@ -332,14 +332,14 @@ export default function AdminPage() {
 
   if (authStatus === "unauthenticated") {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-[var(--accent-light)] py-20">
+      <div className="flex min-h-screen items-center justify-center bg-[var(--surface)] py-20">
         <LoginForm onSuccess={() => setAuthStatus("authenticated")} />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[var(--accent-light)] py-20">
+    <div className="min-h-screen bg-[var(--surface)] py-20">
       <div className="mx-auto max-w-3xl px-6">
         <div className="flex items-center justify-between">
           <div>
