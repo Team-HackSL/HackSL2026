@@ -14,28 +14,28 @@ export function Header() {
   const NavLinks = ({ className = "" }: { className?: string }) => (
     <div className={className}>
       <a
-        href="#hackathons"
+        href="/#hackathons"
         className="text-sm font-medium text-white/80 transition-colors duration-200 hover:text-white"
         onClick={() => setIsOpen(false)}
       >
         Hackathons
       </a>
       <a
-        href="#blog"
+        href="/#blog"
         className="text-sm font-medium text-white/80 transition-colors duration-200 hover:text-white"
         onClick={() => setIsOpen(false)}
       >
         Blog
       </a>
       <a
-        href="#community"
+        href="/#community"
         className="text-sm font-medium text-white/80 transition-colors duration-200 hover:text-white"
         onClick={() => setIsOpen(false)}
       >
         Community
       </a>
       <a
-        href="#about"
+        href="/#about"
         className="text-sm font-medium text-white/80 transition-colors duration-200 hover:text-white"
         onClick={() => setIsOpen(false)}
       >
@@ -82,7 +82,7 @@ export function Header() {
             <HackerModeToggle />
             <ThemeToggle />
           </div>
-          <a href="#contact" className={ctaClass}>
+          <a href="/#contact" className={ctaClass}>
             {hacker ? <>&gt;_ Get in touch</> : "Get in touch"}
           </a>
         </div>
@@ -132,7 +132,7 @@ export function Header() {
             <NavLinks className="flex flex-col items-start gap-3 pb-3" />
             <div className="border-t border-white/10 pt-3">
               <a
-                href="#contact"
+                href="/#contact"
                 className={`block text-center ${ctaClass}`}
                 onClick={() => setIsOpen(false)}
               >
