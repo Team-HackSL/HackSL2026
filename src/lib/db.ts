@@ -1,4 +1,5 @@
 import { sql } from "@vercel/postgres";
+import { seedBlogPosts } from "./blog-seed";
 
 export async function ensureHackathonsTable() {
   await sql`
@@ -34,6 +35,51 @@ export async function ensureBlogsTable() {
   `;
   // Add the author column for tables created before it was introduced.
   await sql`ALTER TABLE blogs ADD COLUMN IF NOT EXISTS author TEXT`;
+  await ensureBlogsSeeded();
+}
+
+/**
+ * Loads the code-shipped seed posts into the database exactly once, so the
+ * pre-created blog posts become first-class rows the admin can edit and
+ * delete just like posts created through the admin panel.
+ *
+ * A marker row in `blogs_meta` guarantees we only seed a given environment
+ * once. Without it, an admin who deletes a seed post would see it reappear on
+ * the next request. The seeding is idempotent and safe to run concurrently.
+ */
+async function ensureBlogsSeeded() {
+  await sql`
+    CREATE TABLE IF NOT EXISTS blogs_meta (
+      key TEXT PRIMARY KEY,
+      value TEXT
+    )
+  `;
+
+  const { rows } = await sql`SELECT 1 FROM blogs_meta WHERE key = 'seeded'`;
+  if (rows.length > 0) return;
+
+  for (const post of seedBlogPosts) {
+    await sql`
+      INSERT INTO blogs (id, title, excerpt, date, slug, author, image, content)
+      VALUES (
+        ${post.id},
+        ${post.title},
+        ${post.excerpt},
+        ${post.date},
+        ${post.slug},
+        ${post.author ?? null},
+        ${post.image ?? null},
+        ${post.content ?? null}
+      )
+      ON CONFLICT (id) DO NOTHING
+    `;
+  }
+
+  await sql`
+    INSERT INTO blogs_meta (key, value)
+    VALUES ('seeded', ${new Date().toISOString()})
+    ON CONFLICT (key) DO NOTHING
+  `;
 }
 
 

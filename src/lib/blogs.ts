@@ -7,6 +7,9 @@ export type { BlogPost } from "./blog-types";
 
 async function getDbBlogs(): Promise<BlogPost[]> {
   await ensureBlogsTable();
+  // Format the DATE column as a plain YYYY-MM-DD string in SQL so it never
+  // round-trips through a timezone-shifted JS Date (which would break the
+  // admin date input on re-edit).
   const { rows } = await sql<{
     id: string;
     title: string;
@@ -16,7 +19,11 @@ async function getDbBlogs(): Promise<BlogPost[]> {
     author: string | null;
     image: string | null;
     content: string | null;
-  }>`SELECT * FROM blogs ORDER BY date DESC`;
+  }>`
+    SELECT id, title, excerpt, to_char(date, 'YYYY-MM-DD') AS date, slug, author, image, content
+    FROM blogs
+    ORDER BY date DESC
+  `;
 
   return rows.map((row) => ({
     id: row.id,
@@ -33,30 +40,20 @@ async function getDbBlogs(): Promise<BlogPost[]> {
 /**
  * Returns all blog posts, newest first.
  *
- * The code-shipped seed posts are always included so the blog renders even
- * with no database. Posts created through the admin panel are merged on top
- * and override a seed post that shares the same slug. If the database is
- * unavailable we fall back to the seed posts alone instead of crashing.
+ * Posts live in the database — including the code-shipped seed posts, which
+ * are loaded into the database once (see `ensureBlogsTable`) so the admin can
+ * edit and delete every post. If the database is unavailable we fall back to
+ * the in-code seed posts so the blog still renders instead of crashing.
  */
 export async function getBlogs(): Promise<BlogPost[]> {
-  let dbBlogs: BlogPost[] = [];
   try {
-    dbBlogs = await getDbBlogs();
+    return await getDbBlogs();
   } catch (err) {
     console.error("Failed to load blogs from database, using seed posts", err);
+    return [...seedBlogPosts].sort(
+      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+    );
   }
-
-  const bySlug = new Map<string, BlogPost>();
-  for (const post of seedBlogPosts) {
-    bySlug.set(post.slug, post);
-  }
-  for (const post of dbBlogs) {
-    bySlug.set(post.slug, post);
-  }
-
-  return Array.from(bySlug.values()).sort(
-    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-  );
 }
 
 /** Returns a single blog post by its slug, or null if not found. */
