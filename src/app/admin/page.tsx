@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import type { BlogPost } from "@/lib/blog-types";
+import { BLOG_TYPES } from "@/lib/blog-types";
 import type { Hackathon } from "@/lib/hackathon-types";
 
 function LoginForm({
@@ -114,6 +115,7 @@ export default function AdminPage() {
     author: "",
     image: "",
     content: "",
+    type: "",
   });
   const [blogImageUploading, setBlogImageUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -292,6 +294,7 @@ export default function AdminPage() {
       author: "",
       image: "",
       content: "",
+      type: "",
     });
     const list = await fetch("/api/blogs").then((r) => r.json());
     setBlogs(list);
@@ -307,6 +310,7 @@ export default function AdminPage() {
       author: post.author,
       image: post.image,
       content: post.content,
+      type: post.type,
     });
     setMessage(null);
   };
@@ -679,6 +683,21 @@ export default function AdminPage() {
               </div>
             </div>
             <div>
+              <label className="block text-sm font-medium text-[var(--foreground)]">Type</label>
+              <select
+                value={blogForm.type ?? ""}
+                onChange={(e) => setBlogForm((f) => ({ ...f, type: e.target.value || undefined }))}
+                className="mt-1 w-full rounded-lg border border-[var(--border)] px-3 py-2"
+              >
+                <option value="">None</option>
+                {BLOG_TYPES.map((t) => (
+                  <option key={t} value={t}>
+                    {t}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div>
               <label className="block text-sm font-medium text-[var(--foreground)]">Excerpt</label>
               <textarea
                 value={blogForm.excerpt ?? ""}
@@ -763,6 +782,7 @@ export default function AdminPage() {
                     author: "",
                     image: "",
                     content: "",
+                    type: "",
                   })
                 }
                 className="ml-2 text-sm text-[var(--muted)] hover:underline"

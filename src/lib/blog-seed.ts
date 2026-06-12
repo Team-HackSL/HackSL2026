@@ -12,6 +12,7 @@ import type { BlogPost } from "./blog-types";
 export const seedBlogPosts: BlogPost[] = [
   {
     id: "seed-first-hackathon-guide",
+    type: "Hackathon",
     slug: "first-hackathon-survival-guide",
     title: "Your First Hackathon: A Survival Guide",
     excerpt:
@@ -50,6 +51,7 @@ Welcome to the community. Your first hackathon is the hardest. After that, you a
   },
   {
     id: "seed-find-perfect-team",
+    type: "Hackathon",
     slug: "how-to-find-the-perfect-hackathon-team",
     title: "How to Find the Perfect Hackathon Team",
     excerpt:
@@ -87,6 +89,7 @@ The best hackathon teams often become startups, study groups, or lifelong friend
   },
   {
     id: "seed-winning-pitch",
+    type: "Designathon",
     slug: "anatomy-of-a-winning-hackathon-pitch",
     title: "The Anatomy of a Winning Hackathon Pitch",
     excerpt:
@@ -121,6 +124,7 @@ Practice the pitch at least three times before you step up. The team that rehear
   },
   {
     id: "seed-organizing-hackathon",
+    type: "OC",
     slug: "organizing-your-first-hackathon-in-sri-lanka",
     title: "Organizing Your First Hackathon in Sri Lanka",
     excerpt:
@@ -160,6 +164,7 @@ The magic of a hackathon is what happens next. Connect winners with mentors, sha
   },
   {
     id: "seed-build-vs-learn",
+    type: "Designathon",
     slug: "should-you-build-or-learn-at-a-hackathon",
     title: "Should You Build or Learn at a Hackathon?",
     excerpt:
@@ -194,6 +199,7 @@ Whatever you choose, decide it on purpose. The worst outcome is drifting through
   },
   {
     id: "seed-avoid-burnout",
+    type: "Hackathon",
     slug: "avoiding-burnout-during-a-48-hour-hackathon",
     title: "Avoiding Burnout During a 48-Hour Hackathon",
     excerpt:
@@ -229,6 +235,7 @@ Reserve the final stretch for testing, polish, and rehearsing your pitch, not fr
   },
   {
     id: "seed-tech-stack",
+    type: "Datathon",
     slug: "choosing-the-right-tech-stack-for-a-hackathon",
     title: "Choosing the Right Tech Stack for a Hackathon",
     excerpt:
@@ -268,6 +275,7 @@ Choose your stack to fit the project, not the other way around. If you are build
   },
   {
     id: "seed-ai-hackathons",
+    type: "Datathon",
     slug: "winning-ai-hackathons-without-a-phd",
     title: "Winning AI Hackathons Without a PhD",
     excerpt:
@@ -306,6 +314,7 @@ AI demos can fail in funny ways. Test your prompts, handle the cases where the m
   },
   {
     id: "seed-after-hackathon",
+    type: "Hackathon",
     slug: "what-to-do-after-the-hackathon-ends",
     title: "What to Do After the Hackathon Ends",
     excerpt:
@@ -343,6 +352,7 @@ The relationships you built over the weekend are the most durable prize. Keep in
   },
   {
     id: "seed-hacksl-community",
+    type: "OC",
     slug: "the-rise-of-the-sri-lankan-hackathon-scene",
     title: "The Rise of the Sri Lankan Hackathon Scene",
     excerpt:

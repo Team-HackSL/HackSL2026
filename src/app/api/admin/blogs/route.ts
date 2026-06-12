@@ -40,10 +40,11 @@ export async function POST(request: NextRequest) {
       author: body.author || undefined,
       image: body.image || undefined,
       content: body.content || undefined,
+      type: body.type || undefined,
     };
 
     await sql`
-      INSERT INTO blogs (id, title, excerpt, date, slug, author, image, content)
+      INSERT INTO blogs (id, title, excerpt, date, slug, author, image, content, type)
       VALUES (
         ${validated.id},
         ${validated.title},
@@ -52,7 +53,8 @@ export async function POST(request: NextRequest) {
         ${validated.slug},
         ${validated.author ?? null},
         ${validated.image ?? null},
-        ${validated.content ?? null}
+        ${validated.content ?? null},
+        ${validated.type ?? null}
       )
       ON CONFLICT (id) DO UPDATE SET
         title = EXCLUDED.title,
@@ -61,7 +63,8 @@ export async function POST(request: NextRequest) {
         slug = EXCLUDED.slug,
         author = EXCLUDED.author,
         image = EXCLUDED.image,
-        content = EXCLUDED.content
+        content = EXCLUDED.content,
+        type = EXCLUDED.type
     `;
 
     return NextResponse.json({ success: true, post: validated });

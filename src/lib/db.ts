@@ -30,11 +30,13 @@ export async function ensureBlogsTable() {
       slug TEXT NOT NULL,
       author TEXT,
       image TEXT,
-      content TEXT
+      content TEXT,
+      type TEXT
     )
   `;
-  // Add the author column for tables created before it was introduced.
+  // Backfill columns for tables created before they were introduced.
   await sql`ALTER TABLE blogs ADD COLUMN IF NOT EXISTS author TEXT`;
+  await sql`ALTER TABLE blogs ADD COLUMN IF NOT EXISTS type TEXT`;
   await ensureBlogsSeeded();
 }
 
@@ -60,7 +62,7 @@ async function ensureBlogsSeeded() {
 
   for (const post of seedBlogPosts) {
     await sql`
-      INSERT INTO blogs (id, title, excerpt, date, slug, author, image, content)
+      INSERT INTO blogs (id, title, excerpt, date, slug, author, image, content, type)
       VALUES (
         ${post.id},
         ${post.title},
@@ -69,7 +71,8 @@ async function ensureBlogsSeeded() {
         ${post.slug},
         ${post.author ?? null},
         ${post.image ?? null},
-        ${post.content ?? null}
+        ${post.content ?? null},
+        ${post.type ?? null}
       )
       ON CONFLICT (id) DO NOTHING
     `;

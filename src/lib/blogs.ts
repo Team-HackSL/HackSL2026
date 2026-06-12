@@ -19,8 +19,9 @@ async function getDbBlogs(): Promise<BlogPost[]> {
     author: string | null;
     image: string | null;
     content: string | null;
+    type: string | null;
   }>`
-    SELECT id, title, excerpt, to_char(date, 'YYYY-MM-DD') AS date, slug, author, image, content
+    SELECT id, title, excerpt, to_char(date, 'YYYY-MM-DD') AS date, slug, author, image, content, type
     FROM blogs
     ORDER BY date DESC
   `;
@@ -34,6 +35,7 @@ async function getDbBlogs(): Promise<BlogPost[]> {
     author: row.author ?? undefined,
     image: row.image ?? undefined,
     content: row.content ?? undefined,
+    type: row.type ?? undefined,
   }));
 }
 
