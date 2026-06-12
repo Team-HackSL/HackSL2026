@@ -77,7 +77,7 @@ export default async function BlogPostPage({ params }: Props) {
               >
                 ← Back to blog
               </Link>
-              <span className="inline-block rounded-full bg-white/95 px-2.5 py-0.5 text-xs font-medium text-[var(--foreground)]">
+              <span className="inline-block rounded-full bg-white/95 px-2.5 py-0.5 text-xs font-medium text-black">
                 {formatDate(post.date)}
               </span>
             </div>
