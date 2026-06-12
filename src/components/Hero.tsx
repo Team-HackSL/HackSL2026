@@ -175,14 +175,13 @@ function HackerHero() {
         <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
           <a
             href="#hackathons"
-            className="group inline-flex items-center gap-2 rounded-xl bg-[#00ff66] px-7 py-3.5 font-mono text-sm font-semibold text-black shadow-[0_0_25px_-4px_rgba(0,255,102,0.7)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_0_35px_-2px_rgba(0,255,102,0.9)]"
+            className="hk-btn-primary inline-flex items-center gap-2 rounded-xl px-7 py-3.5 text-sm font-semibold transition-all duration-200 hover:-translate-y-0.5"
           >
-            <span className="text-black/60 group-hover:text-black">&gt;_</span>
             Explore Hackathons
           </a>
           <a
             href="#contact"
-            className="inline-flex items-center gap-2 rounded-xl border border-[#00ff66]/40 bg-[#00ff66]/5 px-7 py-3.5 font-mono text-sm font-semibold text-[#00ff66] backdrop-blur-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#00ff66]/15"
+            className="hk-btn-secondary inline-flex items-center gap-2 rounded-xl px-7 py-3.5 text-sm font-semibold backdrop-blur-sm transition-all duration-200 hover:-translate-y-0.5"
           >
             List Your Event
           </a>

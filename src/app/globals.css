@@ -410,6 +410,51 @@ html[data-hacker="on"] .border-\[var\(--border\)\] {
   box-shadow: inset 0 0 0 1px rgba(0, 255, 102, 0.04);
 }
 
+/* ---------------------------------------------------------------------------
+   Persistent button system (HACKER MODE ONLY).
+   Primary  = "Explore Hackathons" style (solid green, dark text, >_ prefix).
+   Secondary = "List Your Event" style (outlined green).
+   Use primary alone, or primary + secondary for a two-button group.
+   These selectors only exist under [data-hacker="on"], so regular light/dark
+   mode keeps each button's original styling.
+   --------------------------------------------------------------------------- */
+html[data-hacker="on"] .hk-btn-primary,
+html[data-hacker="on"] .hk-btn-secondary {
+  font-family: var(--font-geist-mono), ui-monospace, monospace !important;
+}
+
+html[data-hacker="on"] .hk-btn-primary {
+  background-color: #00ff66 !important;
+  background-image: none !important;
+  color: #03110a !important;
+  border: 1px solid transparent !important;
+  box-shadow: 0 0 25px -4px rgba(0, 255, 102, 0.7) !important;
+}
+
+html[data-hacker="on"] .hk-btn-primary:hover {
+  background-color: #00ff66 !important;
+  box-shadow: 0 0 35px -2px rgba(0, 255, 102, 0.9) !important;
+}
+
+/* The terminal prompt prefix, so every primary button matches the hero CTA. */
+html[data-hacker="on"] .hk-btn-primary::before {
+  content: ">_ ";
+  opacity: 0.55;
+  font-weight: 700;
+}
+
+html[data-hacker="on"] .hk-btn-secondary {
+  background-color: rgba(0, 255, 102, 0.05) !important;
+  background-image: none !important;
+  color: #00ff66 !important;
+  border: 1px solid rgba(0, 255, 102, 0.4) !important;
+  box-shadow: none !important;
+}
+
+html[data-hacker="on"] .hk-btn-secondary:hover {
+  background-color: rgba(0, 255, 102, 0.15) !important;
+}
+
 /*
   Footer logos layout
   The footer markup uses classes like `footer-grid`, `footer-logo`, and `footer-logos`.

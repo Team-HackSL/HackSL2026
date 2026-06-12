@@ -30,13 +30,13 @@ export function StartHackathon() {
             href="https://whatsapp.com/channel/0029VafzTTaLY6d3MqQpTX1d"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-xl bg-white px-7 py-3.5 text-sm font-semibold text-[var(--accent)] shadow-lg transition-all duration-200 hover:bg-violet-50 hover:-translate-y-0.5 hover:shadow-xl"
+            className="hk-btn-primary inline-flex items-center gap-2 rounded-xl bg-white px-7 py-3.5 text-sm font-semibold text-[var(--accent)] shadow-lg transition-all duration-200 hover:bg-violet-50 hover:-translate-y-0.5 hover:shadow-xl"
           >
             Submit via WhatsApp
           </a>
           <a
             href="#contact"
-            className="inline-flex items-center gap-2 rounded-xl border border-white/30 bg-white/10 px-7 py-3.5 text-sm font-semibold text-white backdrop-blur-sm transition-all duration-200 hover:bg-white/20 hover:-translate-y-0.5"
+            className="hk-btn-secondary inline-flex items-center gap-2 rounded-xl border border-white/30 bg-white/10 px-7 py-3.5 text-sm font-semibold text-white backdrop-blur-sm transition-all duration-200 hover:bg-white/20 hover:-translate-y-0.5"
           >
             Contact us
           </a>

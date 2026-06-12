@@ -67,7 +67,7 @@ export function ContactUs() {
                 href="https://whatsapp.com/channel/0029VafzTTaLY6d3MqQpTX1d"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-4 inline-flex items-center gap-2 rounded-xl bg-[#25D366] px-5 py-2.5 text-sm font-semibold text-white transition-all duration-200 hover:bg-[#128C7E] hover:-translate-y-0.5 hover:shadow-md"
+                className="hk-btn-primary mt-4 inline-flex items-center gap-2 rounded-xl bg-[#25D366] px-5 py-2.5 text-sm font-semibold text-white transition-all duration-200 hover:bg-[#128C7E] hover:-translate-y-0.5 hover:shadow-md"
               >
                 WhatsApp Community
               </a>
@@ -148,7 +148,7 @@ export function ContactUs() {
             <button
               type="submit"
               disabled={status === "sending"}
-              className="w-full rounded-xl bg-[var(--accent)] px-6 py-3 text-sm font-semibold text-white transition-all duration-200 hover:bg-[var(--accent-hover)] hover:shadow-md disabled:opacity-60"
+              className="hk-btn-primary w-full rounded-xl bg-[var(--accent)] px-6 py-3 text-sm font-semibold text-white transition-all duration-200 hover:bg-[var(--accent-hover)] hover:shadow-md disabled:opacity-60"
             >
               {status === "sending" ? "Sending…" : "Send message"}
             </button>

@@ -44,13 +44,13 @@ export function HackSLFellows() {
             href="https://whatsapp.com/channel/0029VafzTTaLY6d3MqQpTX1d"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-xl bg-[var(--accent)] px-7 py-3.5 text-sm font-semibold text-white shadow-md transition-all duration-200 hover:bg-[var(--accent-hover)] hover:-translate-y-0.5 hover:shadow-lg"
+            className="hk-btn-primary inline-flex items-center gap-2 rounded-xl bg-[var(--accent)] px-7 py-3.5 text-sm font-semibold text-white shadow-md transition-all duration-200 hover:bg-[var(--accent-hover)] hover:-translate-y-0.5 hover:shadow-lg"
           >
             Apply now
           </a>
           <a
             href="/fellows"
-            className="inline-flex items-center gap-2 rounded-xl border border-[var(--border)] bg-[var(--background)] px-7 py-3.5 text-sm font-semibold text-[var(--foreground)] transition-all duration-200 hover:border-[var(--accent)]/30 hover:shadow-md"
+            className="hk-btn-secondary inline-flex items-center gap-2 rounded-xl border border-[var(--border)] bg-[var(--background)] px-7 py-3.5 text-sm font-semibold text-[var(--foreground)] transition-all duration-200 hover:border-[var(--accent)]/30 hover:shadow-md"
           >
             Learn more
           </a>
