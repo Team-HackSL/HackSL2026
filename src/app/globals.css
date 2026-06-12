@@ -330,6 +330,86 @@ select:focus-visible {
   }
 }
 
+/* ===========================================================================
+   HACKER MODE — site-wide dark-web palette override.
+   Toggled by HackerModeProvider (sets data-hacker="on" on <html>).
+   `html[data-hacker="on"]` outranks both :root and [data-theme="dark"],
+   so it overrides whichever light/dark theme is active.
+   =========================================================================== */
+html[data-hacker="on"] {
+  --background: #03060a;
+  --foreground: #b8ffcf;
+  --surface: #0a120d;
+  --surface-hover: #0f1c14;
+  --accent: #00ff66;
+  --accent-hover: #00d957;
+  --accent-light: #060f0a;
+  --dark: #02050a;
+  --dark-surface: #060a07;
+  --muted: #5f9e78;
+  --border: rgba(0, 255, 102, 0.16);
+  --border-light: rgba(0, 255, 102, 0.08);
+  --partners-bg: #03060a;
+  color-scheme: dark;
+}
+
+/* Monospace everything for the terminal feel. */
+html[data-hacker="on"] body {
+  font-family: var(--font-geist-mono), ui-monospace, SFMono-Regular, monospace;
+  background: #03060a;
+}
+
+/* Green text selection. */
+html[data-hacker="on"] ::selection {
+  background: rgba(0, 255, 102, 0.3);
+  color: #eafff1;
+}
+
+/* Headings get a soft green glow. */
+html[data-hacker="on"] h1,
+html[data-hacker="on"] h2,
+html[data-hacker="on"] h3 {
+  text-shadow: 0 0 8px rgba(0, 255, 102, 0.18);
+}
+
+/* The big accent-filled CTA section becomes dark instead of bright green. */
+html[data-hacker="on"] #start-hackathon {
+  background-color: #05080a !important;
+  border-top: 1px solid rgba(0, 255, 102, 0.15);
+  border-bottom: 1px solid rgba(0, 255, 102, 0.15);
+}
+
+/* Solid accent buttons/links: keep the green fill but switch to dark text. */
+html[data-hacker="on"] a.bg-\[var\(--accent\)\],
+html[data-hacker="on"] button.bg-\[var\(--accent\)\] {
+  color: #03110a !important;
+  box-shadow: 0 0 22px -6px rgba(0, 255, 102, 0.8);
+}
+
+/* Recolor the blog-card placeholder gradient to green. */
+html[data-hacker="on"] .from-\[var\(--accent\)\] {
+  background-image: linear-gradient(
+    to bottom right,
+    #00ff66,
+    #00803a,
+    #021a0d
+  ) !important;
+}
+
+/* Form fields read as dark terminal panels. */
+html[data-hacker="on"] input,
+html[data-hacker="on"] textarea,
+html[data-hacker="on"] select {
+  background-color: #0a120d !important;
+  border-color: rgba(0, 255, 102, 0.25) !important;
+  color: #d6ffe3 !important;
+}
+
+/* Cards/borders pick up a faint green edge. */
+html[data-hacker="on"] .border-\[var\(--border\)\] {
+  box-shadow: inset 0 0 0 1px rgba(0, 255, 102, 0.04);
+}
+
 /*
   Footer logos layout
   The footer markup uses classes like `footer-grid`, `footer-logo`, and `footer-logos`.

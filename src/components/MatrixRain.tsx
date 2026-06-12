@@ -15,8 +15,10 @@ type MatrixRainProps = {
    * "fixed" pins the canvas to the viewport behind all content (-z-10).
    * "absolute" confines it to the nearest positioned ancestor (e.g. a hero),
    * where it reliably renders over that element's own background.
+   * "overlay" pins it to the viewport ON TOP of content (z-20) with a screen
+   * blend — a subtle full-page veil for site-wide hacker mode.
    */
-  variant?: "fixed" | "absolute";
+  variant?: "fixed" | "absolute" | "overlay";
 };
 
 /**
@@ -141,16 +143,23 @@ export function MatrixRain({
     };
   }, [fontSize, headColor, trailColor, variant]);
 
+  const className =
+    variant === "absolute"
+      ? "pointer-events-none absolute inset-0 h-full w-full"
+      : variant === "overlay"
+        ? "pointer-events-none fixed inset-0 z-20"
+        : "pointer-events-none fixed inset-0 -z-10";
+
   return (
     <canvas
       ref={canvasRef}
       aria-hidden
-      className={
-        variant === "absolute"
-          ? "pointer-events-none absolute inset-0 h-full w-full"
-          : "pointer-events-none fixed inset-0 -z-10"
+      className={className}
+      style={
+        variant === "overlay"
+          ? { opacity, mixBlendMode: "screen" }
+          : { opacity }
       }
-      style={{ opacity }}
     />
   );
 }

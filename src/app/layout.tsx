@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { PageEffects } from "@/components/PageEffects";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { HackerModeProvider } from "@/components/HackerModeProvider";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -40,17 +41,19 @@ export default function RootLayout({
       <head>
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=localStorage.getItem('theme');if(t==='dark'||(!t&&window.matchMedia('(prefers-color-scheme: dark)').matches)){document.documentElement.setAttribute('data-theme','dark')}}catch(e){}})()`,
+            __html: `(function(){try{var t=localStorage.getItem('theme');if(t==='dark'||(!t&&window.matchMedia('(prefers-color-scheme: dark)').matches)){document.documentElement.setAttribute('data-theme','dark')}var h=localStorage.getItem('hackerMode');document.documentElement.setAttribute('data-hacker',h==='on'?'on':'off')}catch(e){}})()`,
           }}
         />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased`}
       >
-        <ThemeProvider>
-          <PageEffects />
-          {children}
-        </ThemeProvider>
+        <HackerModeProvider>
+          <ThemeProvider>
+            <PageEffects />
+            {children}
+          </ThemeProvider>
+        </HackerModeProvider>
       </body>
     </html>
   );
