@@ -70,15 +70,17 @@ export default async function BlogPostPage({ params }: Props) {
             </>
           )}
           <div className="relative mx-auto max-w-3xl px-6 py-20">
-            <Link
-              href="/#blog"
-              className="inline-flex items-center gap-1 text-sm font-semibold text-white/90 transition-colors hover:text-white"
-            >
-              ← Back to blog
-            </Link>
-            <span className="mt-6 inline-block rounded-full bg-white/95 px-2.5 py-0.5 text-xs font-medium text-[var(--foreground)]">
-              {formatDate(post.date)}
-            </span>
+            <div className="flex items-center justify-between gap-4">
+              <Link
+                href="/#blog"
+                className="inline-flex items-center gap-1 text-sm font-semibold text-white/90 transition-colors hover:text-white"
+              >
+                ← Back to blog
+              </Link>
+              <span className="inline-block rounded-full bg-white/95 px-2.5 py-0.5 text-xs font-medium text-[var(--foreground)]">
+                {formatDate(post.date)}
+              </span>
+            </div>
             <h1 className="mt-4 text-3xl font-bold leading-tight tracking-[-0.03em] text-white sm:text-4xl">
               {post.title}
             </h1>
