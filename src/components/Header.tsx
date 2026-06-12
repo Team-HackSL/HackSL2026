@@ -66,7 +66,7 @@ export function Header() {
       <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
         <Link href="/" className="flex items-center gap-2">
           <Image
-            src="/hacksl-logo.png"
+            src={hacker ? "/hacksl-logo-black.jpg" : "/hacksl-logo.png"}
             alt="HackSL"
             width={140}
             height={40}
