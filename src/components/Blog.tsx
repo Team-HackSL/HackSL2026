@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getBlogs } from "@/lib/blogs";
 import { formatDate } from "@/lib/hackathon-types";
+import { BlogCardArt } from "./BlogCardArt";
 
 export async function Blog() {
   const posts = await getBlogs();
@@ -35,17 +36,7 @@ export async function Blog() {
                     className="absolute inset-0 h-full w-full object-cover"
                   />
                 ) : (
-                  <>
-                    <div className="absolute inset-0 bg-gradient-to-br from-[var(--accent)] via-violet-600 to-fuchsia-500" />
-                    <div
-                      className="absolute inset-0 opacity-[0.07]"
-                      style={{
-                        backgroundImage:
-                          "linear-gradient(rgba(255,255,255,0.8) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.8) 1px, transparent 1px)",
-                        backgroundSize: "24px 24px",
-                      }}
-                    />
-                  </>
+                  <BlogCardArt post={post} />
                 )}
                 <div className="relative flex h-full items-end p-4">
                   <span className="rounded-full bg-white/95 px-2.5 py-0.5 text-xs font-medium text-black">
