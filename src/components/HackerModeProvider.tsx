@@ -5,7 +5,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 const HackerModeContext = createContext<{
   hacker: boolean;
   toggle: () => void;
-}>({ hacker: false, toggle: () => {} });
+}>({ hacker: true, toggle: () => {} });
 
 export function useHackerMode() {
   return useContext(HackerModeContext);
@@ -18,12 +18,16 @@ export function useHackerMode() {
  * When off, the regular light/dark theme is in effect.
  */
 export function HackerModeProvider({ children }: { children: React.ReactNode }) {
-  const [hacker, setHacker] = useState(false);
+  // Hacker mode is the DEFAULT; users opt out and the choice is persisted.
+  // Initial value matches the server render to avoid a hydration mismatch.
+  const [hacker, setHacker] = useState(true);
 
   useEffect(() => {
     // The inline script in layout.tsx has already applied the attribute
-    // pre-paint; here we just sync React state to it.
-    setHacker(document.documentElement.getAttribute("data-hacker") === "on");
+    // pre-paint; here we sync React state to it (default on unless saved off).
+    const on = localStorage.getItem("hackerMode") !== "off";
+    setHacker(on);
+    document.documentElement.setAttribute("data-hacker", on ? "on" : "off");
   }, []);
 
   const toggle = () => {
