@@ -111,6 +111,7 @@ export default function AdminPage() {
     excerpt: "",
     date: "",
     slug: "",
+    author: "",
     image: "",
     content: "",
   });
@@ -288,6 +289,7 @@ export default function AdminPage() {
       excerpt: "",
       date: "",
       slug: "",
+      author: "",
       image: "",
       content: "",
     });
@@ -302,6 +304,7 @@ export default function AdminPage() {
       excerpt: post.excerpt,
       date: post.date,
       slug: post.slug,
+      author: post.author,
       image: post.image,
       content: post.content,
     });
@@ -655,14 +658,25 @@ export default function AdminPage() {
                 />
               </div>
             </div>
-            <div>
-              <label className="block text-sm font-medium text-[var(--foreground)]">Slug (optional)</label>
-              <input
-                value={blogForm.slug ?? ""}
-                onChange={(e) => setBlogForm((f) => ({ ...f, slug: e.target.value }))}
-                placeholder="my-blog-post"
-                className="mt-1 w-full rounded-lg border border-[var(--border)] px-3 py-2"
-              />
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div>
+                <label className="block text-sm font-medium text-[var(--foreground)]">Slug (optional)</label>
+                <input
+                  value={blogForm.slug ?? ""}
+                  onChange={(e) => setBlogForm((f) => ({ ...f, slug: e.target.value }))}
+                  placeholder="my-blog-post"
+                  className="mt-1 w-full rounded-lg border border-[var(--border)] px-3 py-2"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-[var(--foreground)]">Author</label>
+                <input
+                  value={blogForm.author ?? ""}
+                  onChange={(e) => setBlogForm((f) => ({ ...f, author: e.target.value }))}
+                  placeholder="e.g. Jane Perera"
+                  className="mt-1 w-full rounded-lg border border-[var(--border)] px-3 py-2"
+                />
+              </div>
             </div>
             <div>
               <label className="block text-sm font-medium text-[var(--foreground)]">Excerpt</label>
@@ -746,6 +760,7 @@ export default function AdminPage() {
                     excerpt: "",
                     date: "",
                     slug: "",
+                    author: "",
                     image: "",
                     content: "",
                   })

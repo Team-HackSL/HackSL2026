@@ -27,10 +27,13 @@ export async function ensureBlogsTable() {
       excerpt TEXT NOT NULL,
       date DATE NOT NULL,
       slug TEXT NOT NULL,
+      author TEXT,
       image TEXT,
       content TEXT
     )
   `;
+  // Add the author column for tables created before it was introduced.
+  await sql`ALTER TABLE blogs ADD COLUMN IF NOT EXISTS author TEXT`;
 }
 
 

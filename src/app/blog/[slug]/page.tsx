@@ -84,6 +84,11 @@ export default async function BlogPostPage({ params }: Props) {
             <h1 className="mt-4 text-3xl font-bold leading-tight tracking-[-0.03em] text-white sm:text-4xl">
               {post.title}
             </h1>
+            {post.author && (
+              <p className="mt-3 text-sm font-medium text-white/80">
+                By {post.author}
+              </p>
+            )}
             <p className="mt-4 max-w-2xl text-lg text-white/85">
               {post.excerpt}
             </p>
@@ -121,6 +126,11 @@ export default async function BlogPostPage({ params }: Props) {
                     <h3 className="mt-2 font-semibold leading-snug text-[var(--foreground)] transition-colors group-hover:text-[var(--accent)]">
                       {p.title}
                     </h3>
+                    {p.author && (
+                      <p className="mt-1 text-xs font-medium text-[var(--muted)]">
+                        By {p.author}
+                      </p>
+                    )}
                     <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-[var(--muted)]">
                       {p.excerpt}
                     </p>

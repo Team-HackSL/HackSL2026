@@ -17,6 +17,7 @@ export const seedBlogPosts: BlogPost[] = [
     excerpt:
       "Walking into your first hackathon is intimidating. Here is everything we wish someone had told us before our first all-nighter.",
     date: "2025-01-12",
+    author: "The HackSL Team",
     content: `Walking into your first hackathon can feel like showing up to a party where everyone already knows each other and speaks a language you barely understand. We have been there. After organising and competing in dozens of events across Sri Lanka, here is the honest guide we wish we had.
 
 ## You do not need to be an expert
@@ -54,6 +55,7 @@ Welcome to the community. Your first hackathon is the hardest. After that, you a
     excerpt:
       "A great idea dies without the right people behind it. Here is how to build a balanced team that actually ships.",
     date: "2025-01-28",
+    author: "The HackSL Team",
     content: `The difference between a frustrating weekend and an unforgettable one usually comes down to one thing: your team. A brilliant idea with the wrong people will stall, while an average idea with the right people will fly.
 
 ## The ideal team shape
@@ -90,6 +92,7 @@ The best hackathon teams often become startups, study groups, or lifelong friend
     excerpt:
       "Judges decide in the first 60 seconds. Learn how to structure a three-minute pitch that sticks.",
     date: "2025-02-14",
+    author: "The HackSL Team",
     content: `You spent the whole weekend building. Now you have three minutes and a nervous heartbeat to convince the judges it mattered. The pitch is where good projects win and great projects lose.
 
 ## Judges decide fast
@@ -123,6 +126,7 @@ Practice the pitch at least three times before you step up. The team that rehear
     excerpt:
       "From venue to sponsors to judging, a practical playbook for running a hackathon that participants will remember.",
     date: "2025-03-02",
+    author: "The HackSL Team",
     content: `Running a hackathon is one of the most rewarding ways to grow a tech community, and Sri Lanka has a hungry, talented base of students and builders waiting for these opportunities. Here is a practical playbook from the HackSL community.
 
 ## Start with the why
@@ -161,6 +165,7 @@ The magic of a hackathon is what happens next. Connect winners with mentors, sha
     excerpt:
       "Not every hackathon is about winning. Sometimes the smartest move is to treat the weekend as a crash course.",
     date: "2025-03-20",
+    author: "The HackSL Team",
     content: `There is a quiet debate in every hackathon community: are these events for shipping polished products, or for learning new skills fast? The honest answer is that it depends entirely on your goals.
 
 ## The case for building to win
@@ -194,6 +199,7 @@ Whatever you choose, decide it on purpose. The worst outcome is drifting through
     excerpt:
       "Endurance beats intensity. Practical habits to keep your energy and your code quality high across a long event.",
     date: "2025-04-08",
+    author: "The HackSL Team",
     content: `The hackathon mythology celebrates the heroic all-nighter, fueled by energy drinks and sheer will. The reality is that burnout produces buggy code and bad decisions. The teams that last are the teams that pace themselves.
 
 ## Energy is your real resource
@@ -228,6 +234,7 @@ Reserve the final stretch for testing, polish, and rehearsing your pitch, not fr
     excerpt:
       "The best stack is not the trendiest one. It is the one your team can ship with at 3am. Here is how to choose.",
     date: "2025-04-26",
+    author: "The HackSL Team",
     content: `Few decisions affect your weekend more than your tech stack. Pick the wrong tools and you will spend the hackathon fighting your setup instead of building your idea. Here is how to choose wisely under pressure.
 
 ## Familiarity beats novelty
@@ -266,6 +273,7 @@ Choose your stack to fit the project, not the other way around. If you are build
     excerpt:
       "AI hackathons are booming. You do not need to train a model from scratch to win. You need a sharp problem and a slick demo.",
     date: "2025-05-15",
+    author: "The HackSL Team",
     content: `AI hackathons have exploded in popularity, and many talented builders avoid them thinking they need deep machine learning expertise. The truth is that the winners are rarely the ones with the fanciest models. They are the ones who solve a real problem in a way that feels like magic.
 
 ## You are building products, not papers
@@ -303,6 +311,7 @@ AI demos can fail in funny ways. Test your prompts, handle the cases where the m
     excerpt:
       "The weekend is over, but the opportunity is not. How to turn a 48-hour project into something that lasts.",
     date: "2025-05-30",
+    author: "The HackSL Team",
     content: `The lights come up, the prizes are handed out, and everyone goes home exhausted. For most teams, the project dies in a forgotten repository. But the hackathon is really just the beginning if you choose to treat it that way.
 
 ## Capture the moment while it is fresh
@@ -339,6 +348,7 @@ The relationships you built over the weekend are the most durable prize. Keep in
     excerpt:
       "From university labs to national stages, Sri Lanka's hackathon culture is thriving. Here is what makes it special.",
     date: "2025-06-06",
+    author: "The HackSL Team",
     content: `Something exciting is happening across Sri Lanka. In university computer labs, co-working spaces, and online communities, a vibrant hackathon culture is taking root, and it is producing a new generation of builders.
 
 ## A community on the rise

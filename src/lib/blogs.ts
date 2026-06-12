@@ -13,6 +13,7 @@ async function getDbBlogs(): Promise<BlogPost[]> {
     excerpt: string;
     date: string;
     slug: string;
+    author: string | null;
     image: string | null;
     content: string | null;
   }>`SELECT * FROM blogs ORDER BY date DESC`;
@@ -23,6 +24,7 @@ async function getDbBlogs(): Promise<BlogPost[]> {
     excerpt: row.excerpt,
     date: row.date,
     slug: row.slug,
+    author: row.author ?? undefined,
     image: row.image ?? undefined,
     content: row.content ?? undefined,
   }));

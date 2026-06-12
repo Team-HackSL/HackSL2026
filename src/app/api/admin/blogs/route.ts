@@ -37,18 +37,20 @@ export async function POST(request: NextRequest) {
       excerpt: body.excerpt || "",
       date: body.date || new Date().toISOString().split("T")[0],
       slug: body.slug || id,
+      author: body.author || undefined,
       image: body.image || undefined,
       content: body.content || undefined,
     };
 
     await sql`
-      INSERT INTO blogs (id, title, excerpt, date, slug, image, content)
+      INSERT INTO blogs (id, title, excerpt, date, slug, author, image, content)
       VALUES (
         ${validated.id},
         ${validated.title},
         ${validated.excerpt},
         ${validated.date},
         ${validated.slug},
+        ${validated.author ?? null},
         ${validated.image ?? null},
         ${validated.content ?? null}
       )
@@ -57,6 +59,7 @@ export async function POST(request: NextRequest) {
         excerpt = EXCLUDED.excerpt,
         date = EXCLUDED.date,
         slug = EXCLUDED.slug,
+        author = EXCLUDED.author,
         image = EXCLUDED.image,
         content = EXCLUDED.content
     `;

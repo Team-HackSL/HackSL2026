@@ -48,6 +48,11 @@ export async function Blog() {
                 <h3 className="font-semibold leading-snug text-[var(--foreground)] transition-colors group-hover:text-[var(--accent)]">
                   {post.title}
                 </h3>
+                {post.author && (
+                  <p className="mt-1 text-xs font-medium text-[var(--muted)]">
+                    By {post.author}
+                  </p>
+                )}
                 <p className="mt-2 flex-1 line-clamp-2 text-sm leading-relaxed text-[var(--muted)]">
                   {post.excerpt}
                 </p>
