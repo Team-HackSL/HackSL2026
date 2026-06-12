@@ -48,7 +48,7 @@ export async function Blog() {
                   </>
                 )}
                 <div className="relative flex h-full items-end p-4">
-                  <span className="rounded-full bg-white/95 px-2.5 py-0.5 text-xs font-medium text-[var(--foreground)]">
+                  <span className="rounded-full bg-white/95 px-2.5 py-0.5 text-xs font-medium text-black">
                     {formatDate(post.date)}
                   </span>
                 </div>
