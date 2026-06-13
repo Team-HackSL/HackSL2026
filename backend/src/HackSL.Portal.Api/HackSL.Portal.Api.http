@@ -1,0 +1,62 @@
+@host = http://localhost:5080
+@token = PASTE_TOKEN_FROM_REGISTER_OR_LOGIN
+
+### Sign up (create account + profile)
+POST {{host}}/api/auth/register
+Content-Type: application/json
+
+{
+  "email": "ada@example.com",
+  "password": "supersecret123",
+  "fullName": "Ada Lovelace",
+  "dateOfBirth": "2002-05-14",
+  "institution": "University of Colombo",
+  "programmingLanguages": ["TypeScript", "Python", "C#"],
+  "skills": [
+    { "category": "Frontend Development", "level": 80 },
+    { "category": "Backend Development", "level": 65 },
+    { "category": "DevOps", "level": 40 }
+  ],
+  "linkedInUrl": "https://www.linkedin.com/in/ada",
+  "gitHubUrl": "https://github.com/ada",
+  "consentToShareData": true,
+  "matchWithTeam": true,
+  "interestedInFellowship": true
+}
+
+### Log in
+POST {{host}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "ada@example.com",
+  "password": "supersecret123"
+}
+
+### Get my profile
+GET {{host}}/api/profile/me
+Authorization: Bearer {{token}}
+
+### Upload resume (multipart)
+POST {{host}}/api/profile/resume
+Authorization: Bearer {{token}}
+Content-Type: multipart/form-data; boundary=----boundary
+
+------boundary
+Content-Disposition: form-data; name="file"; filename="resume.pdf"
+Content-Type: application/pdf
+
+< ./resume.pdf
+------boundary--
+
+### Upload profile photo (multipart)
+POST {{host}}/api/profile/photo
+Authorization: Bearer {{token}}
+Content-Type: multipart/form-data; boundary=----boundary
+
+------boundary
+Content-Disposition: form-data; name="file"; filename="photo.png"
+Content-Type: image/png
+
+< ./photo.png
+------boundary--

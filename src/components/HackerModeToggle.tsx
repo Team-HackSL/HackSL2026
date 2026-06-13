@@ -12,6 +12,9 @@ export function HackerModeToggle() {
   return (
     <button
       type="button"
+      // Some browser extensions inject attributes (e.g. fdprocessedid) onto buttons
+      // before hydration; suppress the resulting attribute-mismatch warning.
+      suppressHydrationWarning
       onClick={toggle}
       role="switch"
       aria-checked={hacker}

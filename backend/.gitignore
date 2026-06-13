@@ -1,0 +1,15 @@
+# .NET build output
+bin/
+obj/
+
+# User-specific / IDE
+*.user
+.vs/
+.idea/
+
+# Local uploads (resumes, photos)
+src/HackSL.Portal.Api/uploads/
+
+# Local secrets
+appsettings.Local.json
+*.env

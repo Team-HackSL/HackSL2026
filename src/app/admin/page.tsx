@@ -5,6 +5,32 @@ import type { BlogPost } from "@/lib/blog-types";
 import { BLOG_TYPES } from "@/lib/blog-types";
 import type { Hackathon } from "@/lib/hackathon-types";
 
+interface MemberSkill {
+  category: string;
+  level: number;
+}
+
+interface Member {
+  userId: string;
+  email: string;
+  accountCreatedAt: string;
+  fullName: string;
+  dateOfBirth: string;
+  institution: string;
+  description?: string | null;
+  programmingLanguages: string[];
+  skills: MemberSkill[];
+  linkedInUrl?: string | null;
+  gitHubUrl?: string | null;
+  resumeUrl?: string | null;
+  resumeFileName?: string | null;
+  profilePhotoUrl?: string | null;
+  consentToShareData: boolean;
+  matchWithTeam: boolean;
+  interestedInFellowship: boolean;
+  subscribeToNewsletter: boolean;
+}
+
 function LoginForm({
   onSuccess,
 }: {
@@ -57,7 +83,7 @@ function LoginForm({
             onChange={(e) => setUsername(e.target.value)}
             required
             autoComplete="username"
-            className="mt-1 w-full rounded-lg border border-[var(--border)] px-3 py-2"
+            className="mt-1 w-full rounded-lg border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-[var(--foreground)]"
           />
         </div>
         <div>
@@ -71,7 +97,7 @@ function LoginForm({
             onChange={(e) => setPassword(e.target.value)}
             required
             autoComplete="current-password"
-            className="mt-1 w-full rounded-lg border border-[var(--border)] px-3 py-2"
+            className="mt-1 w-full rounded-lg border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-[var(--foreground)]"
           />
         </div>
         {error && <p className="text-sm text-red-600">{error}</p>}
@@ -108,6 +134,15 @@ export default function AdminPage() {
   const [imageUploading, setImageUploading] = useState(false);
   const imageFileRef = useRef<HTMLInputElement>(null);
   const [blogs, setBlogs] = useState<BlogPost[]>([]);
+  const [members, setMembers] = useState<Member[]>([]);
+  const [memberSearch, setMemberSearch] = useState("");
+  const [memberLanguage, setMemberLanguage] = useState("");
+  const [memberSkill, setMemberSkill] = useState("");
+  const [memberFlags, setMemberFlags] = useState({
+    subscribeToNewsletter: false,
+    matchWithTeam: false,
+    interestedInFellowship: false,
+  });
   const [blogForm, setBlogForm] = useState<Partial<BlogPost>>({
     title: "",
     excerpt: "",
@@ -160,6 +195,11 @@ export default function AdminPage() {
       .then((r) => r.json())
       .then(setBlogs)
       .catch(() => setBlogs([]));
+
+    fetch("/api/admin/members", { credentials: "include" })
+      .then((r) => (r.ok ? r.json() : []))
+      .then((d) => setMembers(Array.isArray(d) ? d : []))
+      .catch(() => setMembers([]));
   }, [authStatus]);
 
   const addTag = () => {
@@ -272,6 +312,20 @@ export default function AdminPage() {
     setAuthStatus("unauthenticated");
   };
 
+  const removeMember = async (userId: string, name: string) => {
+    if (!confirm(`Remove ${name}'s profile? This permanently deletes their account and data.`)) return;
+    const res = await fetch(`/api/admin/members/${userId}`, {
+      method: "DELETE",
+      credentials: "include",
+    });
+    if (res.ok) {
+      setMembers((items) => items.filter((m) => m.userId !== userId));
+      setMessage({ type: "ok", text: "Member removed." });
+    } else {
+      setMessage({ type: "err", text: "Failed to remove member." });
+    }
+  };
+
   const submitBlog = async (e: React.FormEvent) => {
     e.preventDefault();
     setMessage(null);
@@ -330,6 +384,50 @@ export default function AdminPage() {
     }
   };
 
+  // Unique programming languages and skill categories across all members, for filter dropdowns.
+  const languageOptions = Array.from(
+    new Set(members.flatMap((m) => m.programmingLanguages))
+  ).sort((a, b) => a.localeCompare(b));
+  const skillOptions = Array.from(
+    new Set(members.flatMap((m) => m.skills.map((s) => s.category)))
+  ).sort((a, b) => a.localeCompare(b));
+
+  const filteredMembers = members.filter((m) => {
+    const q = memberSearch.trim().toLowerCase();
+    if (q) {
+      const haystack = [m.fullName, m.email, m.institution]
+        .filter(Boolean)
+        .join(" ")
+        .toLowerCase();
+      if (!haystack.includes(q)) return false;
+    }
+    if (memberLanguage && !m.programmingLanguages.includes(memberLanguage)) return false;
+    if (memberSkill && !m.skills.some((s) => s.category === memberSkill)) return false;
+    if (memberFlags.subscribeToNewsletter && !m.subscribeToNewsletter) return false;
+    if (memberFlags.matchWithTeam && !m.matchWithTeam) return false;
+    if (memberFlags.interestedInFellowship && !m.interestedInFellowship) return false;
+    return true;
+  });
+
+  const memberFiltersActive =
+    memberSearch.trim() !== "" ||
+    memberLanguage !== "" ||
+    memberSkill !== "" ||
+    memberFlags.subscribeToNewsletter ||
+    memberFlags.matchWithTeam ||
+    memberFlags.interestedInFellowship;
+
+  const resetMemberFilters = () => {
+    setMemberSearch("");
+    setMemberLanguage("");
+    setMemberSkill("");
+    setMemberFlags({
+      subscribeToNewsletter: false,
+      matchWithTeam: false,
+      interestedInFellowship: false,
+    });
+  };
+
   if (authStatus === "checking") {
     return (
       <div className="flex min-h-screen items-center justify-center bg-[var(--surface)]">
@@ -365,6 +463,7 @@ export default function AdminPage() {
           </button>
         </div>
 
+<<<<<<< HEAD
         <div className="mt-8 flex gap-2 border-b border-[var(--border)]">
           {([
             { key: "hackathons", label: "Hackathons" },
@@ -391,6 +490,183 @@ export default function AdminPage() {
 
         {activeTab === "hackathons" && (
         <>
+=======
+        {/* Portal members */}
+        <section className="mt-8 rounded-xl border border-[var(--border)] bg-[var(--background)] p-6">
+          <h2 className="text-lg font-semibold text-[var(--foreground)]">
+            Portal members{" "}
+            <span className="text-sm font-normal text-[var(--muted)]">
+              ({memberFiltersActive
+                ? `${filteredMembers.length} of ${members.length}`
+                : members.length})
+            </span>
+          </h2>
+          <p className="mt-1 text-sm text-[var(--muted)]">
+            Everyone who signed up through the user portal. Passwords are never shown.
+          </p>
+          {members.length === 0 ? (
+            <p className="mt-4 text-sm text-[var(--muted)]">No members yet.</p>
+          ) : (
+            <>
+              <div className="mt-4 space-y-3 rounded-lg border border-[var(--border)] p-3">
+                <div className="flex flex-col gap-3 sm:flex-row">
+                  <input
+                    type="text"
+                    value={memberSearch}
+                    onChange={(e) => setMemberSearch(e.target.value)}
+                    placeholder="Search name, email, or institution"
+                    className="flex-1 rounded-lg border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-sm text-[var(--foreground)]"
+                  />
+                  <select
+                    value={memberLanguage}
+                    onChange={(e) => setMemberLanguage(e.target.value)}
+                    className="rounded-lg border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-sm text-[var(--foreground)]"
+                  >
+                    <option value="">All languages</option>
+                    {languageOptions.map((lang) => (
+                      <option key={lang} value={lang}>
+                        {lang}
+                      </option>
+                    ))}
+                  </select>
+                  <select
+                    value={memberSkill}
+                    onChange={(e) => setMemberSkill(e.target.value)}
+                    className="rounded-lg border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-sm text-[var(--foreground)]"
+                  >
+                    <option value="">All skills</option>
+                    {skillOptions.map((cat) => (
+                      <option key={cat} value={cat}>
+                        {cat}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="flex flex-wrap items-center gap-4">
+                  {([
+                    ["subscribeToNewsletter", "Newsletter"],
+                    ["matchWithTeam", "Team match"],
+                    ["interestedInFellowship", "Fellowship"],
+                  ] as const).map(([key, label]) => (
+                    <label key={key} className="flex items-center gap-2 text-sm text-[var(--foreground)]">
+                      <input
+                        type="checkbox"
+                        checked={memberFlags[key]}
+                        onChange={(e) =>
+                          setMemberFlags((f) => ({ ...f, [key]: e.target.checked }))
+                        }
+                      />
+                      {label}
+                    </label>
+                  ))}
+                  {memberFiltersActive && (
+                    <button
+                      type="button"
+                      onClick={resetMemberFilters}
+                      className="ml-auto text-sm text-[var(--muted)] hover:text-[var(--foreground)] hover:underline"
+                    >
+                      Clear filters
+                    </button>
+                  )}
+                </div>
+              </div>
+              {filteredMembers.length === 0 ? (
+                <p className="mt-4 text-sm text-[var(--muted)]">No members match these filters.</p>
+              ) : (
+              <div className="mt-4 space-y-3">
+              {filteredMembers.map((m) => (
+                <details key={m.userId} className="rounded-lg border border-[var(--border)] p-4">
+                  <summary className="flex cursor-pointer flex-wrap items-center justify-between gap-2">
+                    <span className="font-medium text-[var(--foreground)]">
+                      {m.fullName}{" "}
+                      <span className="font-normal text-[var(--muted)]">· {m.email}</span>
+                    </span>
+                    <span className="flex items-center gap-2">
+                      {m.subscribeToNewsletter && (
+                        <span className="rounded bg-[var(--surface)] px-2 py-0.5 text-xs text-[var(--muted)]">newsletter</span>
+                      )}
+                      {m.matchWithTeam && (
+                        <span className="rounded bg-[var(--surface)] px-2 py-0.5 text-xs text-[var(--muted)]">team-match</span>
+                      )}
+                      {m.interestedInFellowship && (
+                        <span className="rounded bg-[var(--surface)] px-2 py-0.5 text-xs text-[var(--muted)]">fellow</span>
+                      )}
+                      <button
+                        type="button"
+                        onClick={() => removeMember(m.userId, m.fullName)}
+                        className="rounded-lg border border-red-400 px-3 py-1 text-xs font-medium text-red-600 hover:bg-red-50"
+                      >
+                        Remove
+                      </button>
+                    </span>
+                  </summary>
+                  <dl className="mt-3 grid gap-2 text-sm sm:grid-cols-2">
+                    <div>
+                      <dt className="text-[var(--muted)]">Institution</dt>
+                      <dd className="text-[var(--foreground)]">{m.institution}</dd>
+                    </div>
+                    <div>
+                      <dt className="text-[var(--muted)]">Date of birth</dt>
+                      <dd className="text-[var(--foreground)]">{m.dateOfBirth}</dd>
+                    </div>
+                    <div className="sm:col-span-2">
+                      <dt className="text-[var(--muted)]">Languages</dt>
+                      <dd className="text-[var(--foreground)]">{m.programmingLanguages.join(", ") || "—"}</dd>
+                    </div>
+                    <div className="sm:col-span-2">
+                      <dt className="text-[var(--muted)]">Skills</dt>
+                      <dd className="text-[var(--foreground)]">
+                        {m.skills.map((s) => `${s.category} (${s.level})`).join(", ") || "—"}
+                      </dd>
+                    </div>
+                    {m.description && (
+                      <div className="sm:col-span-2">
+                        <dt className="text-[var(--muted)]">About</dt>
+                        <dd className="whitespace-pre-wrap text-[var(--foreground)]">{m.description}</dd>
+                      </div>
+                    )}
+                    <div>
+                      <dt className="text-[var(--muted)]">LinkedIn</dt>
+                      <dd>
+                        {m.linkedInUrl ? (
+                          <a href={m.linkedInUrl} target="_blank" rel="noopener noreferrer" className="text-[var(--accent)] hover:underline">profile</a>
+                        ) : "—"}
+                      </dd>
+                    </div>
+                    <div>
+                      <dt className="text-[var(--muted)]">GitHub</dt>
+                      <dd>
+                        {m.gitHubUrl ? (
+                          <a href={m.gitHubUrl} target="_blank" rel="noopener noreferrer" className="text-[var(--accent)] hover:underline">profile</a>
+                        ) : "—"}
+                      </dd>
+                    </div>
+                    <div>
+                      <dt className="text-[var(--muted)]">Resume</dt>
+                      <dd>
+                        {m.resumeUrl ? (
+                          <a href={m.resumeUrl} target="_blank" rel="noopener noreferrer" className="text-[var(--accent)] hover:underline">{m.resumeFileName || "download"}</a>
+                        ) : "—"}
+                      </dd>
+                    </div>
+                    <div>
+                      <dt className="text-[var(--muted)]">Photo</dt>
+                      <dd>
+                        {m.profilePhotoUrl ? (
+                          <a href={m.profilePhotoUrl} target="_blank" rel="noopener noreferrer" className="text-[var(--accent)] hover:underline">view</a>
+                        ) : "—"}
+                      </dd>
+                    </div>
+                  </dl>
+                </details>
+              ))}
+              </div>
+              )}
+            </>
+          )}
+        </section>
+
+>>>>>>> 65bc487 (Add .NET user portal backend with admin member management and filtering)
         <form onSubmit={submit} className="mt-8 space-y-4 rounded-xl border border-[var(--border)] bg-[var(--background)] p-6">
           <div>
             <label className="block text-sm font-medium text-[var(--foreground)]">Name</label>
@@ -398,7 +674,7 @@ export default function AdminPage() {
               required
               value={form.name}
               onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
-              className="mt-1 w-full rounded-lg border border-[var(--border)] px-3 py-2"
+              className="mt-1 w-full rounded-lg border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-[var(--foreground)]"
             />
           </div>
           <div>
@@ -407,7 +683,7 @@ export default function AdminPage() {
               value={form.description}
               onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))}
               rows={3}
-              className="mt-1 w-full rounded-lg border border-[var(--border)] px-3 py-2"
+              className="mt-1 w-full rounded-lg border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-[var(--foreground)]"
             />
           </div>
           <div className="grid gap-4 sm:grid-cols-2">
@@ -418,7 +694,7 @@ export default function AdminPage() {
                 required
                 value={form.date}
                 onChange={(e) => setForm((f) => ({ ...f, date: e.target.value }))}
-                className="mt-1 w-full rounded-lg border border-[var(--border)] px-3 py-2"
+                className="mt-1 w-full rounded-lg border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-[var(--foreground)]"
               />
             </div>
             <div>
@@ -427,7 +703,7 @@ export default function AdminPage() {
                 value={form.location}
                 onChange={(e) => setForm((f) => ({ ...f, location: e.target.value }))}
                 placeholder="e.g. Colombo"
-                className="mt-1 w-full rounded-lg border border-[var(--border)] px-3 py-2"
+                className="mt-1 w-full rounded-lg border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-[var(--foreground)]"
               />
             </div>
           </div>
@@ -438,7 +714,7 @@ export default function AdminPage() {
               value={form.registrationUrl}
               onChange={(e) => setForm((f) => ({ ...f, registrationUrl: e.target.value }))}
               placeholder="https://..."
-              className="mt-1 w-full rounded-lg border border-[var(--border)] px-3 py-2"
+              className="mt-1 w-full rounded-lg border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-[var(--foreground)]"
             />
           </div>
           <div>
@@ -447,7 +723,7 @@ export default function AdminPage() {
               value={form.organizer}
               onChange={(e) => setForm((f) => ({ ...f, organizer: e.target.value }))}
               placeholder="e.g. NIBM IEEE"
-              className="mt-1 w-full rounded-lg border border-[var(--border)] px-3 py-2"
+              className="mt-1 w-full rounded-lg border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-[var(--foreground)]"
             />
           </div>
           <div className="grid gap-4 sm:grid-cols-2">
@@ -461,7 +737,7 @@ export default function AdminPage() {
                     mode: (e.target.value || undefined) as "online" | "in-person" | undefined,
                   }))
                 }
-                className="mt-1 w-full rounded-lg border border-[var(--border)] px-3 py-2"
+                className="mt-1 w-full rounded-lg border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-[var(--foreground)]"
               >
                 <option value="">In-person (default)</option>
                 <option value="in-person">In-person</option>
@@ -527,7 +803,7 @@ export default function AdminPage() {
                     status: (e.target.value || undefined) as "upcoming" | "open" | "ended" | undefined,
                   }))
                 }
-                className="mt-1 w-full rounded-lg border border-[var(--border)] px-3 py-2"
+                className="mt-1 w-full rounded-lg border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-[var(--foreground)]"
               >
                 <option value="">Auto from date</option>
                 <option value="upcoming">Upcoming</option>
@@ -545,7 +821,7 @@ export default function AdminPage() {
                     length: (e.target.value || undefined) as "1-6 days" | "1-4 weeks" | "1+ month" | undefined,
                   }))
                 }
-                className="mt-1 w-full rounded-lg border border-[var(--border)] px-3 py-2"
+                className="mt-1 w-full rounded-lg border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-[var(--foreground)]"
               >
                 <option value="">Select</option>
                 <option value="1-6 days">1-6 days</option>
@@ -678,7 +954,7 @@ export default function AdminPage() {
                   required
                   value={blogForm.title ?? ""}
                   onChange={(e) => setBlogForm((f) => ({ ...f, title: e.target.value }))}
-                  className="mt-1 w-full rounded-lg border border-[var(--border)] px-3 py-2"
+                  className="mt-1 w-full rounded-lg border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-[var(--foreground)]"
                 />
               </div>
               <div>
@@ -688,7 +964,7 @@ export default function AdminPage() {
                   required
                   value={blogForm.date ?? ""}
                   onChange={(e) => setBlogForm((f) => ({ ...f, date: e.target.value }))}
-                  className="mt-1 w-full rounded-lg border border-[var(--border)] px-3 py-2"
+                  className="mt-1 w-full rounded-lg border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-[var(--foreground)]"
                 />
               </div>
             </div>
@@ -713,6 +989,7 @@ export default function AdminPage() {
               </div>
             </div>
             <div>
+<<<<<<< HEAD
               <label className="block text-sm font-medium text-[var(--foreground)]">Type</label>
               <select
                 value={blogForm.type ?? ""}
@@ -726,6 +1003,15 @@ export default function AdminPage() {
                   </option>
                 ))}
               </select>
+=======
+              <label className="block text-sm font-medium text-[var(--foreground)]">Slug (optional)</label>
+              <input
+                value={blogForm.slug ?? ""}
+                onChange={(e) => setBlogForm((f) => ({ ...f, slug: e.target.value }))}
+                placeholder="my-blog-post"
+                className="mt-1 w-full rounded-lg border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-[var(--foreground)]"
+              />
+>>>>>>> 65bc487 (Add .NET user portal backend with admin member management and filtering)
             </div>
             <div>
               <label className="block text-sm font-medium text-[var(--foreground)]">Excerpt</label>
@@ -733,7 +1019,7 @@ export default function AdminPage() {
                 value={blogForm.excerpt ?? ""}
                 onChange={(e) => setBlogForm((f) => ({ ...f, excerpt: e.target.value }))}
                 rows={3}
-                className="mt-1 w-full rounded-lg border border-[var(--border)] px-3 py-2"
+                className="mt-1 w-full rounded-lg border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-[var(--foreground)]"
               />
             </div>
             <div>
@@ -791,7 +1077,7 @@ export default function AdminPage() {
                 value={blogForm.content ?? ""}
                 onChange={(e) => setBlogForm((f) => ({ ...f, content: e.target.value }))}
                 rows={4}
-                className="mt-1 w-full rounded-lg border border-[var(--border)] px-3 py-2"
+                className="mt-1 w-full rounded-lg border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-[var(--foreground)]"
               />
             </div>
             <button
