@@ -92,6 +92,7 @@ function LoginForm({
 
 export default function AdminPage() {
   const [authStatus, setAuthStatus] = useState<"checking" | "authenticated" | "unauthenticated">("checking");
+  const [activeTab, setActiveTab] = useState<"hackathons" | "blog" | "users">("hackathons");
   const [hackathons, setHackathons] = useState<Hackathon[]>([]);
   const [message, setMessage] = useState<{ type: "ok" | "err"; text: string } | null>(null);
   const [form, setForm] = useState<Partial<Hackathon>>({
@@ -364,6 +365,32 @@ export default function AdminPage() {
           </button>
         </div>
 
+        <div className="mt-8 flex gap-2 border-b border-[var(--border)]">
+          {([
+            { key: "hackathons", label: "Hackathons" },
+            { key: "blog", label: "Blog" },
+            { key: "users", label: "User Admin" },
+          ] as const).map((tab) => (
+            <button
+              key={tab.key}
+              type="button"
+              onClick={() => {
+                setActiveTab(tab.key);
+                setMessage(null);
+              }}
+              className={`-mb-px border-b-2 px-4 py-2 text-sm font-medium transition ${
+                activeTab === tab.key
+                  ? "border-[var(--accent)] text-[var(--accent)]"
+                  : "border-transparent text-[var(--muted)] hover:text-[var(--foreground)]"
+              }`}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
+
+        {activeTab === "hackathons" && (
+        <>
         <form onSubmit={submit} className="mt-8 space-y-4 rounded-xl border border-[var(--border)] bg-[var(--background)] p-6">
           <div>
             <label className="block text-sm font-medium text-[var(--foreground)]">Name</label>
@@ -637,8 +664,11 @@ export default function AdminPage() {
             ))}
           </ul>
         </div>
+        </>
+        )}
 
-        <div className="mt-14 border-t border-[var(--border)] pt-10">
+        {activeTab === "blog" && (
+        <div className="mt-8">
           <h2 className="text-lg font-semibold text-[var(--foreground)]">Blog posts</h2>
           <form onSubmit={submitBlog} className="mt-4 space-y-4 rounded-xl border border-[var(--border)] bg-[var(--background)] p-6">
             <div className="grid gap-4 sm:grid-cols-2">
@@ -792,6 +822,12 @@ export default function AdminPage() {
             )}
           </form>
 
+          {message && (
+            <p className={`mt-4 ${message.type === "ok" ? "text-green-600" : "text-red-600"}`}>
+              {message.text}
+            </p>
+          )}
+
           <ul className="mt-6 space-y-3">
             {blogs.map((post) => (
               <li
@@ -820,6 +856,22 @@ export default function AdminPage() {
             ))}
           </ul>
         </div>
+        )}
+
+        {activeTab === "users" && (
+        <div className="mt-8">
+          <h2 className="text-lg font-semibold text-[var(--foreground)]">User Admin</h2>
+          <div className="mt-4 rounded-xl border border-[var(--border)] bg-[var(--background)] p-6">
+            <p className="text-sm text-[var(--muted)]">
+              Signed in as <span className="font-medium text-[var(--foreground)]">admin</span>.
+            </p>
+            <p className="mt-2 text-sm text-[var(--muted)]">
+              User management is coming soon. Admin credentials are currently configured
+              through environment variables.
+            </p>
+          </div>
+        </div>
+        )}
 
         <p className="mt-8 text-sm text-[var(--muted)]">
           <a href="/" className="text-[var(--foreground)] hover:underline">
