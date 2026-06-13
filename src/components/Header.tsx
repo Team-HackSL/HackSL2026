@@ -99,7 +99,7 @@ export function Header() {
               {hacker ? <>&gt;_ Log in</> : "Log in"}
             </Link>
           ) : (
-            <Link href="/portal/signup" className={authBtnClass}>
+            <Link href="/portal" className={authBtnClass}>
               {hacker ? <>&gt;_ Sign up</> : "Sign up"}
             </Link>
           )}
@@ -158,7 +158,7 @@ export function Header() {
                 </Link>
               ) : (
                 <Link
-                  href="/portal/signup"
+                  href="/portal"
                   className={`block text-center ${authBtnClass}`}
                   onClick={() => setIsOpen(false)}
                 >
