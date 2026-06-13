@@ -4,7 +4,7 @@ import { PortalNav } from "@/components/portal/PortalNav";
 
 export const metadata: Metadata = {
   title: "HackSL Portal",
-  description: "Create your HackSL profile — get matched with teams, partners, and the Fellowship.",
+  description: "Create your HackSL profile - get matched with teams, partners, and the Fellowship.",
 };
 
 export default function PortalLayout({ children }: { children: React.ReactNode }) {

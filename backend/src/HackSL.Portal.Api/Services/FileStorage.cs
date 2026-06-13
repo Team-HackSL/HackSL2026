@@ -31,7 +31,7 @@ public interface IFileStorage
 
 /// <summary>
 /// Stores uploads on the local filesystem. Swap this implementation for S3/Azure Blob/
-/// Vercel Blob without touching the controllers — they depend only on IFileStorage.
+/// Vercel Blob without touching the controllers - they depend only on IFileStorage.
 /// </summary>
 public class LocalFileStorage : IFileStorage
 {

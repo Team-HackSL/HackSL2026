@@ -1,4 +1,4 @@
-# HackSL — Features
+# HackSL - Features
 
 **Hack Sri Lanka** is an open-source platform for discovering hackathons and tech
 events across Sri Lanka. It is a Next.js (App Router) application styled with
@@ -19,17 +19,17 @@ uploads. This document catalogs every feature in the project.
 The home page (`src/app/page.tsx`) is server-rendered (`force-dynamic`) and loads
 live hackathon data from the database. It composes these sections in order:
 
-1. **Hero** — headline, stats, and primary CTAs (theme-aware, see §4).
-2. **Hackathons** — filterable directory of events.
-3. **Organize a Hackathon** — CTA section for event organizers.
-4. **Partners** — scrolling logo marquee.
-5. **Fellows** — University Ambassador program teaser.
-6. **About Us** — vision / what we do / who we are.
-7. **Mission** — quote-style mission statement.
-8. **Blog** — latest community posts.
-9. **Community** — social/community links.
-10. **Team** — founder profiles.
-11. **Contact Us** — contact form + direct contact info.
+1. **Hero** - headline, stats, and primary CTAs (theme-aware, see §4).
+2. **Hackathons** - filterable directory of events.
+3. **Organize a Hackathon** - CTA section for event organizers.
+4. **Partners** - scrolling logo marquee.
+5. **Fellows** - University Ambassador program teaser.
+6. **About Us** - vision / what we do / who we are.
+7. **Mission** - quote-style mission statement.
+8. **Blog** - latest community posts.
+9. **Community** - social/community links.
+10. **Team** - founder profiles.
+11. **Contact Us** - contact form + direct contact info.
 
 A fixed **Header** (top nav) and **Footer** wrap every page.
 
@@ -162,18 +162,18 @@ Two distinct hero treatments selected by Hacker Mode:
 
 ## 5. Marketing / informational sections
 
-- **Organize a Hackathon** (`StartHackathon.tsx`) — organizer CTA pointing to
+- **Organize a Hackathon** (`StartHackathon.tsx`) - organizer CTA pointing to
   WhatsApp and the contact section.
-- **Partners** (`Partners.tsx`) — infinite, pause-on-hover marquee of 20+
+- **Partners** (`Partners.tsx`) - infinite, pause-on-hover marquee of 20+
   partner/university logos, with per-logo error fallback to initials and edge
   fade masks.
-- **About Us** (`AboutUs.tsx`) — Vision / What We Do / Who We Are cards.
-- **Mission** (`Mission.tsx`) — large pull-quote mission statement.
-- **Team** (`Team.tsx`) — founder cards with photo (initials fallback), role, and
+- **About Us** (`AboutUs.tsx`) - Vision / What We Do / Who We Are cards.
+- **Mission** (`Mission.tsx`) - large pull-quote mission statement.
+- **Team** (`Team.tsx`) - founder cards with photo (initials fallback), role, and
   LinkedIn link.
-- **Community** (`Community.tsx`) — WhatsApp, LinkedIn, Facebook, and Instagram
+- **Community** (`Community.tsx`) - WhatsApp, LinkedIn, Facebook, and Instagram
   cards with brand-colored hover states.
-- **Photo Carousel** (`PhotoCarousel.tsx`) — auto-advancing "Moments" image
+- **Photo Carousel** (`PhotoCarousel.tsx`) - auto-advancing "Moments" image
   carousel with clickable dot indicators (component available in the codebase).
 
 ---
@@ -256,9 +256,9 @@ A single-page admin console gated by authentication, with three tabs.
 - **Session cookie:** `hacksl_admin_session`, `httpOnly`, `sameSite=lax`,
   `secure` in production, 24-hour max age.
 - **Auth API routes:**
-  - `POST /api/auth/login` — verifies credentials, sets the session cookie.
-  - `POST /api/auth/logout` — clears the session.
-  - `GET /api/auth/session` — reports authentication status.
+  - `POST /api/auth/login` - verifies credentials, sets the session cookie.
+  - `POST /api/auth/logout` - clears the session.
+  - `GET /api/auth/session` - reports authentication status.
 - **Protected admin APIs** accept either a valid session cookie or a legacy
   `Authorization: Bearer <HACKSL_ADMIN_SECRET>` header.
 
@@ -275,8 +275,8 @@ A single-page admin console gated by authentication, with three tabs.
 | `/api/admin/upload` | POST | admin | Upload an image to Vercel Blob |
 | `/api/contact` | POST | public | Send a contact-form email |
 | `/api/auth/login` | POST | public | Admin login |
-| `/api/auth/logout` | POST | — | Admin logout |
-| `/api/auth/session` | GET | — | Check session status |
+| `/api/auth/logout` | POST | - | Admin logout |
+| `/api/auth/session` | GET | - | Check session status |
 
 ### 10.1 Admin mutations
 - Hackathon and blog POSTs **upsert** by `id` (insert or update on conflict),

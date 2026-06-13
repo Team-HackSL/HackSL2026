@@ -58,7 +58,7 @@ export default function SignupPage() {
     <div className="rounded-2xl border border-[var(--border)] bg-[var(--background)] p-6 shadow-sm sm:p-8">
       <h1 className="text-2xl font-bold text-[var(--foreground)]">Create your profile</h1>
       <p className="mt-1 text-sm text-[var(--muted)]">
-        Join the HackSL community — get matched with teams and discovered by partners.
+        Join the HackSL community - get matched with teams and discovered by partners.
       </p>
 
       <form onSubmit={handleSubmit} className="mt-8 space-y-6">

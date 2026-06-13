@@ -1,6 +1,6 @@
 namespace HackSL.Portal.Api.Dtos;
 
-/// <summary>A member's full profile for the admin view — never includes the password hash.</summary>
+/// <summary>A member's full profile for the admin view - never includes the password hash.</summary>
 public class AdminMemberResponse
 {
     public Guid UserId { get; set; }

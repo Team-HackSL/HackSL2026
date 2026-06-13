@@ -42,7 +42,7 @@ async function getDbBlogs(): Promise<BlogPost[]> {
 /**
  * Returns all blog posts, newest first.
  *
- * Posts live in the database — including the code-shipped seed posts, which
+ * Posts live in the database - including the code-shipped seed posts, which
  * are loaded into the database once (see `ensureBlogsTable`) so the admin can
  * edit and delete every post. If the database is unavailable we fall back to
  * the in-code seed posts so the blog still renders instead of crashing.

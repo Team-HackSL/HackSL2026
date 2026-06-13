@@ -29,7 +29,7 @@ export function AboutUs() {
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-lg text-[var(--muted)]">
             HackSL (Hack Sri Lanka) connects students, engineers, and creators
-            through hackathons and tech events — one community at a time.
+            through hackathons and tech events - one community at a time.
           </p>
         </div>
 

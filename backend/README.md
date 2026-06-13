@@ -1,4 +1,4 @@
-# HackSL Portal — Backend (.NET)
+# HackSL Portal - Backend (.NET)
 
 ASP.NET Core 8 Web API for the HackSL user portal. Handles sign-up, login, and
 the user profile (skills, programming languages, resume/photo uploads, and the
@@ -12,26 +12,26 @@ team-matching / fellowship opt-ins).
 | Database       | PostgreSQL via EF Core (Npgsql)                    |
 | Auth           | JWT bearer tokens                                  |
 | Passwords      | PBKDF2 / SHA-256, 100k iterations (BCL only)       |
-| File storage   | Vercel Blob (default) or local disk — `IFileStorage` |
+| File storage   | Vercel Blob (default) or local disk - `IFileStorage` |
 | API docs       | Swagger UI at `/swagger` (Development)             |
 
 ## Prerequisites
 
-- **.NET 8 SDK** — https://dotnet.microsoft.com/download/dotnet/8.0
-  (not currently installed on this machine — install it first)
+- **.NET 8 SDK** - https://dotnet.microsoft.com/download/dotnet/8.0
+  (not currently installed on this machine - install it first)
 - **PostgreSQL** running and reachable.
 
 ## Configure
 
 Edit `src/HackSL.Portal.Api/appsettings.json` (or use user-secrets / env vars):
 
-- `ConnectionStrings:Postgres` — your Postgres connection string.
-- `Jwt:Key` — **replace** with a long random secret (≥ 32 chars).
-- `Cors:Origins` — the frontend origin(s), e.g. `http://localhost:3000`.
-- `Storage:Provider` — `VercelBlob` (default) or `Local`.
-- **Vercel Blob token** — set `BLOB_READ_WRITE_TOKEN` in the environment (the same
+- `ConnectionStrings:Postgres` - your Postgres connection string.
+- `Jwt:Key` - **replace** with a long random secret (≥ 32 chars).
+- `Cors:Origins` - the frontend origin(s), e.g. `http://localhost:3000`.
+- `Storage:Provider` - `VercelBlob` (default) or `Local`.
+- **Vercel Blob token** - set `BLOB_READ_WRITE_TOKEN` in the environment (the same
   token the Next.js site uses, found in `.env.local`), or `Storage:BlobReadWriteToken`.
-- `Storage:PublicBaseUrl` — *Local provider only*: leave empty to use the request host.
+- `Storage:PublicBaseUrl` - *Local provider only*: leave empty to use the request host.
 
 Tip: keep secrets out of source control with user-secrets:
 
@@ -53,7 +53,7 @@ dotnet run --project src/HackSL.Portal.Api
 Then open **http://localhost:5080/swagger**.
 
 On startup the app creates the schema automatically (`EnsureCreated`). Once you
-introduce EF migrations it switches to `Migrate` instead — see below.
+introduce EF migrations it switches to `Migrate` instead - see below.
 
 ### Optional: use EF Core migrations
 
@@ -68,8 +68,8 @@ dotnet ef database update
 
 | Method | Route                  | Auth   | Purpose                                  |
 | ------ | ---------------------- | ------ | ---------------------------------------- |
-| POST   | `/api/auth/register`   | —      | Sign up: create account + profile        |
-| POST   | `/api/auth/login`      | —      | Log in, returns JWT                       |
+| POST   | `/api/auth/register`   | -      | Sign up: create account + profile        |
+| POST   | `/api/auth/login`      | -      | Log in, returns JWT                       |
 | GET    | `/api/profile/me`      | Bearer | Get the current user's profile            |
 | PUT    | `/api/profile/me`      | Bearer | Update profile (replaces skills/langs)    |
 | POST   | `/api/profile/resume`  | Bearer | Upload resume (PDF/DOC/DOCX, ≤ 10 MB)     |
@@ -102,7 +102,7 @@ requests, or use Swagger.
 ```
 
 Files (resume, photo) are uploaded separately after sign-up using the returned
-JWT — `multipart/form-data` with a single field named `file`.
+JWT - `multipart/form-data` with a single field named `file`.
 
 ## Project layout
 
@@ -119,7 +119,7 @@ src/HackSL.Portal.Api/
 ## Notes / next steps
 
 - **Storage**: defaults to **Vercel Blob** (`VercelBlobStorage`), uploading via Vercel
-  Blob's server HTTP API with a `BLOB_READ_WRITE_TOKEN` — same store as the Next.js site.
+  Blob's server HTTP API with a `BLOB_READ_WRITE_TOKEN` - same store as the Next.js site.
   Switch to `Storage:Provider = "Local"` for local-disk development (served at `/uploads/...`).
   Both implement `IFileStorage`; controllers are unaware of the choice.
 - **Email verification, password reset, and rate limiting** are not included yet.

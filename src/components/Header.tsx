@@ -66,7 +66,7 @@ export function Header() {
     ? "border-[#00ff66]/20 bg-[#05080a]/90"
     : "border-white/10 bg-[var(--accent)]/95";
 
-  // Solid auth button (Sign up / Log in) — the primary portal action, pinned right.
+  // Solid auth button (Sign up / Log in) - the primary portal action, pinned right.
   const authBtnClass = hacker
     ? "rounded-lg bg-[#00ff66] px-4 py-2 font-mono text-sm font-semibold text-[#03110a] transition-all duration-200 hover:shadow-[0_0_18px_-4px_rgba(0,255,102,0.8)]"
     : "rounded-lg bg-white px-4 py-2 text-sm font-semibold text-[var(--accent)] transition-all duration-200 hover:bg-white/90";

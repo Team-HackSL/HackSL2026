@@ -142,7 +142,7 @@ select:focus-visible {
   }
 }
 
-/* CRT scanline overlay — a fixed, pointer-transparent layer over the page. */
+/* CRT scanline overlay - a fixed, pointer-transparent layer over the page. */
 .crt-scanlines {
   position: fixed;
   inset: 0;
@@ -331,7 +331,7 @@ select:focus-visible {
 }
 
 /* ===========================================================================
-   HACKER MODE — site-wide dark-web palette override.
+   HACKER MODE - site-wide dark-web palette override.
    Toggled by HackerModeProvider (sets data-hacker="on" on <html>).
    `html[data-hacker="on"]` outranks both :root and [data-theme="dark"],
    so it overrides whichever light/dark theme is active.

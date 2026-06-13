@@ -18,7 +18,7 @@ const RESPONSIBILITIES = [
   {
     icon: "📣",
     title: "Champion HackSL on campus",
-    text: "Be the face of HackSL at your university — share opportunities, post hackathons, and rally fellow students to build.",
+    text: "Be the face of HackSL at your university - share opportunities, post hackathons, and rally fellow students to build.",
   },
   {
     icon: "🎤",
@@ -89,7 +89,7 @@ const STEPS = [
   {
     number: "04",
     title: "Lead",
-    text: "Start representing HackSL on your campus — run events, grow your network, and make an impact.",
+    text: "Start representing HackSL on your campus - run events, grow your network, and make an impact.",
   },
 ];
 
@@ -158,7 +158,7 @@ export default function FellowsPage() {
             </h2>
             <p className="mt-5 text-lg leading-relaxed text-[var(--muted)]">
               The HackSL Fellows Program is our University Ambassador initiative
-              — a network of passionate students who bring HackSL to their
+              - a network of passionate students who bring HackSL to their
               campuses. Fellows are the bridge between HackSL and student
               communities across the country: they spread the word about
               hackathons, host events, and inspire the next generation of
@@ -308,7 +308,7 @@ export default function FellowsPage() {
             </h2>
             <p className="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-violet-100/80">
               Join a growing network of student leaders shaping the future of
-              tech in Sri Lanka. Applications are open — we&apos;d love to have
+              tech in Sri Lanka. Applications are open - we&apos;d love to have
               you on board.
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-3">

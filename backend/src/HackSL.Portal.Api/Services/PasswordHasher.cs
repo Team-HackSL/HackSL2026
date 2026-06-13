@@ -9,7 +9,7 @@ public interface IPasswordHasher
 }
 
 /// <summary>
-/// PBKDF2 (SHA-256) password hasher. Self-contained — uses only the BCL,
+/// PBKDF2 (SHA-256) password hasher. Self-contained - uses only the BCL,
 /// no third-party crypto library. Hash format: pbkdf2.{iterations}.{salt}.{key}
 /// </summary>
 public class Pbkdf2PasswordHasher : IPasswordHasher

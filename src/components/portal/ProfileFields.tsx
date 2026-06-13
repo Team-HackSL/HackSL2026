@@ -164,7 +164,7 @@ export function ProfileFields({
         />
       </div>
 
-      {/* About you / achievements — used for team matching */}
+      {/* About you / achievements - used for team matching */}
       <div>
         <label htmlFor="description" className={labelClass}>
           About you <span className="font-normal text-[var(--muted)]">(optional)</span>

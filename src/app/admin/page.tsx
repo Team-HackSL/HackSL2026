@@ -1078,12 +1078,12 @@ export default function AdminPage() {
                         </div>
                         <div className="sm:col-span-2">
                           <dt className="text-[var(--muted)]">Languages</dt>
-                          <dd className="text-[var(--foreground)]">{m.programmingLanguages.join(", ") || "—"}</dd>
+                          <dd className="text-[var(--foreground)]">{m.programmingLanguages.join(", ") || "-"}</dd>
                         </div>
                         <div className="sm:col-span-2">
                           <dt className="text-[var(--muted)]">Skills</dt>
                           <dd className="text-[var(--foreground)]">
-                            {m.skills.map((s) => `${s.category} (${s.level})`).join(", ") || "—"}
+                            {m.skills.map((s) => `${s.category} (${s.level})`).join(", ") || "-"}
                           </dd>
                         </div>
                         {m.description && (
@@ -1097,7 +1097,7 @@ export default function AdminPage() {
                           <dd>
                             {m.linkedInUrl ? (
                               <a href={m.linkedInUrl} target="_blank" rel="noopener noreferrer" className="text-[var(--accent)] hover:underline">profile</a>
-                            ) : "—"}
+                            ) : "-"}
                           </dd>
                         </div>
                         <div>
@@ -1105,7 +1105,7 @@ export default function AdminPage() {
                           <dd>
                             {m.gitHubUrl ? (
                               <a href={m.gitHubUrl} target="_blank" rel="noopener noreferrer" className="text-[var(--accent)] hover:underline">profile</a>
-                            ) : "—"}
+                            ) : "-"}
                           </dd>
                         </div>
                         <div>
@@ -1113,7 +1113,7 @@ export default function AdminPage() {
                           <dd>
                             {m.resumeUrl ? (
                               <a href={m.resumeUrl} target="_blank" rel="noopener noreferrer" className="text-[var(--accent)] hover:underline">{m.resumeFileName || "download"}</a>
-                            ) : "—"}
+                            ) : "-"}
                           </dd>
                         </div>
                         <div>
@@ -1121,7 +1121,7 @@ export default function AdminPage() {
                           <dd>
                             {m.profilePhotoUrl ? (
                               <a href={m.profilePhotoUrl} target="_blank" rel="noopener noreferrer" className="text-[var(--accent)] hover:underline">view</a>
-                            ) : "—"}
+                            ) : "-"}
                           </dd>
                         </div>
                       </dl>

@@ -32,7 +32,7 @@ public class RegisterRequest
     [Url, MaxLength(500)]
     public string? GitHubUrl { get; set; }
 
-    /// <summary>Must be true — the user consents to HackSL using their resume/data to share with partners.</summary>
+    /// <summary>Must be true - the user consents to HackSL using their resume/data to share with partners.</summary>
     public bool ConsentToShareData { get; set; }
 
     /// <summary>Opt-in: match me with a hackathon team.</summary>

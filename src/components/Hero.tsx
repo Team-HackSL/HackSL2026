@@ -28,7 +28,7 @@ export function Hero() {
 }
 
 /* ------------------------------------------------------------------ */
-/* Regular hero — the standard themed (light/dark) marketing hero.      */
+/* Regular hero - the standard themed (light/dark) marketing hero.      */
 /* ------------------------------------------------------------------ */
 function RegularHero() {
   return (
@@ -105,7 +105,7 @@ function RegularHero() {
 }
 
 /* ------------------------------------------------------------------ */
-/* Hacker hero — dark terminal showpiece with matrix rain + glitch.    */
+/* Hacker hero - dark terminal showpiece with matrix rain + glitch.    */
 /* ------------------------------------------------------------------ */
 function HackerHero() {
   return (
@@ -158,7 +158,7 @@ function HackerHero() {
             <span className="h-3 w-3 rounded-full bg-[#ffbd2e]" />
             <span className="h-3 w-3 rounded-full bg-[#27c93f]" />
             <span className="ml-2 font-mono text-xs text-[#00ff66]/60">
-              hacksl — secure shell
+              hacksl - secure shell
             </span>
           </div>
           <Typewriter

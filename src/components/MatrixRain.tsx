@@ -16,7 +16,7 @@ type MatrixRainProps = {
    * "absolute" confines it to the nearest positioned ancestor (e.g. a hero),
    * where it reliably renders over that element's own background.
    * "overlay" pins it to the viewport ON TOP of content (z-20) with a screen
-   * blend — a subtle full-page veil for site-wide hacker mode.
+   * blend - a subtle full-page veil for site-wide hacker mode.
    */
   variant?: "fixed" | "absolute" | "overlay";
 };
@@ -51,7 +51,7 @@ export function MatrixRain({
           }
         : { w: window.innerWidth, h: window.innerHeight };
 
-    // Katakana + latin + digits — the iconic glyph set.
+    // Katakana + latin + digits - the iconic glyph set.
     const glyphs =
       "ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ0123456789ABCDEFhacksl<>/{}[]$#@".split(
         ""
