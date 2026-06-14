@@ -232,11 +232,11 @@ export function ProfileFields({
               aria-label="Country dialing code"
               value={state.mobileCountryCode}
               onChange={(e) => set({ mobileCountryCode: e.target.value })}
-              className={`${fieldBase} w-auto shrink-0`}
+              className={`${fieldBase} w-28 shrink-0`}
             >
               {COUNTRY_DIAL_CODES.map((c) => (
                 <option key={c.iso} value={c.dial}>
-                  {c.dial} {c.label}
+                  {c.dial} {c.iso}
                 </option>
               ))}
             </select>
@@ -248,7 +248,7 @@ export function ProfileFields({
               autoComplete="tel-national"
               inputMode="tel"
               placeholder="71 234 5678"
-              className={`${fieldBase} flex-1`}
+              className={`${fieldBase} min-w-0 flex-1`}
             />
           </div>
         </div>
