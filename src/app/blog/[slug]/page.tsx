@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getBlog, getBlogs } from "@/lib/blogs";
+import { getBlog, getBlogs, incrementBlogViews } from "@/lib/blogs";
 import { formatDate } from "@/lib/hackathon-types";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -35,6 +35,10 @@ export default async function BlogPostPage({ params }: Props) {
   if (!post) {
     notFound();
   }
+
+  // Record a view of this post. The page is force-dynamic, so this runs on
+  // every load. Best-effort - incrementBlogViews never throws.
+  await incrementBlogViews(slug);
 
   const related = (await getBlogs())
     .filter((p) => p.slug !== post.slug)

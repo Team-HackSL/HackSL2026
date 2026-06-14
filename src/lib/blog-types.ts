@@ -9,6 +9,10 @@ export interface BlogPost {
   content?: string;
   /** Hackathon category this post relates to, e.g. "Designathon". */
   type?: string;
+  /** Number of times the post's detail page has been viewed. */
+  views?: number;
+  /** Number of times the post card was clicked from a listing. */
+  clicks?: number;
 }
 
 /**

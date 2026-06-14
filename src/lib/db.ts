@@ -18,6 +18,9 @@ export async function ensureHackathonsTable() {
       length TEXT
     )
   `;
+  // Analytics counter. Events have no detail page, so a "view" is recorded when
+  // a visitor opens the event card (clicks through to registration).
+  await sql`ALTER TABLE hackathons ADD COLUMN IF NOT EXISTS views INTEGER NOT NULL DEFAULT 0`;
 }
 
 export async function ensureBlogsTable() {
@@ -37,6 +40,10 @@ export async function ensureBlogsTable() {
   // Backfill columns for tables created before they were introduced.
   await sql`ALTER TABLE blogs ADD COLUMN IF NOT EXISTS author TEXT`;
   await sql`ALTER TABLE blogs ADD COLUMN IF NOT EXISTS type TEXT`;
+  // Analytics counters: views = blog detail page loads, clicks = card
+  // click-throughs from a listing.
+  await sql`ALTER TABLE blogs ADD COLUMN IF NOT EXISTS views INTEGER NOT NULL DEFAULT 0`;
+  await sql`ALTER TABLE blogs ADD COLUMN IF NOT EXISTS clicks INTEGER NOT NULL DEFAULT 0`;
   await ensureBlogsSeeded();
 }
 

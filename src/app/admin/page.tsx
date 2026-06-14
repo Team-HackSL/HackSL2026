@@ -739,6 +739,9 @@ export default function AdminPage() {
 
         <div className="mt-10">
           <h2 className="text-lg font-semibold text-[var(--foreground)]">Current hackathons</h2>
+          <p className="mt-1 text-sm text-[var(--muted)]">
+            👁 {hackathons.reduce((sum, h) => sum + (h.views ?? 0), 0).toLocaleString()} total event views
+          </p>
           <ul className="mt-4 space-y-3">
             {hackathons.map((h) => (
               <li
@@ -749,6 +752,9 @@ export default function AdminPage() {
                   <p className="font-medium text-[var(--foreground)]">{h.name}</p>
                   <p className="text-sm text-[var(--muted)]">
                     {h.date} · {h.location}
+                  </p>
+                  <p className="mt-1 text-xs font-medium text-[var(--muted)]">
+                    👁 {(h.views ?? 0).toLocaleString()} {(h.views ?? 0) === 1 ? "view" : "views"}
                   </p>
                 </div>
                 <div className="flex gap-2">
@@ -775,6 +781,11 @@ export default function AdminPage() {
         {activeTab === "blog" && (
         <div className="mt-8">
           <h2 className="text-lg font-semibold text-[var(--foreground)]">Blog posts</h2>
+          <p className="mt-1 text-sm text-[var(--muted)]">
+            👁 {blogs.reduce((sum, b) => sum + (b.views ?? 0), 0).toLocaleString()} total views
+            {" · "}
+            🔗 {blogs.reduce((sum, b) => sum + (b.clicks ?? 0), 0).toLocaleString()} total clicks
+          </p>
           <form onSubmit={submitBlog} className="mt-4 space-y-4 rounded-xl border border-[var(--border)] bg-[var(--background)] p-6">
             <div className="grid gap-4 sm:grid-cols-2">
               <div>
@@ -942,6 +953,11 @@ export default function AdminPage() {
                 <div>
                   <p className="font-medium text-[var(--foreground)]">{post.title}</p>
                   <p className="text-sm text-[var(--muted)]">{post.date}</p>
+                  <p className="mt-1 text-xs font-medium text-[var(--muted)]">
+                    👁 {(post.views ?? 0).toLocaleString()} {(post.views ?? 0) === 1 ? "view" : "views"}
+                    {" · "}
+                    🔗 {(post.clicks ?? 0).toLocaleString()} {(post.clicks ?? 0) === 1 ? "click" : "clicks"}
+                  </p>
                 </div>
                 <div className="flex gap-2">
                   <button

@@ -1,6 +1,9 @@
+"use client";
+
 import Image from "next/image";
 import type { Hackathon } from "@/lib/hackathon-types";
 import { formatDate } from "@/lib/hackathon-types";
+import { trackEngagement } from "@/lib/track";
 
 interface HackathonCardProps {
   hackathon: Hackathon;
@@ -18,6 +21,7 @@ export function HackathonCard({ hackathon }: HackathonCardProps) {
       href={hackathon.registrationUrl}
       target="_blank"
       rel="noopener noreferrer"
+      onClick={() => trackEngagement({ type: "hackathon", event: "view", id: hackathon.id })}
       className="group flex flex-col overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--background)] shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[var(--accent)]/20 hover:shadow-xl"
     >
       {/* Thumbnail / Banner */}

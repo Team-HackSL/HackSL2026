@@ -11,6 +11,8 @@ export interface Hackathon {
   mode?: "online" | "in-person";
   status?: "upcoming" | "open" | "ended";
   length?: "1-6 days" | "1-4 weeks" | "1+ month";
+  /** Number of times the event card has been opened (click-through). */
+  views?: number;
 }
 
 export function getHackathonStatus(

@@ -20,6 +20,7 @@ async function getHackathonsFromDb(): Promise<Hackathon[]> {
     mode: string | null;
     status: string | null;
     length: string | null;
+    views: number | null;
   }>`SELECT * FROM hackathons ORDER BY date ASC`;
 
   return rows.map((row) => ({
@@ -35,6 +36,7 @@ async function getHackathonsFromDb(): Promise<Hackathon[]> {
     mode: (row.mode as Hackathon["mode"]) ?? undefined,
     status: (row.status as Hackathon["status"]) ?? undefined,
     length: (row.length as Hackathon["length"]) ?? undefined,
+    views: row.views ?? 0,
   }));
 }
 
@@ -49,6 +51,19 @@ export async function getHackathons(): Promise<Hackathon[]> {
   } catch (err) {
     console.error("Failed to load hackathons from database", err);
     return [];
+  }
+}
+
+/**
+ * Records one view of an event (its card was opened / clicked through to the
+ * registration page). Best-effort: analytics must never break a request.
+ */
+export async function incrementHackathonViews(id: string): Promise<void> {
+  try {
+    await ensureHackathonsTable();
+    await sql`UPDATE hackathons SET views = views + 1 WHERE id = ${id}`;
+  } catch (err) {
+    console.error("Failed to record event view", err);
   }
 }
 
