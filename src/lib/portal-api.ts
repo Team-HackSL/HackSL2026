@@ -1,14 +1,20 @@
 // Client for the HackSL .NET portal backend (see /backend).
 // Talks to the ASP.NET Core API; the JWT is kept in localStorage and sent as a Bearer token.
 
+// The deployed portal backend (ASP.NET Core on Google Cloud Run). This is a
+// public HTTP endpoint the browser calls directly, so it is safe to ship as the
+// production default; set NEXT_PUBLIC_PORTAL_API_URL to override it (e.g. if the
+// service is ever moved).
+const PRODUCTION_PORTAL_API = "https://hacksl-portal-api-xctfkdmupa-el.a.run.app";
+
 /**
  * Resolve the portal backend base URL.
  *
- * In local dev we fall back to the .NET dev server on :5080. In production the
- * fallback would be unreachable from the visitor's browser and produces a
- * confusing `ERR_CONNECTION_REFUSED` plus uncaught promise rejections, so when
- * `NEXT_PUBLIC_PORTAL_API_URL` is not configured outside of localhost we return
- * an empty string and let `request()` raise a clear, user-facing error instead.
+ * Order of precedence: an explicit `NEXT_PUBLIC_PORTAL_API_URL` build-time value
+ * wins; otherwise we use the local .NET dev server on :5080 when running on
+ * localhost, and the deployed Cloud Run backend everywhere else. We never return
+ * an empty/localhost base in production, which previously caused a confusing
+ * `ERR_CONNECTION_REFUSED` plus uncaught promise rejections in the browser.
  */
 function resolvePortalApiBase(): string {
   const configured = process.env.NEXT_PUBLIC_PORTAL_API_URL;
@@ -16,7 +22,7 @@ function resolvePortalApiBase(): string {
 
   if (typeof window !== "undefined") {
     const host = window.location.hostname;
-    if (host !== "localhost" && host !== "127.0.0.1") return "";
+    if (host !== "localhost" && host !== "127.0.0.1") return PRODUCTION_PORTAL_API;
   }
   return "http://localhost:5080";
 }
