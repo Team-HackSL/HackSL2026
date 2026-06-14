@@ -42,6 +42,7 @@ public class AuthController : ControllerBase
                 FullName = req.FullName.Trim(),
                 DateOfBirth = req.DateOfBirth,
                 Institution = req.Institution.Trim(),
+                MobileNumber = string.IsNullOrWhiteSpace(req.MobileNumber) ? null : req.MobileNumber.Trim(),
                 Description = string.IsNullOrWhiteSpace(req.Description) ? null : req.Description.Trim(),
                 ProgrammingLanguages = NormalizeLanguages(req.ProgrammingLanguages),
                 LinkedInUrl = req.LinkedInUrl,

@@ -27,6 +27,7 @@ export interface Profile {
   fullName: string;
   dateOfBirth: string; // yyyy-MM-dd
   institution: string;
+  mobileNumber?: string | null;
   description?: string | null;
   programmingLanguages: string[];
   skills: SkillRating[];
@@ -54,6 +55,7 @@ export interface RegisterPayload {
   fullName: string;
   dateOfBirth: string;
   institution: string;
+  mobileNumber?: string;
   description?: string;
   programmingLanguages: string[];
   skills: SkillRating[];

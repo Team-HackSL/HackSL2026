@@ -32,6 +32,7 @@ public class AppDbContext : DbContext
             e.Property(p => p.Id).ValueGeneratedNever();
             e.Property(p => p.FullName).HasMaxLength(200).IsRequired();
             e.Property(p => p.Institution).HasMaxLength(200);
+            e.Property(p => p.MobileNumber).HasMaxLength(30);
             e.Property(p => p.Description).HasMaxLength(4000);
             e.Property(p => p.LinkedInUrl).HasMaxLength(500);
             e.Property(p => p.GitHubUrl).HasMaxLength(500);

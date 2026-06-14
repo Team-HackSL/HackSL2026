@@ -12,6 +12,9 @@ public class UserProfile
     public DateOnly DateOfBirth { get; set; }
     public string Institution { get; set; } = string.Empty;
 
+    /// <summary>Optional contact mobile number.</summary>
+    public string? MobileNumber { get; set; }
+
     /// <summary>Optional self-introduction / past hackathon achievements, used for team matching.</summary>
     public string? Description { get; set; }
 

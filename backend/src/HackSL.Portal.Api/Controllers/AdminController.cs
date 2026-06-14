@@ -63,6 +63,7 @@ public class AdminController : ControllerBase
                     FullName = p.FullName,
                     DateOfBirth = p.DateOfBirth,
                     Institution = p.Institution,
+                    MobileNumber = p.MobileNumber,
                     Description = p.Description,
                     ProgrammingLanguages = p.ProgrammingLanguages,
                     Skills = p.Skills.OrderBy(s => s.Category)

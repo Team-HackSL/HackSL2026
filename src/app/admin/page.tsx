@@ -17,6 +17,7 @@ interface Member {
   fullName: string;
   dateOfBirth: string;
   institution: string;
+  mobileNumber?: string | null;
   description?: string | null;
   programmingLanguages: string[];
   skills: MemberSkill[];
@@ -1166,6 +1167,10 @@ export default function AdminPage() {
                         <div>
                           <dt className="text-[var(--muted)]">Date of birth</dt>
                           <dd className="text-[var(--foreground)]">{m.dateOfBirth}</dd>
+                        </div>
+                        <div>
+                          <dt className="text-[var(--muted)]">Mobile</dt>
+                          <dd className="text-[var(--foreground)]">{m.mobileNumber || "-"}</dd>
                         </div>
                         <div className="sm:col-span-2">
                           <dt className="text-[var(--muted)]">Languages</dt>

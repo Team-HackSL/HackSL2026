@@ -53,6 +53,7 @@ public class ProfileController : ControllerBase
         p.FullName = req.FullName.Trim();
         p.DateOfBirth = req.DateOfBirth;
         p.Institution = req.Institution.Trim();
+        p.MobileNumber = string.IsNullOrWhiteSpace(req.MobileNumber) ? null : req.MobileNumber.Trim();
         p.Description = string.IsNullOrWhiteSpace(req.Description) ? null : req.Description.Trim();
         p.ProgrammingLanguages = req.ProgrammingLanguages
             .Select(l => l.Trim()).Where(l => l.Length > 0)

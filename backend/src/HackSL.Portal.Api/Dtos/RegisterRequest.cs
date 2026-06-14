@@ -19,6 +19,9 @@ public class RegisterRequest
     [Required, MaxLength(200)]
     public string Institution { get; set; } = string.Empty;
 
+    [Phone, MaxLength(30)]
+    public string? MobileNumber { get; set; }
+
     [MaxLength(4000)]
     public string? Description { get; set; }
 

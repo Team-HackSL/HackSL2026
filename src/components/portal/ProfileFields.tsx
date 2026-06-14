@@ -8,6 +8,7 @@ export interface ProfileFormState {
   fullName: string;
   dateOfBirth: string;
   institution: string;
+  mobileNumber: string;
   description: string;
   programmingLanguages: string[];
   skills: Record<string, number>;
@@ -24,6 +25,7 @@ export function emptyProfileForm(): ProfileFormState {
     fullName: "",
     dateOfBirth: "",
     institution: "",
+    mobileNumber: "",
     description: "",
     programmingLanguages: [],
     skills: Object.fromEntries(SKILL_CATEGORIES.map((c) => [c, 0])),
@@ -43,6 +45,7 @@ export function profileToForm(p: Profile): ProfileFormState {
     fullName: p.fullName,
     dateOfBirth: p.dateOfBirth,
     institution: p.institution,
+    mobileNumber: p.mobileNumber ?? "",
     description: p.description ?? "",
     programmingLanguages: p.programmingLanguages,
     skills,
@@ -65,6 +68,7 @@ export function formToProfileFields(s: ProfileFormState) {
     fullName: s.fullName.trim(),
     dateOfBirth: s.dateOfBirth,
     institution: s.institution.trim(),
+    mobileNumber: s.mobileNumber.trim() || undefined,
     description: s.description.trim() || undefined,
     programmingLanguages: s.programmingLanguages,
     skills,
@@ -153,15 +157,31 @@ export function ProfileFields({
         </div>
       </div>
 
-      <div>
-        <label htmlFor="institution" className={labelClass}>University / School</label>
-        <input
-          id="institution"
-          value={state.institution}
-          onChange={(e) => set({ institution: e.target.value })}
-          required
-          className={inputClass}
-        />
+      <div className="grid gap-4 sm:grid-cols-2">
+        <div>
+          <label htmlFor="institution" className={labelClass}>University / School</label>
+          <input
+            id="institution"
+            value={state.institution}
+            onChange={(e) => set({ institution: e.target.value })}
+            required
+            className={inputClass}
+          />
+        </div>
+        <div>
+          <label htmlFor="mobileNumber" className={labelClass}>
+            Mobile number <span className="font-normal text-[var(--muted)]">(optional)</span>
+          </label>
+          <input
+            id="mobileNumber"
+            type="tel"
+            value={state.mobileNumber}
+            onChange={(e) => set({ mobileNumber: e.target.value })}
+            autoComplete="tel"
+            placeholder="e.g. +94 71 234 5678"
+            className={inputClass}
+          />
+        </div>
       </div>
 
       {/* About you / achievements - used for team matching */}
