@@ -8,6 +8,7 @@ export interface ProfileFormState {
   fullName: string;
   dateOfBirth: string;
   institution: string;
+  mobileCountryCode: string;
   mobileNumber: string;
   description: string;
   programmingLanguages: string[];
@@ -20,11 +21,58 @@ export interface ProfileFormState {
   subscribeToNewsletter: boolean;
 }
 
+// Dial codes offered in the mobile-number picker. Sri Lanka leads as the
+// default since that's where most participants are. One entry per dial code.
+export const COUNTRY_DIAL_CODES: { iso: string; label: string; dial: string }[] = [
+  { iso: "LK", label: "Sri Lanka", dial: "+94" },
+  { iso: "IN", label: "India", dial: "+91" },
+  { iso: "US", label: "United States / Canada", dial: "+1" },
+  { iso: "GB", label: "United Kingdom", dial: "+44" },
+  { iso: "AU", label: "Australia", dial: "+61" },
+  { iso: "NZ", label: "New Zealand", dial: "+64" },
+  { iso: "SG", label: "Singapore", dial: "+65" },
+  { iso: "MY", label: "Malaysia", dial: "+60" },
+  { iso: "AE", label: "United Arab Emirates", dial: "+971" },
+  { iso: "SA", label: "Saudi Arabia", dial: "+966" },
+  { iso: "QA", label: "Qatar", dial: "+974" },
+  { iso: "DE", label: "Germany", dial: "+49" },
+  { iso: "FR", label: "France", dial: "+33" },
+  { iso: "NL", label: "Netherlands", dial: "+31" },
+  { iso: "SE", label: "Sweden", dial: "+46" },
+  { iso: "JP", label: "Japan", dial: "+81" },
+  { iso: "CN", label: "China", dial: "+86" },
+  { iso: "KR", label: "South Korea", dial: "+82" },
+  { iso: "BD", label: "Bangladesh", dial: "+880" },
+  { iso: "PK", label: "Pakistan", dial: "+92" },
+  { iso: "NP", label: "Nepal", dial: "+977" },
+  { iso: "MV", label: "Maldives", dial: "+960" },
+  { iso: "ZA", label: "South Africa", dial: "+27" },
+  { iso: "NG", label: "Nigeria", dial: "+234" },
+  { iso: "KE", label: "Kenya", dial: "+254" },
+  { iso: "BR", label: "Brazil", dial: "+55" },
+];
+
+const DEFAULT_DIAL_CODE = "+94";
+
+// Split a stored E.164-style number (e.g. "+94712345678") back into a dial code
+// and the national portion so the picker can be rehydrated when editing.
+function parseMobile(value: string): { code: string; national: string } {
+  const v = value.trim();
+  if (!v) return { code: DEFAULT_DIAL_CODE, national: "" };
+  // Match the longest dial code first so e.g. +94 wins over +9.
+  const dials = COUNTRY_DIAL_CODES.map((c) => c.dial).sort((a, b) => b.length - a.length);
+  const match = dials.find((d) => v.startsWith(d));
+  if (match) return { code: match, national: v.slice(match.length).replace(/^[\s-]+/, "") };
+  // Legacy value without a recognised code: keep its digits, default the code.
+  return { code: DEFAULT_DIAL_CODE, national: v.replace(/^\+/, "") };
+}
+
 export function emptyProfileForm(): ProfileFormState {
   return {
     fullName: "",
     dateOfBirth: "",
     institution: "",
+    mobileCountryCode: DEFAULT_DIAL_CODE,
     mobileNumber: "",
     description: "",
     programmingLanguages: [],
@@ -41,11 +89,13 @@ export function emptyProfileForm(): ProfileFormState {
 export function profileToForm(p: Profile): ProfileFormState {
   const skills = Object.fromEntries(SKILL_CATEGORIES.map((c) => [c, 0])) as Record<string, number>;
   for (const s of p.skills) skills[s.category] = s.level;
+  const mobile = parseMobile(p.mobileNumber ?? "");
   return {
     fullName: p.fullName,
     dateOfBirth: p.dateOfBirth,
     institution: p.institution,
-    mobileNumber: p.mobileNumber ?? "",
+    mobileCountryCode: mobile.code,
+    mobileNumber: mobile.national,
     description: p.description ?? "",
     programmingLanguages: p.programmingLanguages,
     skills,
@@ -64,11 +114,15 @@ export function formToProfileFields(s: ProfileFormState) {
     level: s.skills[c] ?? 0,
   })).filter((sk) => sk.level > 0);
 
+  // Combine the dial code and national digits into a single E.164-style value
+  // (e.g. "+94712345678"); omit entirely when no number was entered.
+  const nationalDigits = s.mobileNumber.replace(/\D/g, "");
+
   return {
     fullName: s.fullName.trim(),
     dateOfBirth: s.dateOfBirth,
     institution: s.institution.trim(),
-    mobileNumber: s.mobileNumber.trim() || undefined,
+    mobileNumber: nationalDigits ? `${s.mobileCountryCode}${nationalDigits}` : undefined,
     description: s.description.trim() || undefined,
     programmingLanguages: s.programmingLanguages,
     skills,
@@ -81,8 +135,9 @@ export function formToProfileFields(s: ProfileFormState) {
   };
 }
 
-const inputClass =
-  "mt-1 w-full rounded-lg border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-[var(--foreground)]";
+const fieldBase =
+  "w-full rounded-lg border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-[var(--foreground)]";
+const inputClass = "mt-1 " + fieldBase;
 const labelClass = "block text-sm font-medium text-[var(--foreground)]";
 
 function Toggle({
@@ -172,15 +227,30 @@ export function ProfileFields({
           <label htmlFor="mobileNumber" className={labelClass}>
             Mobile number <span className="font-normal text-[var(--muted)]">(optional)</span>
           </label>
-          <input
-            id="mobileNumber"
-            type="tel"
-            value={state.mobileNumber}
-            onChange={(e) => set({ mobileNumber: e.target.value })}
-            autoComplete="tel"
-            placeholder="e.g. +94 71 234 5678"
-            className={inputClass}
-          />
+          <div className="mt-1 flex gap-2">
+            <select
+              aria-label="Country dialing code"
+              value={state.mobileCountryCode}
+              onChange={(e) => set({ mobileCountryCode: e.target.value })}
+              className={`${fieldBase} w-auto shrink-0`}
+            >
+              {COUNTRY_DIAL_CODES.map((c) => (
+                <option key={c.iso} value={c.dial}>
+                  {c.dial} {c.label}
+                </option>
+              ))}
+            </select>
+            <input
+              id="mobileNumber"
+              type="tel"
+              value={state.mobileNumber}
+              onChange={(e) => set({ mobileNumber: e.target.value })}
+              autoComplete="tel-national"
+              inputMode="tel"
+              placeholder="71 234 5678"
+              className={`${fieldBase} flex-1`}
+            />
+          </div>
         </div>
       </div>
 
