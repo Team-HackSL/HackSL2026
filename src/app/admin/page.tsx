@@ -118,7 +118,7 @@ function LoginForm({
 
 export default function AdminPage() {
   const [authStatus, setAuthStatus] = useState<"checking" | "authenticated" | "unauthenticated">("checking");
-  const [activeTab, setActiveTab] = useState<"hackathons" | "blog" | "users">("hackathons");
+  const [activeTab, setActiveTab] = useState<"hackathons" | "blog" | "users" | "analytics">("hackathons");
   const [hackathons, setHackathons] = useState<Hackathon[]>([]);
   const [message, setMessage] = useState<{ type: "ok" | "err"; text: string } | null>(null);
   const [form, setForm] = useState<Partial<Hackathon>>({
@@ -428,6 +428,96 @@ export default function AdminPage() {
     });
   };
 
+  // High-level platform analytics, derived from the data already loaded above.
+  const analytics = (() => {
+    const now = Date.now();
+    const DAY = 24 * 60 * 60 * 1000;
+    const parsed = members
+      .map((m) => ({ member: m, created: new Date(m.accountCreatedAt).getTime() }))
+      .filter((x) => !Number.isNaN(x.created));
+
+    const signupsInDays = (days: number) =>
+      parsed.filter((x) => now - x.created <= days * DAY).length;
+
+    const newLast7 = signupsInDays(7);
+    const newLast30 = signupsInDays(30);
+    const prev30 = parsed.filter(
+      (x) => now - x.created > 30 * DAY && now - x.created <= 60 * DAY
+    ).length;
+    const signupTrend =
+      prev30 === 0
+        ? newLast30 > 0
+          ? 100
+          : 0
+        : Math.round(((newLast30 - prev30) / prev30) * 100);
+
+    // New sign-ups per month over the last 6 calendar months.
+    const monthly: { label: string; count: number }[] = [];
+    const base = new Date();
+    for (let i = 5; i >= 0; i--) {
+      const d = new Date(base.getFullYear(), base.getMonth() - i, 1);
+      const next = new Date(base.getFullYear(), base.getMonth() - i + 1, 1);
+      const count = parsed.filter(
+        (x) => x.created >= d.getTime() && x.created < next.getTime()
+      ).length;
+      monthly.push({
+        label: d.toLocaleDateString("en-US", { month: "short" }),
+        count,
+      });
+    }
+    const monthlyMax = Math.max(1, ...monthly.map((m) => m.count));
+
+    const total = members.length;
+    const pct = (n: number) => (total === 0 ? 0 : Math.round((n / total) * 100));
+
+    // "Active / engaged" members: anyone who has opted into a program or shared a
+    // profile link, i.e. did more than the bare-minimum sign-up.
+    const engaged = members.filter(
+      (m) =>
+        m.matchWithTeam ||
+        m.interestedInFellowship ||
+        m.subscribeToNewsletter ||
+        Boolean(m.resumeUrl) ||
+        Boolean(m.linkedInUrl) ||
+        Boolean(m.gitHubUrl)
+    ).length;
+
+    const engagement = [
+      { label: "Newsletter subscribers", count: members.filter((m) => m.subscribeToNewsletter).length },
+      { label: "Open to team matching", count: members.filter((m) => m.matchWithTeam).length },
+      { label: "Interested in fellowship", count: members.filter((m) => m.interestedInFellowship).length },
+    ];
+
+    const completeness = [
+      { label: "Resume", count: members.filter((m) => Boolean(m.resumeUrl)).length },
+      { label: "GitHub", count: members.filter((m) => Boolean(m.gitHubUrl)).length },
+      { label: "LinkedIn", count: members.filter((m) => Boolean(m.linkedInUrl)).length },
+      { label: "Profile photo", count: members.filter((m) => Boolean(m.profilePhotoUrl)).length },
+    ];
+
+    const upcomingHackathons = hackathons.filter((h) => {
+      const t = new Date(h.date).getTime();
+      return !Number.isNaN(t) && t >= now;
+    }).length;
+
+    return {
+      total,
+      newLast7,
+      newLast30,
+      signupTrend,
+      monthly,
+      monthlyMax,
+      engaged,
+      engagedPct: pct(engaged),
+      engagement,
+      completeness,
+      pct,
+      blogCount: blogs.length,
+      hackathonCount: hackathons.length,
+      upcomingHackathons,
+    };
+  })();
+
   if (authStatus === "checking") {
     return (
       <div className="flex min-h-screen items-center justify-center bg-[var(--surface)]">
@@ -468,6 +558,7 @@ export default function AdminPage() {
             { key: "hackathons", label: "Hackathons" },
             { key: "blog", label: "Blog" },
             { key: "users", label: "User Admin" },
+            { key: "analytics", label: "Analytics" },
           ] as const).map((tab) => (
             <button
               key={tab.key}
@@ -1130,6 +1221,149 @@ export default function AdminPage() {
                 </div>
               )}
             </>
+          )}
+        </div>
+        )}
+
+        {activeTab === "analytics" && (
+        <div className="mt-8">
+          <h2 className="text-lg font-semibold text-[var(--foreground)]">Analytics</h2>
+          <p className="mt-1 text-sm text-[var(--muted)]">
+            High-level metrics on sign-ups, active members, and platform engagement.
+          </p>
+
+          {/* Headline stat cards */}
+          <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {([
+              { label: "Total members", value: analytics.total, sub: "all-time sign-ups" },
+              {
+                label: "New (30 days)",
+                value: analytics.newLast30,
+                sub:
+                  analytics.signupTrend === 0
+                    ? "vs. previous 30 days"
+                    : `${analytics.signupTrend > 0 ? "▲" : "▼"} ${Math.abs(analytics.signupTrend)}% vs. prev 30d`,
+                trend: analytics.signupTrend,
+              },
+              { label: "New (7 days)", value: analytics.newLast7, sub: "recent sign-ups" },
+              {
+                label: "Active members",
+                value: analytics.engaged,
+                sub: `${analytics.engagedPct}% engaged`,
+              },
+            ] as const).map((card) => (
+              <div
+                key={card.label}
+                className="rounded-xl border border-[var(--border)] bg-[var(--background)] p-5"
+              >
+                <p className="text-sm text-[var(--muted)]">{card.label}</p>
+                <p className="mt-2 text-3xl font-bold text-[var(--foreground)]">{card.value}</p>
+                <p
+                  className={`mt-1 text-xs ${
+                    "trend" in card && card.trend > 0
+                      ? "text-green-600"
+                      : "trend" in card && card.trend < 0
+                        ? "text-red-600"
+                        : "text-[var(--muted)]"
+                  }`}
+                >
+                  {card.sub}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          {/* Sign-up trend over the last 6 months */}
+          <div className="mt-6 rounded-xl border border-[var(--border)] bg-[var(--background)] p-6">
+            <h3 className="text-sm font-semibold text-[var(--foreground)]">New sign-ups (last 6 months)</h3>
+            <div className="mt-6 flex items-end justify-between gap-3" style={{ height: "160px" }}>
+              {analytics.monthly.map((m, i) => (
+                <div key={i} className="flex flex-1 flex-col items-center justify-end gap-2">
+                  <span className="text-xs font-medium text-[var(--foreground)]">{m.count}</span>
+                  <div
+                    className="w-full rounded-t-md bg-[var(--accent)] transition-all"
+                    style={{
+                      height: `${Math.round((m.count / analytics.monthlyMax) * 130)}px`,
+                      minHeight: m.count > 0 ? "4px" : "0px",
+                    }}
+                  />
+                  <span className="text-xs text-[var(--muted)]">{m.label}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-6 grid gap-6 lg:grid-cols-2">
+            {/* Engagement breakdown */}
+            <div className="rounded-xl border border-[var(--border)] bg-[var(--background)] p-6">
+              <h3 className="text-sm font-semibold text-[var(--foreground)]">Engagement</h3>
+              <p className="mt-1 text-xs text-[var(--muted)]">Share of members opting into programs.</p>
+              <div className="mt-4 space-y-4">
+                {analytics.engagement.map((e) => (
+                  <div key={e.label}>
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-[var(--foreground)]">{e.label}</span>
+                      <span className="text-[var(--muted)]">
+                        {e.count} ({analytics.pct(e.count)}%)
+                      </span>
+                    </div>
+                    <div className="mt-1 h-2 w-full overflow-hidden rounded-full bg-[var(--surface)]">
+                      <div
+                        className="h-full rounded-full bg-[var(--accent)]"
+                        style={{ width: `${analytics.pct(e.count)}%` }}
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Profile completeness */}
+            <div className="rounded-xl border border-[var(--border)] bg-[var(--background)] p-6">
+              <h3 className="text-sm font-semibold text-[var(--foreground)]">Profile completeness</h3>
+              <p className="mt-1 text-xs text-[var(--muted)]">Members who provided each field.</p>
+              <div className="mt-4 space-y-4">
+                {analytics.completeness.map((c) => (
+                  <div key={c.label}>
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-[var(--foreground)]">{c.label}</span>
+                      <span className="text-[var(--muted)]">
+                        {c.count} ({analytics.pct(c.count)}%)
+                      </span>
+                    </div>
+                    <div className="mt-1 h-2 w-full overflow-hidden rounded-full bg-[var(--surface)]">
+                      <div
+                        className="h-full rounded-full bg-[var(--accent)]"
+                        style={{ width: `${analytics.pct(c.count)}%` }}
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Content overview */}
+          <div className="mt-6 grid gap-4 sm:grid-cols-3">
+            {([
+              { label: "Blog posts", value: analytics.blogCount },
+              { label: "Hackathons", value: analytics.hackathonCount },
+              { label: "Upcoming hackathons", value: analytics.upcomingHackathons },
+            ] as const).map((card) => (
+              <div
+                key={card.label}
+                className="rounded-xl border border-[var(--border)] bg-[var(--background)] p-5"
+              >
+                <p className="text-sm text-[var(--muted)]">{card.label}</p>
+                <p className="mt-2 text-2xl font-bold text-[var(--foreground)]">{card.value}</p>
+              </div>
+            ))}
+          </div>
+
+          {members.length === 0 && (
+            <p className="mt-6 text-sm text-[var(--muted)]">
+              Member metrics will populate once people sign up through the portal.
+            </p>
           )}
         </div>
         )}
