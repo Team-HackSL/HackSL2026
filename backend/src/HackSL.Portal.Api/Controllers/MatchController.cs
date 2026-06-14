@@ -13,24 +13,26 @@ namespace HackSL.Portal.Api.Controllers;
 /// Tinder-style team matching for users who opted into "Match me with a team".
 ///
 /// The swipe deck only exposes anonymized fields (skills, university, languages,
-/// intro, GitHub). A right-swipe is a "like"; the free tier grants a single right-swipe
-/// and further likes are gated behind a (not-yet-built) paywall. When two users have
-/// both right-swiped each other it becomes a mutual match and their personal details
-/// (name, email, LinkedIn) are revealed to one another.
+/// intro, GitHub). A right-swipe is a "like" and users may swipe right as many times
+/// as they want for free. When two users have both right-swiped each other it becomes a
+/// mutual match and their personal details (name, email, LinkedIn) are revealed to one
+/// another. The free tier grants a single mutual match; once a user has matched with one
+/// person their free match is used up and forming further matches is gated behind a
+/// (not-yet-built) paywall. Swiping right always stays free.
 /// </summary>
 [ApiController]
 [Route("api/match")]
 [Authorize]
 public class MatchController : ControllerBase
 {
-    /// <summary>Right-swipes ("matches") included for free. Beyond this, the paywall applies.</summary>
+    /// <summary>Mutual matches included for free. Beyond this, the paywall applies.</summary>
     private const int FreeMatchLimit = 1;
 
     private readonly AppDbContext _db;
 
     public MatchController(AppDbContext db) => _db = db;
 
-    /// <summary>Whether the current user can match, and how many free likes they have left.</summary>
+    /// <summary>Whether the current user can match, and how many free matches they have left.</summary>
     [HttpGet("status")]
     public async Task<ActionResult<MatchStatusResponse>> Status(CancellationToken ct)
     {
@@ -39,12 +41,12 @@ public class MatchController : ControllerBase
         var profile = await _db.Profiles.AsNoTracking().FirstOrDefaultAsync(p => p.UserId == userId, ct);
         if (profile is null) return NotFound();
 
-        var used = await _db.TeamSwipes.CountAsync(s => s.SwiperUserId == userId && s.IsRightSwipe, ct);
+        var matchesUsed = await CountMutualMatchesAsync(userId, ct);
         return Ok(new MatchStatusResponse
         {
             MatchWithTeam = profile.MatchWithTeam,
-            RightSwipesUsed = used,
-            FreeMatchesRemaining = Math.Max(0, FreeMatchLimit - used),
+            MatchesUsed = matchesUsed,
+            FreeMatchesRemaining = Math.Max(0, FreeMatchLimit - matchesUsed),
         });
     }
 
@@ -101,12 +103,23 @@ public class MatchController : ControllerBase
         var existing = await _db.TeamSwipes
             .FirstOrDefaultAsync(s => s.SwiperUserId == userId && s.TargetUserId == req.TargetUserId, ct);
 
-        var usedRightSwipes = await _db.TeamSwipes
-            .CountAsync(s => s.SwiperUserId == userId && s.IsRightSwipe, ct);
+        // Swiping right is unlimited and free. The free allowance is only spent when a
+        // *mutual* match forms, so we check the reciprocal like up front.
+        var reciprocal = isRight
+            ? await _db.TeamSwipes.FirstOrDefaultAsync(
+                s => s.SwiperUserId == req.TargetUserId && s.TargetUserId == userId && s.IsRightSwipe, ct)
+            : null;
 
-        // A right-swipe the user hasn't already spent on this person consumes a free match.
+        var matchesUsed = await CountMutualMatchesAsync(userId, ct);
+
+        // This swipe would complete a brand-new mutual match if it's a right-swipe the user
+        // hasn't already spent on this person and the target has already liked them back.
         var isNewRight = isRight && (existing is null || !existing.IsRightSwipe);
-        if (isNewRight && usedRightSwipes >= FreeMatchLimit)
+        var wouldFormNewMatch = isNewRight && reciprocal is not null;
+
+        // Once the user has used their free match, forming another is gated behind the paywall.
+        // We block only the match-completing swipe — ordinary right-swipes stay unlimited.
+        if (wouldFormNewMatch && matchesUsed >= FreeMatchLimit)
         {
             return StatusCode(402, new
             {
@@ -133,22 +146,17 @@ public class MatchController : ControllerBase
 
         await _db.SaveChangesAsync(ct);
 
-        var usedAfter = usedRightSwipes + (isNewRight ? 1 : 0);
+        var matchesAfter = matchesUsed + (wouldFormNewMatch ? 1 : 0);
         var response = new SwipeResponse
         {
-            FreeMatchesRemaining = Math.Max(0, FreeMatchLimit - usedAfter),
+            FreeMatchesRemaining = Math.Max(0, FreeMatchLimit - matchesAfter),
         };
 
         // A mutual match: the target must have already right-swiped the caller.
-        if (isRight)
+        if (isRight && reciprocal is not null)
         {
-            var reciprocal = await _db.TeamSwipes.FirstOrDefaultAsync(
-                s => s.SwiperUserId == req.TargetUserId && s.TargetUserId == userId && s.IsRightSwipe, ct);
-            if (reciprocal is not null)
-            {
-                response.IsMatch = true;
-                response.Match = ToMatch(target, reciprocal.CreatedAt);
-            }
+            response.IsMatch = true;
+            response.Match = ToMatch(target, reciprocal.CreatedAt);
         }
 
         return Ok(response);
@@ -192,6 +200,19 @@ public class MatchController : ControllerBase
         .ToList();
 
         return Ok(result);
+    }
+
+    /// <summary>How many confirmed mutual matches the user has (both sides right-swiped).</summary>
+    private async Task<int> CountMutualMatchesAsync(Guid userId, CancellationToken ct)
+    {
+        var myLikeTargetIds = await _db.TeamSwipes
+            .Where(s => s.SwiperUserId == userId && s.IsRightSwipe)
+            .Select(s => s.TargetUserId)
+            .ToListAsync(ct);
+        if (myLikeTargetIds.Count == 0) return 0;
+
+        return await _db.TeamSwipes.CountAsync(
+            s => s.IsRightSwipe && s.TargetUserId == userId && myLikeTargetIds.Contains(s.SwiperUserId), ct);
     }
 
     private static MatchCandidateResponse ToCandidate(UserProfile p) => new()

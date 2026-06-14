@@ -28,7 +28,7 @@ public class SwipeResponse
     public bool IsMatch { get; set; }
     /// <summary>Revealed details of the other person, present only when IsMatch is true.</summary>
     public MatchResponse? Match { get; set; }
-    /// <summary>How many free right-swipes ("matches") the user has left after this action.</summary>
+    /// <summary>How many free matches the user has left after this action.</summary>
     public int FreeMatchesRemaining { get; set; }
 }
 
@@ -55,8 +55,8 @@ public class MatchStatusResponse
 {
     /// <summary>Whether the user opted into team matching.</summary>
     public bool MatchWithTeam { get; set; }
-    /// <summary>Right-swipes used so far.</summary>
-    public int RightSwipesUsed { get; set; }
-    /// <summary>Free right-swipes ("matches") remaining (the free tier grants one).</summary>
+    /// <summary>Mutual matches formed so far (each consumes one free match).</summary>
+    public int MatchesUsed { get; set; }
+    /// <summary>Free matches remaining (the free tier grants one).</summary>
     public int FreeMatchesRemaining { get; set; }
 }

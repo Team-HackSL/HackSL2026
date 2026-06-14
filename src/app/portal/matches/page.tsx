@@ -99,11 +99,8 @@ export default function MatchesPage() {
   const handleSwipe = useCallback(
     async (direction: "left" | "right") => {
       if (!current || busy) return;
-      // Block right-swipes once the free match is used; left (skip) stays free.
-      if (direction === "right" && freeRemaining <= 0) {
-        setPaywall(true);
-        return;
-      }
+      // Swiping right is unlimited and free. The server only blocks (402) the swipe that
+      // would form a *second* mutual match once the free match has been used.
       setBusy(true);
       setError(null);
       try {
@@ -127,7 +124,7 @@ export default function MatchesPage() {
         setBusy(false);
       }
     },
-    [current, busy, freeRemaining],
+    [current, busy],
   );
 
   // Arrow-key swiping for the "deck" feel.

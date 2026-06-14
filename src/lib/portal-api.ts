@@ -253,7 +253,7 @@ export interface Match {
 
 export interface MatchStatus {
   matchWithTeam: boolean;
-  rightSwipesUsed: number;
+  matchesUsed: number;
   freeMatchesRemaining: number;
 }
 
