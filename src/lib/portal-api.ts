@@ -1,8 +1,27 @@
 // Client for the HackSL .NET portal backend (see /backend).
 // Talks to the ASP.NET Core API; the JWT is kept in localStorage and sent as a Bearer token.
 
-export const PORTAL_API_BASE =
-  process.env.NEXT_PUBLIC_PORTAL_API_URL || "http://localhost:5080";
+/**
+ * Resolve the portal backend base URL.
+ *
+ * In local dev we fall back to the .NET dev server on :5080. In production the
+ * fallback would be unreachable from the visitor's browser and produces a
+ * confusing `ERR_CONNECTION_REFUSED` plus uncaught promise rejections, so when
+ * `NEXT_PUBLIC_PORTAL_API_URL` is not configured outside of localhost we return
+ * an empty string and let `request()` raise a clear, user-facing error instead.
+ */
+function resolvePortalApiBase(): string {
+  const configured = process.env.NEXT_PUBLIC_PORTAL_API_URL;
+  if (configured) return configured;
+
+  if (typeof window !== "undefined") {
+    const host = window.location.hostname;
+    if (host !== "localhost" && host !== "127.0.0.1") return "";
+  }
+  return "http://localhost:5080";
+}
+
+export const PORTAL_API_BASE = resolvePortalApiBase();
 
 const TOKEN_KEY = "hacksl_portal_token";
 
@@ -100,11 +119,28 @@ export class PortalApiError extends Error {
 }
 
 async function request<T>(path: string, init: RequestInit = {}): Promise<T> {
+  if (!PORTAL_API_BASE) {
+    throw new PortalApiError(
+      "The HackSL portal is not available right now. Please try again later.",
+      503
+    );
+  }
+
   const token = getToken();
   const headers = new Headers(init.headers);
   if (token) headers.set("Authorization", `Bearer ${token}`);
 
-  const res = await fetch(`${PORTAL_API_BASE}${path}`, { ...init, headers });
+  let res: Response;
+  try {
+    res = await fetch(`${PORTAL_API_BASE}${path}`, { ...init, headers });
+  } catch {
+    // Network error (backend down/unreachable) - surface a friendly message
+    // rather than letting the raw fetch rejection bubble up to the console.
+    throw new PortalApiError(
+      "Could not reach the HackSL portal. Please try again later.",
+      503
+    );
+  }
 
   if (res.status === 204) return undefined as T;
 

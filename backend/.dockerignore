@@ -1,0 +1,10 @@
+# Keep the build context small and avoid leaking local artifacts/secrets.
+**/bin/
+**/obj/
+**/.vs/
+**/*.user
+**/appsettings.*.json
+!**/appsettings.json
+.git
+.gitignore
+README.md

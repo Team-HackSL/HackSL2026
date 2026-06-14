@@ -46,8 +46,17 @@ cp .env.example .env
 | `HACKSL_ADMIN_USERNAME` | Admin login username | `admin` |
 | `HACKSL_ADMIN_PASSWORD` | Admin login password | `hacksl-admin-2025` |
 | `HACKSL_ADMIN_SECRET` | Secret for signing session tokens | `hacksl-admin-2025` |
+| `NEXT_PUBLIC_PORTAL_API_URL` | Public URL of the .NET portal backend (see `/backend`), used by the browser for signup/login/profile | `http://localhost:5080` |
+| `PORTAL_API_URL` | Same backend, used server-side by the admin members proxy | `http://localhost:5080` |
 
 For production, use strong, unique values.
+
+> **Portal backend:** The member portal (signup, login, profile, team matching)
+> talks to the separate .NET API in [`/backend`](./backend). It must be deployed
+> somewhere reachable (Vercel does not host .NET) and `NEXT_PUBLIC_PORTAL_API_URL`
+> set to that public HTTPS URL. If it is not configured in production, the portal
+> pages fail gracefully with a "portal is not available" message instead of
+> attempting an (unreachable) `localhost` request.
 
 ### 4. Run locally
 

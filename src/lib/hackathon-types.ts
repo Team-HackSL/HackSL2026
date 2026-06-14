@@ -28,9 +28,14 @@ export function getHackathonStatus(
 
 export function formatDate(dateStr: string): string {
   const date = new Date(dateStr);
+  // Pin to UTC so the rendered day is identical on the server (UTC) and in the
+  // browser regardless of the viewer's local timezone. Date-only strings like
+  // "2025-06-20" parse as UTC midnight, so without this a viewer west of UTC
+  // would render the previous day and trip React hydration error #418.
   return date.toLocaleDateString("en-US", {
     month: "short",
     day: "numeric",
     year: "numeric",
+    timeZone: "UTC",
   });
 }
