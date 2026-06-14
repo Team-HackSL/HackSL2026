@@ -136,8 +136,8 @@ export function formToProfileFields(s: ProfileFormState) {
 }
 
 const fieldBase =
-  "w-full rounded-lg border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-[var(--foreground)]";
-const inputClass = "mt-1 " + fieldBase;
+  "rounded-lg border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-[var(--foreground)]";
+const inputClass = "mt-1 w-full " + fieldBase;
 const labelClass = "block text-sm font-medium text-[var(--foreground)]";
 
 function Toggle({
@@ -227,7 +227,7 @@ export function ProfileFields({
           <label htmlFor="mobileNumber" className={labelClass}>
             Mobile number <span className="font-normal text-[var(--muted)]">(optional)</span>
           </label>
-          <div className="mt-1 flex gap-2">
+          <div className="mt-1 flex min-w-0 gap-2">
             <select
               aria-label="Country dialing code"
               value={state.mobileCountryCode}
