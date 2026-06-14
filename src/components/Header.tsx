@@ -52,13 +52,6 @@ export function Header() {
       >
         About
       </a>
-      <Link
-        href="/admin"
-        className="text-sm font-medium text-white/40 transition-colors duration-200 hover:text-white/70"
-        onClick={() => setIsOpen(false)}
-      >
-        Admin
-      </Link>
     </div>
   );
 

@@ -27,6 +27,20 @@ export default function LoginPage() {
     setError("");
     setLoading(true);
     try {
+      // Admins sign in through this same form - there is no separate admin page.
+      // Try the admin credentials first; a non-OK response just means this is a
+      // regular member, so we fall through to the portal login below.
+      const adminRes = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username: email.trim(), password }),
+        credentials: "include",
+      });
+      if (adminRes.ok) {
+        router.push("/admin");
+        return;
+      }
+
       const auth = await login(email, password);
       setProfile(auth.profile);
       router.push("/portal/profile");
@@ -46,7 +60,7 @@ export default function LoginPage() {
           <label htmlFor="email" className="block text-sm font-medium text-[var(--foreground)]">Email</label>
           <input
             id="email"
-            type="email"
+            type="text"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
