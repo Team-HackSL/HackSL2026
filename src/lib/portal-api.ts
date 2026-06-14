@@ -86,6 +86,17 @@ export function clearToken(): void {
 
 // ---- low-level request helper -------------------------------------------
 
+/** Error thrown by the portal API client; carries the HTTP status so callers
+ *  can distinguish cases like the 402 paywall from ordinary failures. */
+export class PortalApiError extends Error {
+  status: number;
+  constructor(message: string, status: number) {
+    super(message);
+    this.name = "PortalApiError";
+    this.status = status;
+  }
+}
+
 async function request<T>(path: string, init: RequestInit = {}): Promise<T> {
   const token = getToken();
   const headers = new Headers(init.headers);
@@ -112,7 +123,7 @@ async function request<T>(path: string, init: RequestInit = {}): Promise<T> {
         : null) ||
       (typeof data === "string" && data) ||
       `Request failed (${res.status})`;
-    throw new Error(message);
+    throw new PortalApiError(message, res.status);
   }
 
   return data as T;
@@ -167,4 +178,63 @@ export function uploadPhoto(file: File): Promise<Profile> {
   const form = new FormData();
   form.append("file", file);
   return request<Profile>("/api/profile/photo", { method: "POST", body: form });
+}
+
+// ---- team matching -------------------------------------------------------
+
+/** An anonymized candidate in the swipe deck - no name, email, LinkedIn or photo. */
+export interface MatchCandidate {
+  userId: string;
+  institution: string;
+  description?: string | null;
+  programmingLanguages: string[];
+  skills: SkillRating[];
+  gitHubUrl?: string | null;
+}
+
+/** A confirmed mutual match - personal details are revealed once both swipe right. */
+export interface Match {
+  userId: string;
+  fullName: string;
+  email: string;
+  linkedInUrl?: string | null;
+  institution: string;
+  description?: string | null;
+  programmingLanguages: string[];
+  skills: SkillRating[];
+  gitHubUrl?: string | null;
+  profilePhotoUrl?: string | null;
+  matchedAt: string;
+}
+
+export interface MatchStatus {
+  matchWithTeam: boolean;
+  rightSwipesUsed: number;
+  freeMatchesRemaining: number;
+}
+
+export interface SwipeResult {
+  isMatch: boolean;
+  match?: Match | null;
+  freeMatchesRemaining: number;
+}
+
+export function getMatchStatus(): Promise<MatchStatus> {
+  return request<MatchStatus>("/api/match/status");
+}
+
+export function getMatchCandidates(): Promise<MatchCandidate[]> {
+  return request<MatchCandidate[]>("/api/match/candidates");
+}
+
+export function getMatches(): Promise<Match[]> {
+  return request<Match[]>("/api/match/matches");
+}
+
+export function swipe(targetUserId: string, direction: "left" | "right"): Promise<SwipeResult> {
+  return request<SwipeResult>("/api/match/swipe", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ targetUserId, direction }),
+  });
 }

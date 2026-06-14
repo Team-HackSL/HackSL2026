@@ -83,9 +83,30 @@ using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     if (db.Database.GetMigrations().Any())
+    {
         db.Database.Migrate();        // use EF migrations when they exist
+    }
     else
+    {
         db.Database.EnsureCreated();  // otherwise bootstrap the schema directly
+
+        // EnsureCreated() is a no-op on databases that already exist, so tables added
+        // after the first run (e.g. team matching) won't appear. Create them defensively.
+        db.Database.ExecuteSqlRaw("""
+            CREATE TABLE IF NOT EXISTS "TeamSwipes" (
+                "Id" uuid NOT NULL,
+                "SwiperUserId" uuid NOT NULL,
+                "TargetUserId" uuid NOT NULL,
+                "IsRightSwipe" boolean NOT NULL,
+                "CreatedAt" timestamp with time zone NOT NULL,
+                CONSTRAINT "PK_TeamSwipes" PRIMARY KEY ("Id")
+            );
+            CREATE UNIQUE INDEX IF NOT EXISTS "IX_TeamSwipes_SwiperUserId_TargetUserId"
+                ON "TeamSwipes" ("SwiperUserId", "TargetUserId");
+            CREATE INDEX IF NOT EXISTS "IX_TeamSwipes_TargetUserId"
+                ON "TeamSwipes" ("TargetUserId");
+            """);
+    }
 }
 
 if (app.Environment.IsDevelopment())

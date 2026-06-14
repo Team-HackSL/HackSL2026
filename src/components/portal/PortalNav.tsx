@@ -41,6 +41,14 @@ export function PortalNav() {
           </Link>
           {profile ? (
             <>
+              {profile.matchWithTeam && (
+                <Link
+                  href="/portal/matches"
+                  className="text-sm font-medium text-white/80 hover:text-white"
+                >
+                  Find a team
+                </Link>
+              )}
               <Link href="/portal/profile" className="text-sm font-medium text-white/80 hover:text-white">
                 My profile
               </Link>

@@ -10,6 +10,7 @@ public class AppDbContext : DbContext
     public DbSet<User> Users => Set<User>();
     public DbSet<UserProfile> Profiles => Set<UserProfile>();
     public DbSet<SkillRating> SkillRatings => Set<SkillRating>();
+    public DbSet<TeamSwipe> TeamSwipes => Set<TeamSwipe>();
 
     protected override void OnModelCreating(ModelBuilder b)
     {
@@ -48,6 +49,14 @@ public class AppDbContext : DbContext
         {
             e.Property(s => s.Id).ValueGeneratedNever();
             e.Property(s => s.Category).HasMaxLength(100).IsRequired();
+        });
+
+        b.Entity<TeamSwipe>(e =>
+        {
+            e.Property(s => s.Id).ValueGeneratedNever();
+            // One swipe per (swiper, target) pair: re-swiping updates the existing row.
+            e.HasIndex(s => new { s.SwiperUserId, s.TargetUserId }).IsUnique();
+            e.HasIndex(s => s.TargetUserId);
         });
     }
 }
