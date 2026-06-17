@@ -15,7 +15,7 @@ const TEAM = [
     name: "Kavindu Ranasinghe",
     role: "Co-Founder",
     placeholder: "KR",
-    image: "/team/kavindu.jpg",
+    image: "/team/kavindu.jpeg",
     linkedIn: "https://www.linkedin.com/in/kavindu-ranasinghe/",
   },
 ];
