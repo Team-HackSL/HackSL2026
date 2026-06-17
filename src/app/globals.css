@@ -117,11 +117,11 @@ select:focus-visible {
 }
 
 .animate-marquee-left {
-  animation: marquee-left 30s linear infinite;
+  animation: marquee-left 80s linear infinite;
 }
 
 .animate-marquee-right {
-  animation: marquee-right 30s linear infinite;
+  animation: marquee-right 80s linear infinite;
 }
 
 /* ===========================================================================
