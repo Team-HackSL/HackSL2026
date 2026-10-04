@@ -26,7 +26,7 @@ export function HackathonCard({ hackathon }: HackathonCardProps) {
     >
       {/* Thumbnail / Banner */}
       <div
-        className="relative aspect-[16/9] w-full overflow-hidden"
+        className="relative w-full overflow-hidden"
         style={{ background: "linear-gradient(135deg, #7C3AED, #5B21B6)" }}
       >
         {hackathon.image ? (
@@ -34,8 +34,9 @@ export function HackathonCard({ hackathon }: HackathonCardProps) {
             <Image
               src={hackathon.image}
               alt={hackathon.name}
-              fill
-              className="object-cover transition-transform duration-500 group-hover:scale-105"
+              width={0}
+              height={0}
+              className="h-auto w-full transition-transform duration-500 group-hover:scale-105"
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             />
           ) : (
@@ -43,11 +44,11 @@ export function HackathonCard({ hackathon }: HackathonCardProps) {
             <img
               src={hackathon.image}
               alt={hackathon.name}
-              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+              className="h-auto w-full transition-transform duration-500 group-hover:scale-105"
             />
           )
         ) : (
-          <div className="flex h-full items-center justify-center">
+          <div className="flex aspect-[16/9] h-full items-center justify-center">
             <span className="text-5xl font-bold text-white/30">
               {hackathon.name.charAt(0)}
             </span>
@@ -58,7 +59,7 @@ export function HackathonCard({ hackathon }: HackathonCardProps) {
           className={`absolute left-3 top-3 rounded-full px-2.5 py-1 text-xs font-semibold backdrop-blur-sm ${
             mode === "online"
               ? "bg-emerald-500/90 text-white"
-              : "bg-white/95 text-[var(--foreground)]"
+              : "bg-white/95 text-gray-900"
           }`}
         >
           {mode === "online" ? "Online" : "In-person"}
