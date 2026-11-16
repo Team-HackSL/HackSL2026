@@ -12,7 +12,7 @@ const PARTNERS = [
   },
   {
     name: "SLIIT",
-    logo: "https://static.sliit.lk/wp-content/uploads/2023/06/06022054/SLIIT-UNI-LOGO.png",
+    logo: "https://www.sliit.lk/build/assets/images/logo.svg",
     alt: "SLIIT - Sri Lanka Institute of Information Technology",
     fallback: undefined,
   },
@@ -60,7 +60,7 @@ const PARTNERS = [
   },
   {
     name: "SLASSCOM",
-    logo: "https://old.slasscom.lk/wp-content/uploads/2023/02/image001.png",
+    logo: "https://slasscom.lk/wp-content/uploads/2024/09/slasscom-logo-WHITE--768x147.png",
     alt: "SLASSCOM",
     fallback: undefined,
   },
